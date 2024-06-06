@@ -1,6 +1,10 @@
 {
     "name": "docs",
     "private": true,
+    "scripts": {
+        "dev": "fern docs dev",
+        "deploy": "fern generate --docs --log-level debug"
+    },
     "devDependencies": {
         "fern-api": "0.30.0"
     }
