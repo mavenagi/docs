@@ -1,0 +1,44 @@
+---
+title: Security and Privacy details
+slug: security-and-privacy-details
+layout: overview
+---
+
+Maven is powered by Enterprise-grade security, ensuring data security and privacy to enable enterprise deployment and personalization at scale, while building a consumer-grade user experience.
+
+For details see Maven Trust Center https://trust.mavenagi.com/ and Privacy Policy: https://www.mavenagi.com/privacy-policy
+
+## Application security
+
+- **Software Composition Analysis.** We scan the libraries and dependencies used in our products to identify vulnerabilities and ensure the vulnerabilities are managed.
+- **Application Security.** 2-factor (2FA) for agents and admins via SMS or an authenticator app.
+- **Service Credential Storage** follows secure credential storage best practices by never storing passwords in human-readable format, and only as the result of a secure, salted, one-way hash
+- **Audit Logs.** Logs include account changes, user changes, app changes, business rules, ticket deletions, and settings.
+
+## Cloud Security
+
+- **Facilities.** Maven AGI hosts Service Data primarily in Azure, Google, and AWS data centers.
+- **Encryption in Transit.** All communications with Maven UI and APIs are encrypted via industry standard HTTPS/TLS (TLS 1.2 or higher) over public networks.
+- **Encryption at Rest.** Service Data is encrypted at rest in AWS using AES-256 key encryption.
+- **Logical Access.** Access to the Maven’s Production Network is restricted on an explicit need-to-know basis, utilizes least privilege
+- **Separate Environments.** Testing and staging environments are logically separated from the Production environment.
+- **Third-Party Penetration Testing.** In addition to our internal scanning and testing program Maven employs third-party security experts to perform detailed penetration tests
+- **Patch management.** All software runs in containers and cloud provider ensures all systems are patched appropriately
+
+## HR Security
+
+- **Policies.** Maven has developed a comprehensive set of security policies covering a range of topics.
+- **Employee Vetting.** Maven performs background checks on all new employees in accordance with local laws.
+- **Confidentiality Agreements.** All new hires are required to sign Non-Disclosure and Confidentiality agreements.
+- **Training.** All employees attend a Security Awareness Training, which is given upon hire and annually thereafter.
+
+## Product Security
+
+- **Framework Security Controls.** Maven leverages modern and secure open-source frameworks with security controls to limit exposure to OWASP Top 10 security risks. These inherent controls reduce our exposure to SQL Injection (SQLi), Cross Site Scripting (XSS), and Cross Site Request Forgery (CSRF), among others.
+- **PII Scrubbing at Point of Ingestion.** Maven diligently scrubs all PII during the creation of the Knowledge Graph and prior to sending any information to external APIs, such as Azure or OpenAI. This process ensures that users' sensitive information remains secure and is not inadvertently disclosed to third parties.
+- **Data Anonymization.** Whenever possible, Maven anonymizes user data to minimize the risk of identifying individual users. This process includes the removal or obfuscation of specific identifiers, such as names, addresses, and other sensitive data.
+- **No External Model Training.** Maven does not use user data for the purpose of training, retraining, or improving the Foundation models or APIs utilized within our platform. This policy ensures that our users' private information remains secure and is not exploited for purposes beyond the scope of the services we provide.
+
+## Data Retention and Deletion.
+
+Maven adheres to strict data retention policies, ensuring that users' personal data is stored only for as long as necessary to fulfill the purposes for which it was collected. Upon request or when data is no longer required, we promptly delete it from our systems in accordance with legal and regulatory requirements.

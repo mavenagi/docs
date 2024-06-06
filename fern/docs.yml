@@ -1,0 +1,68 @@
+instances:
+  - url: mavenagi.docs.buildwithfern.com
+    custom-domain: docs.mavenagi.com
+
+js:
+  - ./maven-chat-widget.js
+
+tabs:
+  help:
+    display-name: Help Center
+    icon: home
+  api:
+    display-name: API Reference
+    icon: puzzle
+    href: https://developers.mavenagi.com/api-reference/
+
+navigation:
+  - tab: help
+    layout:
+      - section: Help Center
+        contents:
+          - page: Welcome
+            path: ./docs/pages/welcome.mdx
+      - section: Training Maven
+        contents:
+          - page: Building knowledge base
+            path: ./docs/pages/building-knowledge-base.mdx
+          - page: Evaluating and improving Maven quality
+            path: ./docs/pages/evaluating-and-improving-maven-quality.mdx
+      - section: Integrations
+        contents:
+          - page: Integrations overview
+            path: ./docs/pages/integrations-overview.mdx
+      - section: Security and Privacy
+        contents:
+          - page: Manage users and permissions
+            path: ./docs/pages/manage-users-and-permissions.mdx
+          - page: User roles and permissions in Maven
+            path: ./docs/pages/user-roles-and-permissions-in-maven.mdx
+          - page: Security and Privacy details
+            path: ./docs/pages/security-and-privacy-details.mdx
+  - tab: api
+
+navbar-links:
+  - type: secondary
+    text: Get support
+    url: https://www.mavenagi.com/contact
+  - type: secondary
+    text: Developer portal
+    url: https://developers.mavenagi.com
+  - type: primary
+    text: Dashboard
+    url: https://app.mavenagi.com
+
+colors:
+  accentPrimary:
+    dark: '#9a66f2'
+    light: '#7e3af2'
+  background:
+    light: '#f6f5ff'
+    dark: '#000000'
+
+logo:
+  dark: ./docs/assets/logo-dark-mode.png
+  light: ./docs/assets/logo-light-mode.png
+  height: 40
+
+favicon: ./docs/assets/icon.svg

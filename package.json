@@ -1,0 +1,7 @@
+{
+    "name": "docs",
+    "private": true,
+    "devDependencies": {
+        "fern-api": "0.30.0"
+    }
+}

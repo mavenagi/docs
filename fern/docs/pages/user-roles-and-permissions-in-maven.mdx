@@ -1,0 +1,17 @@
+---
+title: User roles and permissions in Maven
+slug: user-roles-and-permissions-in-maven
+layout: overview
+---
+
+User permissions define the level of Maven access a user in your organization will have. Usually, permissions are based on a user's role, though organization-level permissions.
+
+The person who sets user permissions is the Admin or Owner. The Admin is the first user of any Maven organization, and each organization must have at least one Admin (any Admin can designate other users as Admins as well). When new users are invited to an organization, they are assigned the role set during the invitation process.
+
+### User roles and permissions
+
+| Role                                                                                                                                                                                                               | Permissions                                                                                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Reader**<br/>Recommended role for third parties and agents, if you do not want them creating content or modifying the AI agents.                                                                                 | - View insights<br/>- View conversations<br/>- View Training Knowledge<br/>- View Settings<br/>- View Members                                                                 |
+| **Admin**<br/>The highest-level permissions set in an organization. We recommend limiting the number of users in an organization who are Admins. The Admin role can only be granted or revoked by existing Admins. | - View insights<br/>- View conversations<br/>- Add / Update / Delete / Training Knowledge<br/>- Run Evaluations<br/>- Edit integrations<br/>- Edit Settings<br/>- Edit Member |
+| **Owner**<br/>The highest-level permissions set in an organization. Owners are usually points of contact for the organization.                                                                                     | - View insights<br/>- View conversations<br/>- Add / Update / Delete / Training Knowledge<br/>- Run Evaluations<br/>- Edit integrations<br/>- Edit Settings<br/>- Edit Member |
