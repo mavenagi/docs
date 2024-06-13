@@ -43,8 +43,8 @@ navigation:
 
 navbar-links:
   - type: secondary
-    text: Get support
-    url: https://www.mavenagi.com/contact
+    text: Support
+    url: https://support.mavenagi.com
   - type: secondary
     text: Developer portal
     url: https://developers.mavenagi.com
