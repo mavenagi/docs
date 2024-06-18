@@ -27,6 +27,8 @@ navigation:
             path: ./docs/pages/building-knowledge-base.mdx
           - page: Evaluating and improving Maven quality
             path: ./docs/pages/evaluating-and-improving-maven-quality.mdx
+          - page: Personas
+            path: ./docs/pages/personas.mdx
       - section: Integrations
         contents:
           - page: Integrations overview
