@@ -1,2 +1,2 @@
 # docs
-[docs.mavenagi.com](docs.mavenagi.com)
+[docs.mavenagi.com](http://docs.mavenagi.com)
