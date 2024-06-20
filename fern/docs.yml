@@ -29,6 +29,9 @@ navigation:
             path: ./docs/pages/evaluating-and-improving-maven-quality.mdx
           - page: Personas
             path: ./docs/pages/personas.mdx
+      - section: Insights
+          - page: Navigating Insights
+            path: ./docs/pages/navigating-insights.mdx
       - section: Integrations
         contents:
           - page: Integrations overview
