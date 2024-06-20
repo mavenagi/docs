@@ -30,6 +30,7 @@ navigation:
           - page: Personas
             path: ./docs/pages/personas.mdx
       - section: Insights
+        contents:
           - page: Navigating Insights
             path: ./docs/pages/navigating-insights.mdx
       - section: Integrations
