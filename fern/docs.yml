@@ -10,9 +10,9 @@ tabs:
     display-name: Help Center
     icon: home
   api:
-    display-name: API Reference
+    display-name: Developers
     icon: puzzle
-    href: https://developers.mavenagi.com/api-reference/
+    href: https://developers.mavenagi.com
 
 navigation:
   - tab: help
@@ -51,9 +51,6 @@ navbar-links:
   - type: secondary
     text: Support
     url: https://support.mavenagi.com
-  - type: secondary
-    text: Developer portal
-    url: https://developers.mavenagi.com
   - type: primary
     text: Dashboard
     url: https://app.mavenagi.com
