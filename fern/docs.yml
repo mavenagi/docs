@@ -9,10 +9,6 @@ tabs:
   help:
     display-name: Help Center
     icon: home
-  api:
-    display-name: Developers
-    icon: puzzle
-    href: https://developers.mavenagi.com
 
 navigation:
   - tab: help
@@ -37,6 +33,10 @@ navigation:
         contents:
           - page: Integrations overview
             path: ./docs/pages/integrations-overview.mdx
+      - section: Developer platform
+        contents:
+          - page: Overview
+            path: ./docs/pages/api-overview.mdx
       - section: Security and Privacy
         contents:
           - page: Manage users and permissions
@@ -50,7 +50,10 @@ navigation:
 navbar-links:
   - type: secondary
     text: Support
-    url: https://support.mavenagi.com
+    url: https://support.mavenagi.com 
+  - type: secondary
+    text: Developer portal
+    url: https://developers.mavenagi.com
   - type: primary
     text: Dashboard
     url: https://app.mavenagi.com
