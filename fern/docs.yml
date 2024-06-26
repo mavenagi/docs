@@ -45,7 +45,6 @@ navigation:
             path: ./docs/pages/user-roles-and-permissions-in-maven.mdx
           - page: Security and Privacy details
             path: ./docs/pages/security-and-privacy-details.mdx
-  - tab: api
 
 navbar-links:
   - type: secondary
