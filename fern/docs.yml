@@ -29,6 +29,8 @@ navigation:
         contents:
           - page: Navigating Insights
             path: ./docs/pages/navigating-insights.mdx
+          - page: Glossary
+            path: ./docs/pages/insights-dashboard-glossary.mdx
       - section: Integrations
         contents:
           - page: Integrations overview
