@@ -31,6 +31,10 @@ navigation:
             path: ./docs/pages/navigating-insights.mdx
           - page: Glossary
             path: ./docs/pages/insights-dashboard-glossary.mdx
+      - section: Conversations
+        contents:
+          - page: ./docs/pages/conversations-overview.mdx
+          - page: ./docs/pages/reviewing-conversations.mdx
       - section: Integrations
         contents:
           - page: Integrations overview
