@@ -6,6 +6,6 @@
         "deploy": "fern generate --docs --log-level debug"
     },
     "devDependencies": {
-        "fern-api": "0.31.9"
+        "fern-api": "0.31.17"
     }
 }
