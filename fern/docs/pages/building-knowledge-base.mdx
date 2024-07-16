@@ -4,7 +4,7 @@ slug: building-knowledge-base
 layout: overview
 ---
 
-Maven answers powered by the knowledge you give it. An accurate, complete and robust knowledge base for Maven enhances its performance and ensures it provides accurate, reliable, and contextually relevant support. To build Maven's knowledge base effectively, follow these steps:
+Maven answers are powered by the knowledge you give it. An accurate, complete and robust knowledge base for Maven enhances its performance and ensures it provides accurate, reliable, and contextually relevant support. To build Maven's knowledge base effectively, follow these steps:
 
 ## How to add Knowledge
 
@@ -20,6 +20,24 @@ Compile all the resources your support agents utilize to answer customer queries
 - **Ensure Data Quality and Diversity:** Make sure the data is high-quality, representative, and unbiased to prevent skewed information.
 - **Maintain Transparency and Documentation:** Document how information is stored, updated, and retrieved within the knowledge base. This helps in understanding the AI's reasoning and simplifies troubleshooting.
 - **Prioritize Privacy and Security:** Data used in the knowledge base will be shared by Maven so protect sensitive information to comply with data privacy regulations.
+
+## Advanced Options
+
+When creating a new Knowledge Base, there are multiple advanced options you may configure:
+
+- **Refresh Frequency:**  Set your URL and External knowledge base types to automatically update on a daily, weekly, or monthly basis.
+
+- **URL Exclusion Pattern:**  Add URL patterns to be excluded from crawling. 
+
+  - Note that this affects only links found on pages, but not Start URLs, which are always crawled.
+
+  - Example:  `https://{store,docs}.example.com/**` excludes all URLs starting with `https://store.example.com/` or `https://docs.example.com/`, and `https://example.com/**/*\?*foo=*` excludes all URLs that contain `foo` query parameter with any value.
+
+- **CSS Elements to Remove:**  Define specific CSS elements to be ignored when pages are crawled by Maven
+
+- **Max Crawl Depth:**  Define the depth from your URL’s starting point to be crawled. 
+
+- **Max Crawl Pages:**  Define the total number of pages to be crawled
 
 ## FAQs
 
