@@ -20,13 +20,11 @@ navigation:
       - section: Insights
         contents:
           - page: Navigating Insights
-            path: ./docs/pages/navigating-insights.mdx
-          - page: Glossary
-            path: ./docs/pages/insights-dashboard-glossary.mdx
+            path: ./docs/pages/insights/overview.mdx
       - section: Conversations
         contents:
           - page: Conversations Overview
-            path: ./docs/pages/conversations-overview.mdx
+            path: ./docs/pages/overview.mdx
           - page: Reviewing Conversations
             path: ./docs/pages/reviewing-conversations.mdx
       - section: Feedback
@@ -35,7 +33,7 @@ navigation:
             path: ./docs/pages/feedback/overview.mdx
       - section: Training Maven
         contents:
-          - page: Building knowledge base
+          - page: Knowledge
             path: ./docs/pages/building-knowledge-base.mdx
           - page: Actions
             path: ./docs/pages/train/actions.mdx
@@ -51,6 +49,10 @@ navigation:
             path: ./docs/pages/integrations-overview.mdx
           - page: App marketplace
             path: ./docs/pages/integrations/appmarketplace.mdx
+          - page: Instant Answers
+            path: ./docs/pages/integrations/instantanswers.mdx
+          - page: Slack
+            path: ./docs/pages/integrations/slack.mdx
       - section: Playground
         contents:
           - page: Testing with playground
