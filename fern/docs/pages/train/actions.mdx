@@ -1,0 +1,36 @@
+---
+title: Actions
+layout: overview
+---
+
+Actions are used to trigger Maven App execution to respond to a user question. 
+The LLM chooses which Action to execute based on the question and the current state 
+of the conversation.
+
+Most customers will add Actions to their Agent by installing existing Maven Apps via the 
+App Marketplace. For advanced use cases, Actions can also be created using the Maven API.
+
+## Action States
+
+Actions can be in one of three states:
+
+- **Pinned**: The Action will always be provided to the LLM.
+- **Included**: The Action will be provided to the the LLM if it is relevant to the user question.
+- **Excluded**: The Action is disabled and will not be provided to the LLM.
+
+## Tuning Actions
+
+When a customer asks a question, Maven will find relevant Actions and provide them to the LLM. 
+
+These relevant Actions include all Actions which are Pinned as well as any actions whose description 
+field is similar to the user question. The original description field is provided by the Maven App
+which created the Action. However, this field can be overridden on the Action Details page if the 
+description does not match your business logic needs.
+
+## Navigation
+
+- **Actions**: The Actions page displays all Actions created by the user. 
+Actions can be bulk selected to change their state.
+
+- **Action Details**: Clicking on a row in the Actions table opens the Action Details page. This page 
+displays the full Action text and allows editing of the Action description.

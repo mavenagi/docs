@@ -17,32 +17,50 @@ navigation:
         contents:
           - page: Welcome
             path: ./docs/pages/welcome.mdx
+      - section: Insights
+        contents:
+          - page: Navigating Insights
+            path: ./docs/pages/insights/overview.mdx
+      - section: Conversations
+        contents:
+          - page: Conversations Overview
+            path: ./docs/pages/overview.mdx
+          - page: Reviewing Conversations
+            path: ./docs/pages/reviewing-conversations.mdx
+      - section: Feedback
+        contents:
+          - page: Overview
+            path: ./docs/pages/feedback/overview.mdx
       - section: Training Maven
         contents:
-          - page: Building knowledge base
+          - page: Knowledge
             path: ./docs/pages/building-knowledge-base.mdx
+          - page: Actions
+            path: ./docs/pages/train/actions.mdx
+          - page: Event Triggers
+            path: ./docs/pages/train/triggers.mdx
           - page: Evaluating and improving Maven quality
             path: ./docs/pages/evaluating-and-improving-maven-quality.mdx
           - page: Personas
             path: ./docs/pages/personas.mdx
-          - page: Maven Playground
-            path: ./docs/pages/maven-playground.mdx
-      - section: Insights
-        contents:
-          - page: Navigating Insights
-            path: ./docs/pages/navigating-insights.mdx
-          - page: Glossary
-            path: ./docs/pages/insights-dashboard-glossary.mdx
-      - section: Conversations
-        contents:
-          - page: Conversations Overview
-            path: ./docs/pages/conversations-overview.mdx
-          - page: Reviewing Conversations
-            path: ./docs/pages/reviewing-conversations.mdx
       - section: Integrations
         contents:
           - page: Integrations overview
             path: ./docs/pages/integrations-overview.mdx
+          - page: App marketplace
+            path: ./docs/pages/integrations/appmarketplace.mdx
+          - page: Instant Answers
+            path: ./docs/pages/integrations/instantanswers.mdx
+          - page: Slack
+            path: ./docs/pages/integrations/slack.mdx
+      - section: Playground
+        contents:
+          - page: Testing with playground
+            path: ./docs/pages/playground/overview.mdx
+      - section: Settings
+        contents:
+          - page: Overview
+            path: ./docs/pages/settings/overview.mdx
       - section: Developer platform
         contents:
           - page: Overview
@@ -59,7 +77,7 @@ navigation:
 navbar-links:
   - type: secondary
     text: Support
-    url: https://support.mavenagi.com 
+    url: https://support.mavenagi.com
   - type: secondary
     text: Developer portal
     url: https://developers.mavenagi.com
