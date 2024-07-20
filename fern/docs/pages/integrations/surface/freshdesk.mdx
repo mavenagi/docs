@@ -1,0 +1,29 @@
+---
+title: Freshdesk
+slug: freshdesk
+layout: overview
+---
+
+## Setup within Maven
+To set up the Freshdesk integration, you will need to first [make an API key](https://support.freshdesk.com/en/support/solutions/articles/215517-how-to-find-your-api-key) for your Freshdesk account.
+
+Once you have an API key, enter your Freshdesk subdomain and the key in the Maven Freshdesk integration settings. 
+After you click "Save", you will see a message below the Freshdesk 
+settings letting you know whether the connection is successful.
+
+If it is not successful double check your subdomain. As an example, if your freshdesk url
+is http://yourcompany.freshdesk.com, then your subdomain would be "yourcompany".
+
+### Optional: Custom tag field
+Use this setting if you have a custom freshdesk field you'd like to use to tag conversations within Maven. 
+Note that custom freshdesk fields always start with "cf_".
+
+## Setup within Freshdesk
+Once your Maven settings are configured, [install the Freshdesk plugin](https://www.freshworks.com/apps/maven_agi_co-pilot/)
+from the Freshdesk Marketplace.
+
+This plugin has one required field: the Agent API key that is displayed on the Maven Freshdesk settings page.
+
+## Still not working?
+
+[Contact us](https://support.mavenagi.com) for more support.

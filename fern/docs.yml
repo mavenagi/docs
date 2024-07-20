@@ -31,7 +31,7 @@ navigation:
             path: ./docs/pages/conversations/reviewing-conversations.mdx
       - section: Feedback
         contents:
-          - page: Overview
+          - page: Feedback Overview
             path: ./docs/pages/feedback/overview.mdx
       - section: Training Maven
         contents:
@@ -51,10 +51,24 @@ navigation:
             path: ./docs/pages/integrations/integrations-overview.mdx
           - page: App marketplace
             path: ./docs/pages/integrations/appmarketplace.mdx
-          - page: Instant Answers
-            path: ./docs/pages/integrations/instantanswers.mdx
-          - page: Slack
-            path: ./docs/pages/integrations/slack.mdx
+          - section: Ticket Systems
+            contents:
+              - page: Salesforce
+                path: ./docs/pages/integrations/copilot/salesforce.mdx
+              - page: Zendesk
+                path: ./docs/pages/integrations/copilot/zendesk.mdx
+              - page: Freshdesk
+                path: ./docs/pages/integrations/copilot/freshdesk.mdx
+          - section: Chat Experiences
+            contents:
+              - page: Chat Widget
+                path: ./docs/pages/integrations/chat/chat.mdx
+              - page: Instant Answers
+                path: ./docs/pages/integrations/chat/instantanswers.mdx
+              - page: SMS
+                path: ./docs/pages/integrations/chat/sms.mdx
+              - page: Slack
+                path: ./docs/pages/integrations/chat/slack.mdx
       - section: Playground
         contents:
           - page: Testing with playground
