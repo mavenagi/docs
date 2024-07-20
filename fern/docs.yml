@@ -26,9 +26,9 @@ navigation:
       - section: Conversations
         contents:
           - page: Conversations Overview
-            path: ./docs/pages/overview.mdx
+            path: ./docs/pages/conversations/overview.mdx
           - page: Reviewing Conversations
-            path: ./docs/pages/reviewing-conversations.mdx
+            path: ./docs/pages/conversations/reviewing-conversations.mdx
       - section: Feedback
         contents:
           - page: Overview
