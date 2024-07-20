@@ -17,6 +17,8 @@ navigation:
         contents:
           - page: Welcome
             path: ./docs/pages/welcome.mdx
+          - page: Glossary
+            path: ./docs/pages/glossary.mdx
       - section: Insights
         contents:
           - page: Navigating Insights
@@ -34,19 +36,19 @@ navigation:
       - section: Training Maven
         contents:
           - page: Knowledge
-            path: ./docs/pages/building-knowledge-base.mdx
+            path: ./docs/pages/train/building-knowledge-base.mdx
           - page: Actions
             path: ./docs/pages/train/actions.mdx
           - page: Event Triggers
             path: ./docs/pages/train/triggers.mdx
-          - page: Evaluating and improving Maven quality
-            path: ./docs/pages/evaluating-and-improving-maven-quality.mdx
           - page: Personas
-            path: ./docs/pages/personas.mdx
+            path: ./docs/pages/train/personas.mdx
+          - page: Improving quality
+            path: ./docs/pages/train/evaluating-and-improving-maven-quality.mdx
       - section: Integrations
         contents:
           - page: Integrations overview
-            path: ./docs/pages/integrations-overview.mdx
+            path: ./docs/pages/integrations/integrations-overview.mdx
           - page: App marketplace
             path: ./docs/pages/integrations/appmarketplace.mdx
           - page: Instant Answers

@@ -1,0 +1,37 @@
+---
+title: Glossary
+slug: glossary
+layout: overview
+---
+
+Glossary of terms used in the Maven dashboard.
+
+| **Term**           | **Description**                                                                                                                                                                                                                                                                                  |
+|-----------------------------------|-----------------------------------------|
+| Conversation       | A full message thread including messages from end users, human agents, Maven responses, or Maven suggested responses.                                                                                                                                                                            |
+| User Interactions  | The number of individual times an end user interfaces with Maven via a message within a conversation.                                                                                                                                                                                            |
+| Count              | The number of conversations as defined above                                                                                                                                                                                                                                                     |
+| Inserts            | The number of Conversations where at least one Maven suggested response has been inserted.                                                                                                                                                                                                       |
+| Coverage           | The percentage of conversations Maven has assessed it could resolve                                                                                                                                                                                                                              |
+| Handle Time        | The length of time the conversation lasted. (time of the last message - time of the first message)                                                                                                                                                                                               |
+| Response Time      | The length of time it took for the first user message to get a response. (time of the first agent message - time of the first message)                                                                                                                                                           |
+| Customer Sentiment | The user sentiment during a conversation as determined by Maven. Either positive, negative or neutral.                                                                                                                                                                                           |
+| Maven Quality      | How well Maven was able to answer questions within a conversation. A conversation can be considered Good, Needs improvement or Ineligible. See below for more details.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| Category           | Each conversation has exactly one category, determined by Maven.                                                                                                                                                                                                                                 |
+| Tag                | Conversations can have multiple tags. Tags are supplied by external integrations. (e.g. a Maven App like Zendesk or Freshdesk)                                                                                                                                                                   |
+
+## Quality
+
+Maven Quality is a measurement of Maven’s confidence in its own answer. There are three categories of quality:
+
+- **Good:** Maven’s self-assessment is that the answer was both correct and of high quality
+- **Needs Improvement:** Maven could not confidently answer the question due to a lack of knowledge or because the end user gave the interaction a thumbs down.
+- **Ineligible/Pending:** Ineligible conversations are those where the user cancels the conversation mid-answer or a question was considered an attack attempt and was blocked.
+
+### How Maven Quality is Calculated
+
+Maven Quality takes the following signals into account:
+
+- **Automatic self grading:** Maven has a self-grading mechanism that displays how confident it is based on how much relevant information it has in knowledge.
+- **Automatic grading against human responses:** Maven automatically grading historic tickets against human responses where human agent responses are available
+- **Human feedback** from Copilot and end-user thumbs up and down
