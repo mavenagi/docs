@@ -34,11 +34,12 @@ When creating a new Knowledge Base, there are multiple advanced options you may 
 - **Refresh Frequency:** Set your URL and External knowledge base types to automatically update on a daily, 
 weekly, or monthly basis.
 
-- **URL Exclusion Pattern:** Add URL patterns to be excluded from crawling.
+- **URL Exclusion Pattern:** Add URL patterns to be excluded from crawling using a glob.
   - Note that this affects only links found on pages, but not Start URLs, which are always crawled.
   - Example: `https://{store,docs}.example.com/**` excludes all URLs starting with `https://store.example.com/` 
 or `https://docs.example.com/`, and `https://example.com/**/*\?*foo=*` excludes all URLs that contain 
 `foo` query parameter with any value.
+  - You can learn more about globs and test them [here](https://www.digitalocean.com/community/tools/glob?comments=true&glob=https%3A%2F%2Fexample.com%2Fdont_scrape_this%2F%2A%2A&matches=false&tests=https%3A%2F%2Fexample.com%2Ftools%2F&tests=https%3A%2F%2Fexample.com%2Fdont_scrape_this%2F&tests=https%3A%2F%2Fexample.com%2Fdont_scrape_this%2F123%3Ftest%3Dabc&tests=https%3A%2F%2Fexample.com%2Fscrape_this).
 
 - **CSS Elements to Remove:** Define specific CSS elements to be ignored when pages are crawled by Maven
 
