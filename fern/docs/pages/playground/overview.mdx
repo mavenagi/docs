@@ -4,28 +4,31 @@ slug: maven-playground
 layout: overview
 ---
 
-Test changes to Knowledge and Persona settings without impacting the live environment. 
-
+Test changes to Knowledge and Persona settings without impacting the live environment.
 
 # Overview
 
-The Maven Playground provides a space to test how Maven answers specific questions across different integrations and to determine how Maven’s answers may change based on additions to your Knowledge bases, refinements of your Persona instructions, and various personalization elements. It also allows you to bulk upload sets of questions for quick and easy tests against different or new conversation sets, for example, questions you may receive about a specific category you wish to refine.
+The Maven Playground provides a space to test how Maven answers specific questions across different 
+integrations and to determine how Maven’s answers may change based on additions to your Knowledge bases, 
+refinements of your Persona instructions, and various personalization elements. It also allows you to 
+bulk upload sets of questions for quick and easy tests against different or new conversation sets, for 
+example, questions you may receive about a specific category you wish to refine.
 
 
 # Navigation
 
 The Playground has three sections:
 
-- **Left column:**  Previous questions asked in Playground for future reference
+- **Left column:** Previous questions asked in Playground for future reference
 
-- **Middle column:**  Live questions and Maven answers, including the ability to view details of each question to see which Knowledge documents Maven referenced in its answer
+- **Middle column:** Live questions and Maven answers, including the ability to view details of each question to see which Knowledge documents Maven referenced in its answer
 
-- **Right column:**  Configuration options for testing, including the space to enter your test questions.
+- **Right column:** Configuration options for testing, including the space to enter your test questions.
 
 
-# Running Tests In Playground
+## Running Tests In Playground
 
-## Evaluating Single Questions
+### Evaluating Single Questions
 
 On the right column, choose your integration and Persona, type a question in the “customer question” section, add any refinements to persona instructions you’d like to test, and click Run at the bottom. Maven's response and details of the answer will appear in the middle column.
 
@@ -36,13 +39,13 @@ You may also click the “docs” icon to toggle existing knowledge bases on or 
 - **Pro tip:** Create a Knowledge Base called “Playground Answers” and set it to inactive. Add test documents to this Knowledge folder. Back in Playground, select your “Playground Answers” Knowledge Base under “Also Include” to run tests against this new, manually uploaded content. This allows you to test how a manually uploaded document will affect Maven’s answers without setting that document as active across your entire Maven instance before you are ready to do so.
 
 
-## Evaluating Multiple Questions in Bulk
+### Evaluating Multiple Questions in Bulk
 
 You may upload multiple questions at once using the Import button at the top of the left-hand column. Format your questions in a CSV file with the column header labeled “Question”. After you import your CSV, refresh your page a few moments later and your answers will all be available in the left hand column. You can then select these questions by ticking the boxes to the left of each question and export for bulk review.
 
-- Pro Tip:  Upload questions 10, 20, 50, or 100 at a time in your CSV for ease of selecting and exporting after Maven has completed its evaluation of your upload.
+- Pro Tip: Upload questions 10, 20, 50, or 100 at a time in your CSV for ease of selecting and exporting after Maven has completed its evaluation of your upload.
 
 
-## Additional Considerations
+### Additional Considerations
 
 - In the middle column, after Maven answers a question, click “View details” to see which documents Maven referenced in its reply. This is a great way to further understand what Knowledge Maven used to answer the question and identify areas of improvement within your knowledge base
