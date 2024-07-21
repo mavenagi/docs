@@ -4,4 +4,33 @@ slug: settings-overview
 layout: overview
 ---
 
-WIP
+The Agent Settings page allows you to configure branding and personalization for your Maven agent.
+
+## Branding
+
+The brand color and logos are currently used to customize chat, search and instant answers.
+
+## Response Customization
+
+Response customization allows you to change how Maven responds to customer questions. You can:
+- [Change the personality](https://docs.mavenagi.com/personas) of your Maven agent
+- Specify additional instructions to tune responses with brand specific tone
+- Provide up to 3 popular questions shown on the chat and search pages
+- And specify a bailout message to return to customers when Maven is unable to answer a question
+
+## Handoff
+
+There are currently two types of handoff available. 
+- Text handoff allows you to specify a message to display to customers when Maven is unable to answer 
+  a question.
+- Integration handoff allows you to specify a ticketing system to route Maven's responses to. 
+  Currently, Maven supports Salesforce, Zendesk, and Freshdesk.
+  
+## Conversation Processing
+
+When syncing tickets from Salesforce, Zendesk, or Freshdesk you can specify certain ticket tags that Maven 
+should ignore.
+
+If Maven receives a ticket with a tag that matches one of the ignored tags, that ticket will not receive
+suggestions nor show up in insights. You can see the tags that are currently in use for your Agent on 
+the insights page.

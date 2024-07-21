@@ -13,18 +13,71 @@ A high quality answer should be:
 2. Empathetic, personalized, and with a human touch
 3. Timely
 
-## There are three drivers to Maven quality
-
-1. **Knowledge** that is uploaded to Maven to enable it to retrieve facts used to answer questions
-3. **User context** that enables Maven to personalize answers to be relevant to the user
-3. **Personality** and writing styles that match your brand voice and writing style
-
-## Understanding quality
+## Understanding the quality calculation
 
 To compute the quality of a response, Maven uses a combination of signals including
 
-1. **Automatic self grading:** Maven has a self-grading mechanism that displays how 
-confident it is based on how much relevant information it has in knowledge.
-2. **Automatic grading against human responses:** Maven automatically grading historic 
-tickets against human responses where human agent responses are available
-3. **Human feedback** from Copilot and end-user thumbs up and down
+- **Automatic self grading:** Maven has a self-grading mechanism that displays how
+  confident it is based on how much relevant information it has in knowledge.
+- **Automatic grading against human responses:** Maven automatically grades historic
+  tickets against human responses where human agent responses are available
+- **Human feedback** from Copilot and end-user thumbs up and down
+
+## Improving quality
+
+Answers from Maven are only as good as the knowledge, user data, and personalization that has been provided.
+
+When Maven gives a low-quality answer, there are several common reasons why:
+
+### Missing knowledge
+
+It's best to think of Maven as a very junior support agent. Eager to help, but doesn't know much about your 
+company or product. So sometimes, Maven is unable to answer a question because it simply does not have the information 
+it needs to do so.
+
+To see if this is the case, open up the Conversation details page on a low performing question and click on the "View Details" button 
+underneath the Maven response. This section shows the knowledge documents and actions Maven used in crafting 
+its response. 
+
+If the knowledge listed does not include the answer within it, then Maven won't be 
+able to do a good job. Either:
+- the knowledge needed is not in your knowledge base
+- or the knowledge _is_ available, but it wasn't a good match for the user question
+
+For the first, simple add the missing knowledge to your knowledge base. Create a "Manual" knowledge base within
+Maven if you don't already have one. Then we recommend adding a document with the title set to the user's question 
+and the content set your preferred answer.
+
+For the second, it's helpful to know that Maven does a search of the knowledge base for each customer question
+it receives. If the knowledge document with the answer didn't show up as a search result, then either it's not 
+specific enough for the user question, or if it's from a URL knowledge base, it may be low quality.
+
+As a quick fix, you can add duplicate knowledge using the above solution for the first issue. It may also be
+helpful though to double check all of your URL knowledge to make sure that the resulting content looks reasonable.
+The more readable it is to a human, the better it will be for search results and the LLM.
+
+### Conflicting information
+
+As described above, your junior support agent is always eager, but if you give them two conflicting pieces 
+of information, they won't really know what to do! They will probably get their wires crossed and give all 
+sorts of incorrect answers.
+
+Also as above, looking at the knowledge used for a low performing question can help you identify the issue. 
+To see if this is the case, open up the Conversation details page and click on the "View Details" button
+underneath the Maven response. 
+
+The exact paragraphs sent to the LLM will be shown in this section. If these paragraphs are conflicting or 
+even just a bit ambiguous, then it's worth fixing the knowledge documents used to answer the question.
+
+If it's not possible to fix the source documents on your help center or website, then it's always possible 
+to deactivate single knowledge documents within Maven. Then, once the bad information is removed, knowledge can be 
+manually added within the dashboard and used until the source documents are fixed.
+
+### Off-topic answers
+
+Remember that Maven doesn't know anything about your company that it has not been told. 
+
+It's highly recommended that a basic overview of your company or product be added within the persona instructions. 
+What is your company name? What do you offer or sell? And what similar services do you not provide?
+
+During your onboarding process, Maven will help you specify these key details.
