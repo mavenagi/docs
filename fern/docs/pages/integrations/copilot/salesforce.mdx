@@ -4,4 +4,31 @@ slug: salesforce
 layout: overview
 ---
 
-Coming soon
+## Setup within Maven
+
+Maven needs several pieces of information to connect to your Salesforce instance.
+
+1. First find your Salesforce domain which is the first portion of your URL (e.g. https://mycompany.my.salesforce.com)
+2. Then find your Organization ID which is listed under Company Information within the Salesforce's Settings page (e.g. 00AA10000001AAA)
+
+After you click "Save", you will see a message below the Salesforce
+settings letting you know whether the connection is successful. 
+
+Optionally, if you wish to use your own connected app, enter a custom App Client Id/Secret.
+
+You can also optionally enter the name of the custom field name used for the first user message if your 
+salesforce setup does start with an EmailMessage.
+
+## Setup within Salesforce
+
+1. Install the Maven AGI plugin from the marketplace.
+2. Then create an integration user from the Salesforce admin panel.
+3. Edit the policy for the Maven connected app to run the Client Credentials Flow as the integration user.
+4. This integration user needs to be given Read permissions to the Case object and Email Messages object. Using a separate Permission Set for Maven AGI is recommended.
+  - The recommended Case field permissions include: Id, SuppliedName, SuppliedEmail, Subject, Description, CreatedDate, LastModifiedDate, CreatedById and LastModifiedById.
+  - The recommended Email Message field permissions include: Id, TextBody, FromName, Incoming, CreatedDate, LastModifiedDate, CreatedById and LastModifiedById.
+5. If you wish for Salesforce tickets to be created from within Maven AGI, Create access to the Case object and Edit access to above Case fields is also required.
+
+## Still not working?
+
+[Contact us](https://support.mavenagi.com) for more support.

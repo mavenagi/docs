@@ -1,0 +1,74 @@
+---
+title: Chat & Instant Answers Widgets
+slug: widgets
+layout: overview
+---
+
+Maven offers widgets that allow you to embed a Maven experience directly into your website. Currently, 
+there is a chat experience and an instant answers experience.
+
+To add either widget to your website, you need to add a small piece of javascript to your page. 
+This javascript code will initialize the widget and connect it to your Maven instance.
+
+Your personalized code snippet can be found on either the chat settings page or instant answers settings 
+page within the Dashboard. You'll need to copy and paste the code snippet into your website's HTML to get started. 
+More specific instructions for common sites are provided below.
+
+## Chat Widget
+
+The chat widget currently supports one additional setting - the welcome message. This message will be
+shown to the user when they first open the chat widget. 
+
+The chat widget's background color and logo at the top of the widget are configured on the Agent Settings page.
+They match the Brand Color and the Horizontal logo, respectively.
+
+## Instant Answers Widget
+
+The instant answers code snippet requires a slightly deeper integration than the chat widget.
+It needs to know which piece of the page to attach the widget to and also needs to know when the user question 
+has been submitted and what the question was. This requires a bit more HTML knowledge.
+
+## Setting up Zendesk help center
+
+Zendesk provides [instructions](https://support.zendesk.com/hc/en-us/articles/4408839332250-Customizing-your-help-center-theme#topic_gxl_3qw_n3)
+for customizing your help center theme. Follow those instructions to edit your theme.
+
+For the chat widget you want to add your code snippet to script.js.
+
+For the instant answers widget:
+
+1. Goto “search_results.hbs”
+2. Find
+    ```
+          {{#if results}}
+            <ul class="search-results-list">
+    ``` 
+   And replace with:
+    ```
+          <div id="maven-instant-answer-container" style="margin-bottom: 5px"></div>
+          {{#if results}}
+            <ul class="search-results-list">
+    ```
+3. Add the following to the end of the file and remember to replace the API KEY with your Maven API key 
+found within the code snippet on the Instant Answers Settings page.
+```
+<script src="https://www.mavenwidgets.net/widget.js" async></script>
+<script>
+// load the widget
+addEventListener("load", function () {
+  Maven.InstantAnswerWidget.init({
+    apiKey: "REPLACE THIS WITH API KEY"
+  });
+  if (document.getElementById('query') !== null) {
+    Maven.InstantAnswerWidget.search({
+      query: document.getElementById('query').value,
+      selector: '#maven-instant-answer-container'
+    });
+  }
+}); 
+</script>
+```
+
+## Still not working?
+
+[Contact us](https://support.mavenagi.com) for more support.

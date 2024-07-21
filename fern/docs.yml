@@ -61,10 +61,8 @@ navigation:
                 path: ./docs/pages/integrations/copilot/freshdesk.mdx
           - section: Chat Experiences
             contents:
-              - page: Chat Widget
-                path: ./docs/pages/integrations/chat/chat-widget.mdx
-              - page: Instant Answers
-                path: ./docs/pages/integrations/chat/instantanswers.mdx
+              - page: Chat & Instant Answers
+                path: ./docs/pages/integrations/chat/widgets.mdx
               - page: SMS
                 path: ./docs/pages/integrations/chat/sms.mdx
               - page: Slack
