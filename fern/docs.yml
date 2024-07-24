@@ -1,6 +1,11 @@
 instances:
   - url: mavenagi.docs.buildwithfern.com
     custom-domain: docs.mavenagi.com
+    edit-this-page:
+      github:
+        owner: mavenagi
+        repo: docs
+        branch: main
 
 js:
   - ./maven-chat-widget.js
