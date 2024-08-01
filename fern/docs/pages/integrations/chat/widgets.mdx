@@ -53,44 +53,45 @@ For the instant answers widget:
             <ul class="search-results-list">
     ```
 3. Add the following to the end of the file and remember to replace the API KEY with your Maven API key 
-found within the code snippet on the Instant Answers Settings page.
-```
-<script src="https://www.mavenwidgets.net/widget.js" async></script>
-<script>
-// This code loads the Maven widget when the page is first opened
-addEventListener("load", function () {
-  Maven.InstantAnswerWidget.init({
-    apiKey: "REPLACE THIS WITH API KEY"
-  });
-
-  // If there is an HTML element on the page with the ID 'query'
-  if (document.getElementById('query') !== null) {
-    // Get the user question from the value of that element
-    var text = document.getElementById('query').value;
-
-    if (text) {
-      console.log("Loading Maven with the question: " + text);
-      Maven.InstantAnswerWidget.search({
-        query: document.getElementById('query').value,
-        selector: '#maven-instant-answer-container'
+  found within the code snippet on the Instant Answers Settings page.
+    ```
+    <script src="https://www.mavenwidgets.net/widget.js" async></script>
+    <script>
+    // This code loads the Maven widget when the page is first opened
+    addEventListener("load", function () {
+      Maven.InstantAnswerWidget.init({
+        apiKey: "REPLACE THIS WITH API KEY"
       });
-    } else {
-      console.log("No query found. Not loading Maven.");
-    }
+    
+      // If there is an HTML element on the page with the ID 'query'
+      if (document.getElementById('query') !== null) {
+        // Get the user question from the value of that element
+        var text = document.getElementById('query').value;
+    
+        if (text) {
+          console.log("Loading Maven with the question: " + text);
+          Maven.InstantAnswerWidget.search({
+            query: document.getElementById('query').value,
+            selector: '#maven-instant-answer-container'
+          });
+        } else {
+          console.log("No query found. Not loading Maven.");
+        }
+    
+      } else {
+        console.log("No HTML element found with the ID query. Not loading Maven.");
+      }
+    }); 
+    </script>
+    ```
 
-  } else {
-    console.log("No HTML element found with the ID query. Not loading Maven.");
-  }
-}); 
-</script>
-```
+If Maven does not render after adding this snippet, check the browser logs to see if either the query HTML element is missing or doesn't have a value. 
 
-Note: If Maven does not render after adding this snippet, check the brower logs to see if either the query HTML element is missing or doesn't have a value. 
 If you see those type of logs:
-- Your Zendesk instance may be putting the user question in another HTML element - if so change "query" in the above snippet to the ID of the HTML element that the user question does appear in
+- Your Zendesk instance may be putting the user question in another HTML element - if so change `query` in the above snippet to the ID of the HTML element that the user question does appear in
 - Or the question may only be in the page url, and not in the HTML at all. In this case, try replacing the above `var text` line with
-  `var text = new URLSearchParams(window.location.search).get("query");`. (Note: you may need to also comment out the if statement that checks 
-   for the presence of the query element: `document.getElementById('query') !== null`
+  `var text = new URLSearchParams(window.location.search).get("query");`. (Note: you may also need to comment out the if statement that checks 
+   for the presence of the query element: `document.getElementById('query') !== null`)
 
 ## Still not working?
 
