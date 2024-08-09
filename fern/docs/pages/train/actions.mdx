@@ -10,6 +10,25 @@ of the conversation.
 Most customers will add Actions to their Agent by installing existing Maven Apps via the 
 App Marketplace. For advanced use cases, Actions can also be created using the Maven API.
 
+## Example
+
+The Weatherapi App is a simple app, [written by Maven](https://github.com/mavenagi-apps/weatherapi) which provides 2 actions when installed:
+- Get the current weather
+- Get a 7 day weather forecast
+
+If a user asks to "reset my password", that phrase is not at all related to the weather, and so no actions will be called. 
+
+But if the user asks for "how hot is it in Boston?", the get current weather action will be called and the data returned to the LLM. The user will receive a response similar to "It's 80F".
+
+On the conversation page for this last example Maven will display that the action was called as well as exactly what data came back from the action code. Note that the action response is never shown directly to the user. Action responses are usually JSON or another machine-readable format. The response is always given to the LLM first.
+
+## Actions vs Triggers
+
+Action code is only called in response to a user question, whether an action is selected is handled by the LLM. Actions are used to get or update information on behalf of users.
+
+[Trigger code](/help-center/training-maven/event-triggers) is called in response to an event. Trigger code execution is usually used for data reporting - e.g. exporting to a BI tool like Snowflake or updating a Zendesk ticket with a specific tag whenever a user clicks thumbs down.
+
+
 ## Action States
 
 Actions can be in one of three states:
