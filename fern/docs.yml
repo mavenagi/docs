@@ -50,6 +50,8 @@ navigation:
             path: ./docs/pages/train/personas.mdx
           - page: Improving quality
             path: ./docs/pages/train/evaluating-and-improving-maven-quality.mdx
+          - page: Supporting complex workflows
+            path: ./docs/pages/train/workflows.md
       - section: Integrations
         contents:
           - page: Integrations overview
