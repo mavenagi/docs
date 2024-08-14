@@ -1,0 +1,53 @@
+---
+title: Supporting complex workflows
+---
+
+The Maven platform is designed to support any complex workflow, allowing you to tailor the level of determinism to your specific needs.
+
+By leveraging Actions for deterministic logic and Knowledge for non-deterministic logic, you can create workflows 
+that balance flexibility with structure.
+
+## Concrete Example
+
+### Desired Workflow
+Imagine a scenario where you need to handle a multi-step support process, such as troubleshooting an issue reported by a user. 
+The workflow might involve:
+
+1. Capturing relevant user context.
+2. Confirming specific details based on user input, such as location or issue type.
+3. Checking the status of related systems or components.
+4. Triggering specific workflows based on the status of those systems (e.g., initiating a repair process if an integration is offline).
+5. Providing real-time feedback to the user, including offering options to update or change settings.
+6. Diagnosing the issue further based on system logs and user-provided information.
+7. Proceeding through a series of troubleshooting steps based on the diagnosis.
+
+As illustrated, each step is interconnected and may involve both logic sequences and function calls. The challenge is to construct such logic within Maven effectively.
+
+### Example Implementation
+
+To achieve this, you can combine Actions and Instructions based on the level of determinism you desire. Here’s a general approach:
+
+- **Actions**:
+  - **system_check**: Requires a parameter, such as “system_type”, provided by the LLM based on user data.
+  - **troubleshoot_issue**: Requires a parameter, such as “problem”, where the valid options for "problem" are predefined.
+  - **request_repair**: An action triggered by a specific request
+
+- **Instructions**: (provided in the Action description field)
+  - **system_check**: "Use this action to verify system status when an issue is reported. The system type should be identified from user context. If there are multiple possible system types, clarify which one applies."
+  - **troubleshoot_issue**: "If specific components are offline, use this action to troubleshoot the issue based on the identified problem."
+  - **request_repair**: "If a troubleshooted issue needs repair, the user can use this action to request said repair."
+
+If needed, you can further refine the process to limit certain actions based on the sequence of events. 
+For example, it's possible to require that the **troubleshoot_issue** action can only proceed after a **system_check** has been completed.
+
+For a less deterministic approach, where the workflow relies more on the LLM, you could implement only the most low-level Actions, and 
+instead provide Instructions describing the desired workflow. 
+(e.g. "If the user is troubleshooting a delivery problem, allow them to escalate their support request only if the delivery is more than 1 week late.")
+
+For a more deterministic approach, where the workflow relies less on the LLM, you could handle the entire process within 
+a single Action that adapts based on user interaction and context. This wouldn't leverage the flexibility of LLM responses, 
+would require engineering whenever the flow needed to change, and might frustrate users if the steps required felt cumbersome.
+
+Neither extreme is recommended; it's important to find a balance that leverages the natural, conversational feel of LLMs while 
+maintaining enough structure to guide users effectively. A well-balanced approach ensures a seamless experience, avoiding the 
+rigid frustrations of traditional methods like phone trees while still providing clarity and efficiency.
