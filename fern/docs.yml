@@ -51,7 +51,7 @@ navigation:
           - page: Improving quality
             path: ./docs/pages/train/evaluating-and-improving-maven-quality.mdx
           - page: Supporting complex workflows
-            path: ./docs/pages/train/workflows.md
+            path: ./docs/pages/train/workflows.mdx
       - section: Integrations
         contents:
           - page: Integrations overview
