@@ -93,6 +93,53 @@ If you see those type of logs:
   `var text = new URLSearchParams(window.location.search).get("query");`. (Note: you may also need to comment out the if statement that checks 
    for the presence of the query element: `document.getElementById('query') !== null`)
 
+## Setting up Salesforce Digital Experience
+
+The Maven Instant Answers widget can be added to a help center built on the Salesforce Content Management System (CMS). To allow a page hosted in the CMS to access Maven AGI, you will likely need to confirm or change a few security settings.
+
+### Trusted URLs for data access
+
+First you must ensure that Salesforce can load data from Maven AGI. In the Salesforce setup navigation, search for "Trusted URLs". In the Trusted URLs page, add entries for https://app.mavenagi.com and https://ORGID.onmaven.ai where ORGID is the ID of your organization.
+
+### Trusted Scripts
+
+Next the CMS must be allowed to load scripts from Maven AGI. In Experience Builder for your site, open the settings and navigate to Security & Privacy. Change "Content Security Policy (CSP)" to Relaxed, then add https://www.mavenwidgets.net/ and https://ORGID.onmaven.ai to the "Trusted Sites for Scripts" list.
+
+### Add the Maven Script
+
+In Settings for your site in Experience Builder, navigate to "Advanced" and press the "Edit Head Markup" button. In the editor, add the following snippet
+
+``` html
+<script src="https://www.mavenwidgets.net/widget.js" async></script>
+<script>
+    // This code loads the Maven widget when the page is first opened
+    addEventListener("load", function () {
+      Maven.InstantAnswerWidget.init({
+        apiKey: "REPLACE THIS WITH API KEY"
+      });
+    }
+</script>
+```
+
+### Add the results container
+
+In experience builder, add a "HTML Editor" component on the page where you would like the search results. Add the following markup:
+
+``` html
+<div id="maven-instant-answer-container"></div>
+```
+
+### Add a search button, or hook the search button
+
+To invoke search and start returning results from Maven, make the following Javascript call in a new button or when an existing search button is pressed
+
+``` javascript
+Maven.InstantAnswerWidget.search({
+    query: text,
+    selector: '#maven-instant-answer-container'
+});
+```
+
 ## Still not working?
 
 In general, if the instant answers widget renders but seems to load forever, this most likely means that Maven is being sent an empty question. 
