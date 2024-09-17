@@ -7,9 +7,6 @@ instances:
         repo: docs
         branch: main
 
-js:
-  - ./maven-chat-widget.js
-
 tabs:
   help:
     display-name: Help Center
