@@ -1,0 +1,81 @@
+---
+title: Preparing Knowledge for Ingestion into Maven
+slug: preparing-knowledge
+layout: overview
+---
+
+# Preparing Knowledge for Ingestion into Maven
+
+## Overview
+
+For data that isn’t in a structured format, Maven supports various data types and offers assistance in organizing information for smooth ingestion. This guide is a dynamic resource and will be updated regularly to reflect new insights and best practices.
+
+## Best Practices
+
+To prepare raw data for ingestion, use the specified ChatGPT prompts below. These prompts will guide ChatGPT in converting raw information into structured data formats that Maven can accurately utilize as knowledge.
+
+## Instructions by Data Type
+
+### Call Transcripts/Interviews
+
+For extracting FAQ items from call transcripts:
+
+**Prompt**  
+_I am going to share several call transcripts with you in the attachment. These are training calls between `<company name>` and their customers. I want you to extract all of the information from these calls that could be useful as future FAQ documentation for `<company name>` customers. The only extractions should be product related. I want you to create at least `<N>` FAQs for me in the format of Question/Answer._
+
+### FAQ Documents
+
+Once FAQs are created or extracted, structure them in CSV format:
+
+**Prompt**  
+_I am sharing several FAQ items in Question/Answer format. Please take these FAQ items and create a two-column CSV, where column 1 will contain each question and column 2 will contain the corresponding answer. The header for column 1 should be “title” and the header for column 2 should be “content”._
+
+### Tables
+
+For tabular data, convert tables to JSON, which enhances readability and processing by LLMs. Use a unique identifier (e.g., "Customer ID") as a reference key.
+
+#### Sample Data
+
+| Purchase Number | Date of Purchase | Customer ID | Item Code |
+|-----------------|------------------|-------------|-----------|
+| 1               | 9/3/16           | 1           | A001      |
+| 2               | 12/2/16          | 2           | C001      |
+| 3               | 4/15/17          | 3           | D001      |
+| 4               | 5/24/17          | 1           | B002      |
+| ...             | ...              | ...         | ...       |
+
+**Prompt**  
+_I am attaching a CSV file containing customer purchase data. Please convert this table to JSON format, utilizing the `<Customer ID>` column as the unique identifier for each item and nesting the other details within that `<Customer ID>`._
+
+(Alternatively, upload a table in a `.doc`, `.docx`, `.pdf`, or similar format and adjust the prompt accordingly.)
+
+#### Sample JSON Output
+
+```json
+{
+  "1": [
+    {
+      "Purchase Number": 1,
+      "Date of Purchase": "9/3/16",
+      "Customer ID": 1,
+      "Item Code": "A001"
+    },
+    {
+      "Purchase Number": 4,
+      "Date of Purchase": "5/24/17",
+      "Customer ID": 1,
+      "Item Code": "B002"
+    },
+    ...
+  ],
+  "2": [
+    {
+      "Purchase Number": 2,
+      "Date of Purchase": "12/2/16",
+      "Customer ID": 2,
+      "Item Code": "C001"
+    },
+    ...
+  ]
+}
+```
