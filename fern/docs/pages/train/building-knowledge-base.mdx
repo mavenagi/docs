@@ -26,6 +26,8 @@ skewed information.
 the knowledge base. This helps in understanding the AI's reasoning and simplifies troubleshooting.
 - **Prioritize Privacy and Security:** Data used in the knowledge base will be shared by Maven so protect sensitive 
 information to comply with data privacy regulations.
+- **Prioritize Concise, Topic-Specific Documents:** Structure content into smaller, focused documents, each covering a single topic. This modular approach improves content accessibility and relevancy when used in search results.
+
 
 ## Advanced Options
 
@@ -49,10 +51,21 @@ or `https://docs.example.com/`, and `https://example.com/**/*\?*foo=*` excludes 
 
 ## FAQs
 
-Q: Among the options to add knowledge, which one(s) are preferable?
+**Q: Among the options to add knowledge, which one(s) are preferable?**
 
 A: Maven prefers knowledge bases from customer service platforms like Salesforce, Zendesk, and Freshdesk, since they tend to be well-formatted and easily refreshable. File uploads and manual entries are also great options.
 
-Q: What format does the CSV files need to be in to upload into Maven's Knowledge Base?
+**Q: What format does the CSV files need to be in to upload into Maven's Knowledge Base?**
 
 A: The CSV files should have a header and at least two columns "title" and "content". Each row represents a document entry. Optionally, you can also include "url" and "metadata/languagecode" (ISO-639-1 language codes, e.g., "en", "es", "de").
+
+**Q: What markup language does Maven recommend for documentation?**
+
+A: Maven recommends Markdown for optimal rendering and compatibility, though all markup languages are also supported.
+
+**Q: Does Maven support bulk formatting and conversion?**
+
+A: Yes, Maven offers support for bulk formatting and conversion to ensure consistent display across documents, particularly when non-standard elements may affect readability or ingestion.
+
+
+
