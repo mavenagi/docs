@@ -39,6 +39,8 @@ navigation:
         contents:
           - page: Knowledge
             path: ./docs/pages/train/building-knowledge-base.mdx
+          - page: Preparing knowledge
+            path: ./docs/pages/train/preparing-knowledge.mdx
           - page: Actions
             path: ./docs/pages/train/actions.mdx
           - page: Event triggers
