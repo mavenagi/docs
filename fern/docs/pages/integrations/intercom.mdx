@@ -1,0 +1,77 @@
+---
+title: Intercom
+slug: integrations/intercom
+layout: overview
+---
+
+Maven provides an integration that allows it to participate in Intercom workflows via a Custom Action.
+
+## Configure Maven
+
+To get started, install the Intercom App from the Maven App directory:
+
+![Install Intercom App from Maven App Directory](/docs/assets/intercom/01_Intercom_App_Directory.png)
+
+Create an authentication token to be used between the services using a random number generator (e.g., `openssl rand -hex 32`). Configure that secret during the installation. Also, provide a comma-separated list of escalation topics that can signal to Intercom that Maven thinks it should escalate the conversation to a ticket (this can be tuned later).
+
+![Configure Authentication Token and Escalation Topics](/docs/assets/intercom/02_Intercom_Install.png)
+
+## Configure Intercom
+
+Navigate to **Settings** -> **Integration** -> **Authentication** in Intercom and create a record for the token created above.
+
+![Create Authentication Record in Intercom](/docs/assets/intercom/03_Intercom_Authentication.png)
+
+The Maven Custom Action will return its response into a custom attribute on the conversation. Navigate to **Data** -> **Conversations** and add custom attributes for `Maven Response` and `Maven Status`.
+
+![Create Conversation Attributes in Intercom](/docs/assets/intercom/04_Intercom_New_Attributes.png)
+![Create Conversation Attributes in Intercom](/docs/assets/intercom/05_Intercom_Conversation_Attributes.png)
+
+
+The action itself is an API call to Maven with a URL that encodes both your organization and agent ID. Navigate to **Settings** -> **Integration** -> **Custom Actions** and create a new record.
+
+On the **About** page, set the Action Usage to be **Workflows and Help Desk**.
+
+![Set Action Usage to Workflows and Help Desk](/docs/assets/intercom/06_Intercom_Custom_Action_Page_1.png)
+
+On the **API Connection** page, set the URL to:
+
+https://intercom.onmaven.app/api/{ORG_ID}/{AGENT_ID}/webhook
+
+Replace `{ORG_ID}` and `{AGENT_ID}` with your actual organization and agent IDs. Configure the authentication token from above as an authorization header.
+
+![Configure API Connection and Authorization Header](/docs/assets/intercom/07_Intercom_Custom_Action_Page_2.png)
+
+The request values need to be mapped to a JSON structure using Intercom values as shown below. Use the Intercom variable tool to inject `Last Message Body`, `Maven Status`, `Conversation ID`, `Last Message ID` and optionally `User ID`.
+
+```json
+{
+  "conversation_id" : "$CONVERSATION_ID",
+  "q": "$LAST_MESSAGE_BODY",
+  "message_id" : "$LAST_MESSAGE_ID"
+  "status" : "$MAVEN_STATUS",
+  "user_id" : "$USER_ID",
+}
+```
+
+On the Test Response page, provide arbitrary values and ensure that a response comes back in the proper form.
+
+![Send Test Response](/docs/assets/intercom/08_Intercom_Custom_Action_Page_3.png)
+
+Once the message is returned, map the response values for text and status to the conversation attributes created above.
+
+![Map Conversation Attributes](/docs/assets/intercom/09_Intercom_Custom_Action_Page_4.png)
+
+## Integrating into a Workflow
+
+To integrate the custom action into a workflow, add it to the flow using Intercom’s builder.
+
+![Integrate into Workflow](/docs/assets/intercom/10_Intercom_Workflow.png)
+
+## Logging
+
+Action logs are available in the logs panel of the Intercom Custom Action.
+
+## Limitations
+
+The major limitation is that streaming responses are only available through Maven’s chat interface and not through third-party chat interfaces like those of Intercom.
