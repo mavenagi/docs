@@ -53,11 +53,11 @@ navigation:
             path: ./docs/pages/train/workflows.mdx
       - section: Integrations
         contents:
-          - page: Integrations overview
-            path: ./docs/pages/integrations/integrations-overview.mdx
-          - page: App marketplace
-            path: ./docs/pages/integrations/appmarketplace.mdx
-          - section: Ticket systems
+          - page: Overview
+            path: ./docs/pages/integrations/overview.mdx
+          - page: App Directory
+            path: ./docs/pages/integrations/directory.mdx
+          - section: Ticketing Systems
             contents:
               - page: Salesforce
                 path: ./docs/pages/integrations/copilot/salesforce.mdx
@@ -65,7 +65,9 @@ navigation:
                 path: ./docs/pages/integrations/copilot/zendesk.mdx
               - page: Freshdesk
                 path: ./docs/pages/integrations/copilot/freshdesk.mdx
-          - section: Chat experiences
+              - page: Intercom
+                path: ./docs/pages/integrations/intercom.mdx
+          - section: Chat Experiences
             contents:
               - page: Chat & instant answers
                 path: ./docs/pages/integrations/chat/widgets.mdx
