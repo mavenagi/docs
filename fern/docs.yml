@@ -67,6 +67,8 @@ navigation:
                 path: ./docs/pages/integrations/copilot/freshdesk.mdx
               - page: Intercom
                 path: ./docs/pages/integrations/intercom.mdx
+              - page: Front
+                path: ./docs/pages/integrations/front.mdx
           - section: Chat Experiences
             contents:
               - page: Chat & instant answers

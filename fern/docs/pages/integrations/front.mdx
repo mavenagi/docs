@@ -1,0 +1,39 @@
+---
+title: Front
+slug: integrations/front
+layout: overview
+---
+
+Maven provides an integration that allows it to create tickets in Front via a Custom Action. Once triggered, a form will be used to collect name, email address, summary and description of the issue the user is facing via the chat experience.
+
+![Ticket Action Form](/docs/assets/front/05_Front_Ticket_Action_Form.png)
+
+## Configure Maven
+
+To get started, install the Front App from the Maven App directory:
+
+![Install Front App from Maven App Directory](/docs/assets/front/01_Front_App_Directory.png)
+
+In Front, visit the `Developers` portal to create an API token and configure that secret during the installation proces.
+
+![Create API Token in Front](/docs/assets/front/02_Front_Developers_API_Tokens.png)
+
+Also, provide the **name** of the email-based channel that should be used to escalate a conversation to a ticket.
+
+![Channels in Front](/docs/assets/front/03_Front_Developers_Channels.png)
+
+Note: Front automatically generates a name for channels when they are created. Usually, the name of the channel is the entire email address but if that fails to install, provide just the username portion of the email address.
+
+![Configure API Token and Channel](/docs/assets/front/04_Front_Install.png)
+
+## Configure Front
+
+Given that the provided channel is already configured in Front, no other action is required.
+
+## Logging
+
+Action logs are available in the logs panel of the Front Custom Action.
+
+## Limitations
+
+- Only email-based channels are currently supported
