@@ -43,12 +43,14 @@ For the instant answers widget:
 3. Add the following to the end of the file and remember to replace the API KEY with your Maven API key 
   found within the code snippet on the Instant Answers Settings page.
     ```
-    <script src="https://www.mavenwidgets.net/widget.js" async></script>
+    <script src="https://instant-answers.onmaven.app/js/widget.js" async></script>
     <script>
     // This code loads the Maven widget when the page is first opened
     addEventListener("load", function () {
       Maven.InstantAnswerWidget.init({
-        apiKey: "REPLACE THIS WITH API KEY"
+        agentId: "REPLACE THIS WITH YOUR AGENT", // defaults to support
+        organizationId: "REPLACE THIS WITH YOUR ORG",
+        locale: "en",
       });
     
       // If there is an HTML element on the page with the ID 'query'
@@ -87,23 +89,25 @@ The Maven Instant Answers widget can be added to a help center built on the Sale
 
 ### Trusted URLs for data access
 
-First you must ensure that Salesforce can load data from Maven AGI. In the Salesforce setup navigation, search for "Trusted URLs". In the Trusted URLs page, add entries for https://app.mavenagi.com and https://ORGID.onmaven.ai where ORGID is the ID of your organization.
+First you must ensure that Salesforce can load data from Maven AGI. In the Salesforce setup navigation, search for "Trusted URLs". In the Trusted URLs page, add entries for https://instant-answers.onmaven.app.
 
 ### Trusted Scripts
 
-Next the CMS must be allowed to load scripts from Maven AGI. In Experience Builder for your site, open the settings and navigate to Security & Privacy. Change "Content Security Policy (CSP)" to Relaxed, then add https://www.mavenwidgets.net/ and https://ORGID.onmaven.ai to the "Trusted Sites for Scripts" list.
+Next the CMS must be allowed to load scripts from Maven AGI. In Experience Builder for your site, open the settings and navigate to Security & Privacy. Change "Content Security Policy (CSP)" to Relaxed, then add https://instant-answers.onmaven.app to the "Trusted Sites for Scripts" list.
 
 ### Add the Maven Script
 
 In Settings for your site in Experience Builder, navigate to "Advanced" and press the "Edit Head Markup" button. In the editor, add the following snippet
 
 ``` html
-<script src="https://www.mavenwidgets.net/widget.js" async></script>
+<script src="https://instant-answers.onmaven.app/js/widget.js" async></script>
 <script>
     // This code loads the Maven widget when the page is first opened
     addEventListener("load", function () {
       Maven.InstantAnswerWidget.init({
-        apiKey: "REPLACE THIS WITH API KEY"
+        agentId: "REPLACE THIS WITH YOUR AGENT", // defaults to support
+        organizationId: "REPLACE THIS WITH YOUR ORG",
+        locale: "en",
       });
     }
 </script>
