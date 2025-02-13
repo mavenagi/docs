@@ -51,34 +51,36 @@ navigation:
             path: ./docs/pages/train/evaluating-and-improving-maven-quality.mdx
           - page: Supporting complex workflows
             path: ./docs/pages/train/workflows.mdx
-      - section: Integrations
+      - section: Maven Apps
         contents:
           - page: Overview
-            path: ./docs/pages/integrations/overview.mdx
-          - page: App Directory
-            path: ./docs/pages/integrations/directory.mdx
+            path: ./docs/pages/apps/overview.mdx
+          - section: Maven Surfaces
+            contents:
+              - page: Chat Widget
+                path: ./docs/pages/apps/surfaces/chat.mdx
+              - page: Full Page Search
+                path: ./docs/pages/apps/surfaces/search.mdx
+              - page: Instant Answers
+                path: ./docs/pages/apps/surfaces/instant-answers.mdx
+          - section: 3rd Party Surfaces
+            contents:
+              - page: Slack
+                path: ./docs/pages/apps/surfaces/slack.mdx
+              - page: SMS
+                path: ./docs/pages/apps/surfaces/sms.mdx               
           - section: Ticketing Systems
             contents:
-              - page: Salesforce
-                path: ./docs/pages/integrations/copilot/salesforce.mdx
-              - page: Zendesk
-                path: ./docs/pages/integrations/copilot/zendesk.mdx
               - page: Freshdesk
-                path: ./docs/pages/integrations/copilot/freshdesk.mdx
-              - page: Intercom
-                path: ./docs/pages/integrations/intercom.mdx
+                path: ./docs/pages/apps/ticketing/freshdesk.mdx
               - page: Front
-                path: ./docs/pages/integrations/front.mdx
-          - section: Chat Experiences
-            contents:
-              - page: Chat
-                path: ./docs/pages/integrations/chat/widgets-chat.mdx
-              - page: Instant Answers
-                path: ./docs/pages/integrations/chat/widgets-instant-answers.mdx
-              - page: SMS
-                path: ./docs/pages/integrations/chat/sms.mdx
-              - page: Slack
-                path: ./docs/pages/integrations/chat/slack.mdx
+                path: ./docs/pages/apps/ticketing/front.mdx
+              - page: Intercom
+                path: ./docs/pages/apps/ticketing/intercom.mdx
+              - page: Salesforce
+                path: ./docs/pages/apps/ticketing/salesforce.mdx
+              - page: Zendesk
+                path: ./docs/pages/apps/ticketing/zendesk.mdx
       - section: Playground
         contents:
           - page: Testing with playground
