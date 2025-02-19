@@ -4,21 +4,387 @@ slug: /apps/chat
 layout: overview
 ---
 
-Maven offers a chat widget that allow you to embed a Maven experience directly into your website.
+Maven offers a chat widget that allows you to embed a Maven experience directly into your website.
+
+## Installation
+
+To install the chat app on your agent:
+
+1. Navigate to the **Apps** page in the **Agent Designer**.
+2. Click on **Browse & Install** on the **Apps Directory** tile.
+3. Search for "Chat" and click on the **Chat** app tile.
+4. Click on the **Install** button.
+
+
+## Integration
 
 To add the chat widget to your website, you need to add a small piece of javascript to your page. 
 This javascript code will initialize the widget and connect it to your Maven instance.
 
-Your personalized code snippet can be found on the chat settings 
-page within the Dashboard. You'll need to copy and paste the code snippet into your website's HTML to get started. 
+Your personalized code snippet can be found on the chat settings page under the "Instructions" tab. Copy and paste the following code snippet into your website's HTML, preferably just before the closing `</body>` tag:
 
-## Chat Widget
+```html
+<script src='https://chat.onmaven.app/js/widget.js' defer></script>
+<script async>
+  addEventListener("load", function () {
+    Maven.ChatWidget.load({
+      organizationId: "YOUR_ORGANIZATION_ID",
+      agentId: "YOUR_AGENT_ID",
+    })
+  });
+</script>
+```
 
-The chat widget currently supports one additional setting - the welcome message. This message will be
-shown to the user when they first open the chat widget. 
+## Basic Settings
 
-The questions shown directly under the welcome message are configured on the Agent Settings page with 
-the popular questions setting.
+The chat app supports several basic configuration options that can be customized through the Dashboard:
 
-The chat widget's background color and logo at the top of the widget are also configured on the Agent Settings page.
-They match the Brand Color and the Horizontal logo, respectively.
+- **Logo URL** - The URL of the logo to display in the chat header.
+- **Brand Color** - The accent color used on the chat UI.
+- **Welcome Message** - The message displayed when the chat widget is opened.
+- **Popular Questions** - Questions shown directly under the welcome message.
+
+Additionally, the appearance of the widget on your site can be further customized:
+
+```javascript
+  Maven.ChatWidget.load({
+    organizationId: "YOUR_ORGANIZATION_ID",
+    agentId: "YOUR_AGENT_ID",
+    bgColor: "#007AFF",
+    buttonLabel: "Chat with us",
+    horizontalPosition: "left",
+    verticalPosition: "top",
+  })
+```
+
+## Advanced Settings
+
+The full list of chat app settings:
+
+| Category | Setting | Description |
+|----------|---------|-------------|
+| **Branding** | Logo URL | The URL of the logo to display in the chat header |
+| | Brand color | The accent color used on the chat UI |
+| | Brand font color | The color of the font against the brand color |
+| | Welcome message | The message displayed when the chat widget is opened |
+| | Popular questions | Questions shown directly under the welcome message |
+| | Enable preview site | Allows the widget to appear on the preview site |
+| **Security** | Allowed domains | The domains that are allowed to render the chat iframe |
+| | JWT public key | The public key used to verify authentication tokens (more on this below) |
+| | Encryption secret | The secret used to encrypt authentication tokens (more on this below) |
+| **Miscellaneous** | Disable attachments | Disables the ability to send files in the chat |
+| | Live agent handoff configuration | A JSON object that configures the live agent handoff settings (more on this below) |
+
+The full list of widget configuration options:
+
+| Option | Type | Required | Default | Description |
+|--------|------|----------|---------|-------------|
+| `organizationId` | string | Yes | - | Your organization ID |
+| `agentId` | string | Yes | - | Your agent ID |
+| `bgColor` | string | No | - | Widget background color |
+| `textColor` | string | No | 'white' | Widget text color |
+| `buttonLabel` | string | No | 'Get Help' | Widget button label |
+| `horizontalPosition` | 'left' \| 'right' | No | 'right' | Widget horizontal position |
+| `verticalPosition` | 'top' \| 'bottom' | No | 'bottom' | Widget vertical position |
+| `locale` | string | No | browser locale | Widget locale |
+| `signedUserData` | string | No | - | A signed and encrypted authentication token |
+| `unsignedUserData` | Record\<string, any\> | No | - | Arbitrary data to include in conversation for context |
+
+### Programmatic Control
+You can programmatically control the widget using the following methods:
+
+```javascript
+// Open the widget
+window.Maven.open();
+
+// Close the widget
+window.Maven.close();
+```
+
+## Live Agent Handoff
+
+Maven Chat supports seamless handoff to live agent support through various service providers. When configured, conversations can be automatically transferred to human agents.
+
+Currently supported providers:
+- Salesforce
+- Zendesk
+- Front
+
+### Salesforce Configuration
+
+Maven Chat integrates with Salesforce Live Agent to provide human support capabilities. This integration requires configuration in both Salesforce and Maven.
+
+#### Requirements
+
+- Salesforce account with Live Agent enabled
+- Access to Salesforce Setup
+- A configured Live Agent deployment and button
+
+#### Setup Process
+
+Follow these steps to configure Salesforce integration:
+
+1. **Configure Live Agent Deployment**
+   - Navigate to **Salesforce Setup > Embedded Service Deployments**
+   - Locate or create a new deployment
+   - Note the **Deployment ID** and **ES Live Agent Dev Name**
+
+2. **Configure Chat Button**
+   - Navigate to **Setup > Chat Buttons & Invitations**
+   - Create or select an existing chat button
+   - Note the **Button ID**
+
+3. **Locate Live Agent Settings**
+   - Find your **Chat Host URL** in the Salesforce Live Agent settings
+   - Note your **Organization ID**
+
+#### Configuration
+
+Create a handoff configuration object with the following structure:
+
+1. Create your configuration object:
+```javascript
+{
+  type: 'salesforce',
+  orgId: 'your-org-id',
+  chatHostUrl: 'https://d.la12s-core1.sfdc-lywfpd.salesforceliveagent.com',
+  chatButtonId: 'your-button-id',
+  deploymentId: 'your-deployment-id',
+  eswLiveAgentDevName: 'your-live-agent-name',
+  apiSecret: 'your-api-secret',
+  allowAnonymousHandoff: false,
+  enableAvailabilityCheck: false
+}
+```
+
+2. Convert to JSON and add to Maven:
+   - Convert the object to a JSON string
+   - Enter it in the **Live agent handoff configuration** field in chat app settings
+
+##### Configuration Options
+
+| Option | Type | Required | Default | Description |
+|--------|------|----------|---------|-------------|
+| `type` | 'salesforce' | Yes | - | Identifies Salesforce as the handoff provider |
+| `orgId` | string | Yes | - | Your Salesforce organization ID |
+| `chatHostUrl` | string | Yes | - | Your Salesforce Live Agent server URL |
+| `chatButtonId` | string | Yes | - | Your Salesforce chat button ID |
+| `deploymentId` | string | Yes | - | Your Salesforce deployment ID |
+| `eswLiveAgentDevName` | string | Yes | - | Your Embedded Service Live Agent name |
+| `apiSecret` | string | Yes | - | Authentication secret for handoff requests |
+| `allowAnonymousHandoff` | boolean | No | false | Whether to request email from anonymous users |
+| `surveyLink` | string | No | - | Post-handoff survey URL |
+| `enableAvailabilityCheck` | boolean | No | false | Whether to check agent availability |
+| `availabilityFallbackMessage` | string | No | - | Message shown when agents unavailable |
+
+### Zendesk Configuration
+
+Maven Chat integrates with Zendesk Conversations to provide human support capabilities. This integration requires configuration in both Zendesk and Maven.
+
+#### Requirements
+
+- Zendesk account with Professional plan or above
+- Access to the Conversations API
+- Admin access to configure integrations
+
+#### Setup Process
+
+Follow these steps to configure Zendesk integration:
+
+1. **Create Zendesk Integration**
+   - Navigate to the **Zendesk Admin Center**
+   - Go to **Apps and integrations > Integrations > Conversations integrations**
+   - Click **Create integration**
+   - Enter a unique name for the integration
+
+2. **Configure Webhook**
+   - Set **Webhook endpoint URL** to `https://chat.onmaven.app/api/zendesk/webhook`
+   - Uncheck **Webhook body data**
+   - Check all **Webhook subscriptions**
+   - Click **Save**
+
+3. **Generate API Key**
+   - Navigate to the **API Keys** tab
+   - Click **Create API key**
+   - Enter an identifying name for the key
+   - Copy and securely store the provided ID and secret key
+   - Click **Next** to complete the setup
+
+#### Configuration
+
+Create a handoff configuration object with the following structure:
+
+1. Create your configuration object:
+```javascript
+{
+  type: 'zendesk',
+  subdomain: 'your-zendesk-subdomain',
+  apiKey: 'int_your_integration_api_key',
+  apiSecret: 'your_integration_api_secret',
+  appId: 'your_zendesk_app_id'
+}
+```
+
+2. Convert to JSON and add to Maven:
+   - Convert the object to a JSON string
+   - Enter it in the **Live agent handoff configuration** field in chat app settings
+
+##### Configuration Options
+
+| Option | Type | Required | Default | Description |
+|--------|------|----------|---------|-------------|
+| `type` | 'zendesk' | Yes | - | Identifies Zendesk as the handoff provider |
+| `subdomain` | string | Yes | - | Your Zendesk subdomain |
+| `apiKey` | string | Yes | - | Your Zendesk integration API key |
+| `apiSecret` | string | Yes | - | Your Zendesk integration secret |
+| `appId` | string | Yes | - | Your Zendesk app ID |
+
+### Front Configuration
+
+Maven Chat integrates with Front to provide human support capabilities. This integration requires configuration in both Front and Maven.
+
+#### Requirements
+
+- Front account with admin access
+- Access to Front's developer settings
+- Maven-created Front Application Channel
+
+#### Setup Process
+
+Follow these steps to configure Front integration:
+
+1. **Create Front Application**
+   - Navigate to [Front Developer Settings](https://app.frontapp.com/settings/developers)
+   - Click **Create App**
+   - Enter app name and description
+   - Note the **App UID** and **App Secret** from Basic Information
+
+2. **Configure Channel**
+   - Go to the **Features** tab
+   - Click **Create channel type**
+   - Configure the following settings:
+     - Set **Webhook URL** to `https://chat.onmaven.app/api/front`
+     - Set **Authentication strategy** to `Bearer`
+     - Set **Contact type** to `Custom`
+     - Set **Supported attachments** to `Text`
+     - Enable **Reply/Compose**
+     - Set **Composer type** to `Basic`
+     - Set **Timeline Type UI** to `Chat Timeline`
+   - Click **Create**
+
+3. **Connect Channel in Front**
+   - Navigate to **Channels** under your workspace
+   - Click **Connect a channel**
+   - Find your channel under the "Other" section
+   - Set **Name** and **Token** to `orgId-agentId`
+   - Select target inbox and click **Continue**
+
+#### Configuration
+
+The handoff configuration requires two steps:
+
+1. Create your configuration object:
+```javascript
+{
+  type: 'front',
+  apiKey: 'your-front-api-token',
+  appId: 'your-front-app-uid',
+  apiSecret: 'your-front-app-secret',
+  shiftNames: [],
+  host: 'optional-self-hosted-front-url'
+}
+```
+
+2. Convert to JSON and add to Maven:
+   - Convert the object to a JSON string
+   - Enter it in the **Live agent handoff configuration** field in chat app settings
+
+##### Configuration Options
+
+| Option | Type | Required | Default | Description |
+|--------|------|----------|---------|-------------|
+| `type` | 'front' | Yes | - | Identifies Front as the handoff provider |
+| `apiKey` | string | Yes | - | Your Front API token |
+| `appId` | string | Yes | - | Your Front App UID |
+| `apiSecret` | string | Yes | - | Your Front App Secret |
+| `shiftNames` | string[] | No | [] | Names of shifts for availability routing |
+| `host` | string | No | - | Custom URL for self-hosted Front instances |
+
+#### Additional Setup Requirements
+
+1. **Content Security Policy**
+   - Update your CSP to allow content from `chat.onmaven.app`
+
+2. **Widget Installation**
+   - Include the widget script:
+     ```html
+     <script src='https://chat.onmaven.app/js/widget.js' defer></script>
+     ```
+   - Initialize with configuration:
+     ```javascript
+     addEventListener("load", function () {
+       Maven.ChatWidget.load({
+         organizationId: "your-org-id",
+         agentId: "your-agent-id",
+         // ... other configuration options
+       });
+     });
+     ```
+
+## Authentication
+
+### Signed User Authentication
+
+Maven Chat now accepts signed and encrypted user authentication, allowing our customers to securely authenticate their users with Maven and persist user data across Maven apps. Authentication is optional and users will fall back to anonymous sessions.
+
+#### Requirements
+
+- A server-generated, signed and encrypted JWT containing user data
+- A shared symmetrical encryption key, provided in the chat app settings (**Encryption secret**)
+- A shared public key for verifying signing, provided in the chat app settings (**JWT public key**)
+
+#### User Data Requirements
+
+The user data object must include:
+- `firstName` - User's first name
+- `lastName` - User's last name
+- `id` - User's unique identifier (UUID)
+- At least one of:
+  - `phoneNumber` - User's phone number
+  - `email` - User's email address
+- Additional fields will be included in the Maven user that's created
+
+#### Generating User Authentication Token
+
+To protect the user data in transit, generate a signed JWT token containing user data and encrypt the token with `ES256` and a 32-bit secret key. This token must be generated on the backend and passed into the chat widget via the `signedUserData` property.
+
+##### Example Implementation (TypeScript)
+
+```typescript
+import { SignJWT, EncryptJWT } from 'jose';
+
+async function secureUserData(userData: Record<string, string> & {
+ id: string
+ firstName: string
+ lastName: string
+} & (
+ { email: string, phoneNumber?: string } |
+ { email?: string, phoneNumber: string }
+)) {
+ // 1. Sign the user data with your private key (ES256 algorithm)
+ const signedJWT = await new SignJWT(userData)
+   .setProtectedHeader({ alg: 'ES256' })
+   .setIssuedAt()
+   .setExpirationTime('1d')
+   .sign(yourPrivateKey);
+
+
+ // 2. Encrypt the signed JWT using your encryption secret
+ const encryptedJWT = await new EncryptJWT({ jwt: signedJWT })
+   .setProtectedHeader({ alg: 'dir', enc: 'A128CBC-HS256' })
+   .encrypt(base64url.decode(encryptionSecret));
+
+
+ return encryptedJWT;
+}
+```
