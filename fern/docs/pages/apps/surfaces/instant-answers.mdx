@@ -36,7 +36,7 @@ For the instant answers widget:
     ``` 
    And replace with:
     ```
-          <div id="maven-instant-answer-container" style="margin-bottom: 5px"></div>
+          <div id="maven-instant-answers-container" style="margin-bottom: 5px"></div>
           {{#if results}}
             <ul class="search-results-list">
     ```
@@ -47,7 +47,7 @@ For the instant answers widget:
     <script>
     // This code loads the Maven widget when the page is first opened
     addEventListener("load", function () {
-      Maven.InstantAnswerWidget.init({
+      Maven.InstantAnswersWidget.init({
         agentId: "REPLACE THIS WITH YOUR AGENT", // defaults to support
         organizationId: "REPLACE THIS WITH YOUR ORG",
         locale: "en",
@@ -60,9 +60,9 @@ For the instant answers widget:
     
         if (text) {
           console.log("Loading Maven with the question: " + text);
-          Maven.InstantAnswerWidget.search({
+          Maven.InstantAnswersWidget.search({
             query: document.getElementById('query').value,
-            selector: '#maven-instant-answer-container'
+            selector: '#maven-instant-answers-container'
           });
         } else {
           console.log("No query found. Not loading Maven.");
@@ -104,7 +104,7 @@ In Settings for your site in Experience Builder, navigate to "Advanced" and pres
 <script>
     // This code loads the Maven widget when the page is first opened
     addEventListener("load", function () {
-      Maven.InstantAnswerWidget.init({
+      Maven.InstantAnswersWidget.init({
         agentId: "REPLACE THIS WITH YOUR AGENT", // defaults to support
         organizationId: "REPLACE THIS WITH YOUR ORG",
         locale: "en",
@@ -118,7 +118,7 @@ In Settings for your site in Experience Builder, navigate to "Advanced" and pres
 In experience builder, add a "HTML Editor" component on the page where you would like the search results. Add the following markup:
 
 ``` html
-<div id="maven-instant-answer-container"></div>
+<div id="maven-instant-answers-container"></div>
 ```
 
 ### Add a search button, or hook the search button
@@ -126,9 +126,9 @@ In experience builder, add a "HTML Editor" component on the page where you would
 To invoke search and start returning results from Maven, make the following Javascript call in a new button or when an existing search button is pressed
 
 ``` javascript
-Maven.InstantAnswerWidget.search({
+Maven.InstantAnswersWidget.search({
     query: text,
-    selector: '#maven-instant-answer-container'
+    selector: '#maven-instant-answers-container'
 });
 ```
 
