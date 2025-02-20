@@ -202,6 +202,7 @@ Follow these steps to configure Zendesk integration:
    - Uncheck **Webhook body data**
    - Check all **Webhook subscriptions**
    - Click **Save**
+   - After saving, note the **Webhook ID** from the URL (it will be in the format `https://admin.zendesk.com/admin/integrations/webhooks/{webhookId}`)
 
 3. **Generate API Key**
    - Navigate to the **API Keys** tab
@@ -221,7 +222,8 @@ Create a handoff configuration object with the following structure:
   subdomain: 'your-zendesk-subdomain',
   apiKey: 'int_your_integration_api_key',
   apiSecret: 'your_integration_api_secret',
-  appId: 'your_zendesk_app_id'
+  appId: 'your_zendesk_app_id',
+  webhookId: 'your-webhook-id'
 }
 ```
 
@@ -238,6 +240,7 @@ Create a handoff configuration object with the following structure:
 | `apiKey` | string | Yes | - | Your Zendesk integration API key |
 | `apiSecret` | string | Yes | - | Your Zendesk integration secret |
 | `appId` | string | Yes | - | Your Zendesk app ID |
+| `webhookId` | string | Yes | - | Your Zendesk webhook ID (found in webhook URL after creation) |
 
 ### Front Configuration
 
