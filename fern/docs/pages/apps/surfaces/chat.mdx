@@ -90,6 +90,58 @@ The full list of widget configuration options:
 | `signedUserData` | string | No | - | A signed and encrypted authentication token |
 | `unsignedUserData` | Record\<string, any\> | No | - | Arbitrary data to include in conversation for context |
 
+### Passing metadata 
+
+Use the `unsignedUserData` parameter to pass name/value pairs of data about the user and the user's context. For example, if your React application has url path parts that you'd like to parse and send:
+
+``` typescript
+'use client';
+
+import Script from 'next/script';
+import React, { useEffect, useState } from 'react';
+
+export default () => {
+  let [part1, setPart1] = useState<string | null>(null);
+  let [part2, setPart2] = useState<string | null>(null);
+
+  useEffect(() => {
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    setPart1(parts[0] || null);
+    setPart2(parts[1] || null);
+  }, []);
+
+  const handleOnReady = () => {
+    if (window.Maven?.ChatWidget) {
+      window.Maven.ChatWidget.load({
+        organizationId: 'your-org-id',
+        agentId: 'your-agent-id',
+        bgColor: '#007AFF',
+        buttonLabel: 'Chat',
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        unsignedUserData: {
+          part1: part1,
+          part2: part2,
+        },
+      });
+    }
+  };
+
+  return (
+    <div>
+      <h1>URL Parts</h1>
+      <p>Param 1: {part1}</p>
+      <p>Param 2: {part2}</p>
+      <Script
+        src="https://chat.onmaven.app/js/widget.js"
+        strategy="lazyOnload"
+        onReady={handleOnReady}
+      />
+    </div>
+  );
+};
+```
+
 ### Programmatic Control
 You can programmatically control the widget using the following methods:
 
