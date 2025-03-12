@@ -4,7 +4,7 @@ slug: /apps/salesforce
 layout: overview
 ---
 
-## Setup within Maven
+# Setup within Maven
 
 Maven needs several pieces of information to connect to your Salesforce instance.
 
@@ -19,15 +19,289 @@ Optionally, if you wish to use your own connected app, enter a custom App Client
 You can also optionally enter the name of the custom field name used for the first user message if your 
 salesforce setup does start with an EmailMessage.
 
-## Setup within Salesforce
+# Setup within Salesforce
 
-1. Install the Maven AGI plugin from the marketplace.
-2. Then create an integration user from the Salesforce admin panel.
-3. Edit the policy for the Maven connected app to run the Client Credentials Flow as the integration user.
-4. This integration user needs to be given Read permissions to the Case object and Email Messages object. Using a separate Permission Set for Maven AGI is recommended.
-  - The recommended Case field permissions include: Id, SuppliedName, SuppliedEmail, Subject, Description, CreatedDate, LastModifiedDate, CreatedById and LastModifiedById.
-  - The recommended Email Message field permissions include: Id, TextBody, FromName, Incoming, CreatedDate, LastModifiedDate, CreatedById and LastModifiedById.
-5. If you wish for Salesforce tickets to be created from within Maven AGI, Create access to the Case object and Edit access to above Case fields is also required.
+## Video Guides
+
+- **Video 1**: [Setting Up Salesforce Integration Part 1](https://www.loom.com/share/04d03251fe404b7ebfd01688ba26ea4f?sid=56f9013b-acc5-4122-9fc7-7f59e50ae90e)
+- **Video 2**: [Setting Up Maven Copilot](https://www.loom.com/share/d14264cfd4be40a39527657b67f6253e?sid=850e4973-244e-4c55-a195-f48de2590e52)
+- **Video 3**: [Setting Up Live Agent Handoff in Salesforce](https://www.loom.com/share/97e6796ebfa247bdade4cf4a393d2f05?sid=6e29dbb4-d0a6-4a0b-bd91-797efd2c86e9)
+
+---
+
+## Set up an Integration User
+
+### Create a Connected App
+1. Go to **Setup > App Manager > New Connected App**.
+2. Enable **OAuth Settings**.
+3. Set **Callback URL**: `https://mavenagi.com`.
+4. **Selected OAuth Scopes**:
+   - Manage user data via APIs (`api`)
+   - Access the Salesforce API Platform (`sfap_api`)
+5. Enable **Client Credentials Flow**.
+6. Save the app.
+7. Click **Manage Consumer Details**.
+8. Copy **Client Id** and **Client Secret** for later use.
+
+### Create an Integration User
+1. Navigate to **Setup > Users > New User**.
+2. **User License**: Salesforce Integration
+3. **Profile**: Salesforce API Only System Integration
+4. Check **Flow User**.
+5. Save.
+6. Go to **Permission Set License Assignments > Edit Assignments**.
+7. Check **Salesforce API Integration**.
+
+### Set up Integration User Permissions
+1. Go to **Setup > Permission Sets > New**.
+2. **Label**: Maven Integration User Permissions
+3. Do not select a **Permission Set License**.
+4. Navigate to **Permission Set > Manage Assignments**, and add the **Integration User**.
+5. Go to **Permission Set > Assigned Connected Apps > Edit**, and add the connected app.
+6. **Object Settings**:
+   - **Cases**: Add **read + create** permissions (if using handoff).
+   - **Email Message**: Add **read** permission.
+   - **CaseFeed**: Add **read** permission.
+
+### Link the Connected App to the Integration User
+1. Go to **Setup > Manage Connected Apps > Your Connected App**.
+2. Edit **Policies**.
+3. Under **OAuth Policies**, set **Permitted Users** to **Admin approved users are pre-authorized**.
+4. Under **Client Credentials Flow**, set **Run As** to the **Integration User**.
+
+### Link Connected App to Maven
+1. Go to **Maven Dashboard > Integrate Salesforce**.
+2. Enter:
+   - **Salesforce Domain**: (from **Setup > My Domain > Current My Domain URL**)
+   - **Connected App Client Id and Secret**
+   - **Salesforce Org Id**: (from **Setup > Company Information > Organization Id**)
+3. When you see **"Connection successful"**, Maven is now synced with Salesforce.
+
+---
+
+## Enable Knowledge Connection
+1. Set up **integration user permissions** for **Knowledge**.
+2. Navigate to **Maven Integration User Permissions**.
+3. Go to **Object Settings > Knowledge (Knowledge_kav)**.
+4. Enable:
+   - **Read**
+   - **View All Records**
+   - **View All Fields** permissions.
+5. In Maven Dashboard, navigate to **Train > Knowledge**.
+
+---
+
+## Install Maven Copilot
+1. Install **Maven Copilot 2.0** from **AppExchange**.
+2. Set up **Maven API Key** in Salesforce:
+   - Navigate to **Setup > Named Credentials > External Credentials**.
+   - Find **Maven AGI Agent Key** > **Principles section** > **Edit**.
+   - Add **Authentication Parameter**:
+     - **Name**: `AgentAPIKey`
+     - **Value**: (See Maven Dashboard)
+
+---
+
+## Set up Email Case Settings
+### Support Settings
+1. Go to **Feature Settings > Service**.
+2. Set **Default Case Owner** and **Automated Case User** to an Admin or Support Lead.
+3. Click **Save**.
+
+### Enable Email-to-Case
+1. Navigate to **Feature Settings > Service > Email-to-Case**.
+2. Check:
+   - **Enable Email-to-Case**
+   - **Enable on-demand service**
+3. Click **Save**.
+
+### Add a Routing Address
+1. Click **New**.
+2. Enter:
+   - **Routing Name**: `email2case`
+   - **Email Address**: (Notification Email)
+   - **Case Origin**: `Email`
+3. Click **Save**.
+
+---
+
+## Set up User Permissions in Salesforce
+1. Create a **Permission Set**: `Maven AGI User Permissions`.
+2. Assign to:
+   - Users needing access to **Maven Copilot**.
+   - The **Integration User**.
+3. Under **Apex Class Access**, add:
+   - `mavenagi.MavenProxy`
+   - `mavenagi.CaseWebhookHandler`
+   - `mavenagi.TriggerDeduper`
+4. Under **External Credential Principal Access**, add:
+   - `MavenAGIAgentKey - Maven API Key`
+5. Under **Object Settings**, enable **read access** for:
+   - **User External Credentials**
+6. Under **Assigned Connected Apps**, add:
+   - `MavenAGI Copilot`
+7. Update **OAuth Policy**:  
+   - **Setup > Connected Apps > OAuth Policies**  
+   - Set to **Admin approved users are pre-authorized**.
+
+### Add MavenCopilot Lightning Component
+1. Navigate to **Case Page > Gear Icon > Edit Page**.
+2. Drag **Copilot Component** to the desired location.
+
+---
+
+## Webhook Configurations
+1. Set **custom setting defaults** for triggers to **OFF**.
+2. Use **VSCode Salesforce Extension** to deploy `mavenWebhooks.platformEventSubscriberConfig-meta.xml`:
+
+   ```xml
+   <?xml version="1.0" encoding="UTF-8"?>
+   <PlatformEventSubscriberConfig xmlns="http://soap.sforce.com/2006/04/metadata">
+       <platformEventConsumer>mavenagi__MavenCaseWebhookEventTrigger</platformEventConsumer>
+       <batchSize>2000</batchSize>
+       <masterLabel>MavenCaseWebhookEventTriggerConfig</masterLabel>
+       <user>{INTEGRATION_USER_EMAIL}</user>
+       <isProtected>false</isProtected>
+   </PlatformEventSubscriberConfig>
+Replace `{INTEGRATION_USER_NAME}` with the unique user name of the integration user you created above. This will configure the webhooks so they are sent from the integration user.
+
+Alternatively, you can use the REST API to deploy these changes. Make a `POST` request to:
+
+For the changes to take effect:
+1. Go to **Setup > Platform Events > MavenCaseWebhookEvent > Subscriptions**
+2. Click on **Manage** for `MavenCaseWebhookEventTrigger`
+3. Click **Suspend**, then click **Resume**
+
+## Configure Live Agent Handoff for Chat
+
+Salesforce configuration varies drastically from organization to organization, depending on their requirements and infrastructure. As such, there is no one configuration that applies to Maven AGI chat handoff integration.
+
+Handoff integration depends on a Salesforce chat deployment and button that can resolve to an **Available** state. Any other state will result in the API returning a `ChatRequestFailed` event.
+
+### Required Properties
+- **Button ID** – The unique identifier for your chat button in Salesforce.
+- **Chat Host URL** – The base URL for your Live Agent server (e.g., `https://d.la12s-core1.sfdc-lywfpd.salesforceliveagent.com`).
+- **Chat Deployment ID** – The unique identifier for your chat deployment.
+- **ES Live Agent Dev Name** – The developer name of the Embedded Service (ES) Live Agent configuration.
+- **Organization ID**
+
+## Configuration Steps
+
+### 1. Enable Chat
+- Navigate to **Feature Settings > Service > Chat**
+- Check **Enable Chat**
+- Copy/save the **Chat API Endpoint** for later
+
+### 2. Set Up Chat Deployment
+- Search "Deployments" and pick the one for **Feature Settings > Service > Chat**
+- Click **New**
+- **Chat Deployment and Developer Name**: `Live Agent Deployment`
+- **Chat Window Title**: `Support`
+- Check **Allow Access to Prechat API**
+- (Optional) Check **Enable Custom Timeouts**
+  - **Idle Connection Warning**: `10`
+  - **Idle Connection Timeout**: `15`
+- Click **Save**
+
+### 3. Configure Omni-Channel Settings
+- Navigate to **Feature Settings > Service > Omni-Channel**
+- Check **Enable Omni-Channel**
+- Check **Enable Skills-Based and Direct-to-Agent-Routing**
+- Select **Warn agents in a popup radio button**
+- Click **Save**
+
+**Note:** Ensure that **Enhanced Omni-Channel Routing** is set to **Off**
+
+### 4. Create a Routing Configuration
+- Navigate to **Feature Settings > Service > Omni-Channel**
+- Click **New**
+- **Routing Configuration Name**: `Live Agent Routing`
+- **Developer**: `Live_Agent_Routing`
+- **Overflow Assignee**: (Optional, can be set as yourself)
+- **Routing Priority**: `1`
+- **Routing Model**: `Least Active`
+- **Push Out Time**: `60`
+- **Capacity Type**: `Inherited`
+- **Units of Capacity**: `1.00`
+
+### 5. Create a Queue
+- Navigate to **Setup > Users > Queues**
+- **Label/Name**: `Live Agent Queue`
+- **Routing Configuration**: `Live Agent Routing`
+- **Available Objects**: Add `Case` and `Chat Transcript`
+- Under **Queue Members**, add agents:
+  - Typically a **Public Group** containing support agents
+  - Can also be set as an individual user for testing
+  - Ensure all selected users have **Chat User** and **Service Cloud** enabled in their user configuration
+
+### 6. Configure Chat Buttons & Integrations
+- Navigate to **Feature Settings > Service > Chat**
+- Click **New**
+- **Type**: `Chat Button`
+- **Name/Developer Name**: `Live Agent Chat`
+- **Routing Type**: `Omni-Channel`
+- **Queue**: Add `Live Agent Queue` from Step 5
+- Check **Enable Queue**
+- **Overall Queue Size**: `10`
+- Click **Save**
+
+### 7. Ensure Presence Configurations are Set Correctly
+- Navigate to **Feature Settings > Service > Omni-Channel**
+- Verify the default **Presence Configuration**:
+  - Ensure it allows for the queue to hand off automatically to agents
+  - Set **Capacity** to a reasonable number per agent
+  - Enable **Audio Settings**
+  - Check all boxes under **Transfer Settings**
+  - Assign the appropriate **Profile** for support agents if configured
+- Click **Save**
+
+### 8. Create an Embedded Services Deployment
+- Navigate to **Feature Settings > Service > Embedded Service Deployments**
+- Click **New Deployment > Embedded Chat**
+- **Service Deployment Name**: `Live Agent Deployment`
+- **Chat Button**: `Live Agent Chat`
+
+### 9. Create JSON String for Handoff
+Now, gather values for the required parameters and create the JSON configuration for the Chat Installation in Maven:
+
+```json
+{
+  "type": "salesforce",
+  "orgId": "found during initial integration",
+  "apiSecret": "5bcd931209ecbbda9ab2247f3a275bfcf62a821829a97d6e6706a318d3e53ce4",
+  "chatHostUrl": "Found in Step 3 above",
+  "chatButtonId": "screenshot below",
+  "deploymentId": "screenshot below",
+  "eswLiveAgentDevName": "Maven",
+  "allowAnonymousHandoff": true,
+  "enableAvailabilityCheck": true,
+  "availabilityFallbackMessage": "Our agents are currently unavailable for a live conversation."
+}
+```
+
+- The `apiSecret` above is a placeholder and should be replaced.
+- `availabilityFallbackMessage` can be customized.
+- `chatButtonId` is found in the **Chat Button** view after creation in Step 8.
+- `deploymentId` is found in the **Chat Deployment** after creation in Step 4 (Org ID is also shown next to deployment ID).
+
+This JSON string is inserted into the **Live Agent Handoff** configuration section of Maven Chat settings.
+
+## Using Live Handoff
+Once configured, support agents can use the Salesforce **Service Console**:
+1. Click the **9 dots** on the left of the screen and search for `Service Console`
+2. Click **Omni-Channel** at the bottom
+3. Click the dropdown arrow next to **Offline**
+4. Select **Available - Chat**
+
+Now, agents are online and can receive incoming chats from Maven.
+
+To initiate a handoff:
+1. In a configured Maven chat instance, type **"connect to an agent"** (this trigger can be customized)
+2. A confirmation popup will appear
+3. Click **Connect to live agent**
+4. The message will appear in the Salesforce **Service Console**
+5. Agents can then **accept the message** and pick up the conversation
+
 
 ## Still not working?
 
