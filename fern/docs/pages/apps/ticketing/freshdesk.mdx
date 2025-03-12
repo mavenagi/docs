@@ -4,26 +4,40 @@ slug: /apps/freshdesk
 layout: overview
 ---
 
-## Setup within Maven
-To set up the Freshdesk integration, you will need to first [make an API key](https://support.freshdesk.com/en/support/solutions/articles/215517-how-to-find-your-api-key) for your Freshdesk account.
+**Setup within Maven**
 
-Once you have an API key, enter your Freshdesk subdomain and the key in the Maven Freshdesk integration settings. 
-After you click "Save", you will see a message below the Freshdesk 
-settings letting you know whether the connection is successful.
+Install the Freskdesk app via Agent Designer  
+* Navigate to the Agent Designer dashboard  
+* Select Apps \> App Directory \> Browse & Install  
+* Install Fresdesk
 
-If it is not successful double check your subdomain. As an example, if your freshdesk url
-is http://yourcompany.freshdesk.com, then your subdomain would be "yourcompany".
+To install, you will need:
 
-### Optional: Custom tag field
-Use this setting if you have a custom freshdesk field you'd like to use to tag conversations within Maven. 
-Note that custom freshdesk fields always start with "cf_".
+* Your FreshDesk API key: How to find your API key  
+* Your FreshDesk subdomain: https://yoursubdomain.freshdesk.com  
+* Optional language (if left blank, 'en' is the default)
 
-## Setup within Freshdesk
-Once your Maven settings are configured, [install the Freshdesk plugin](https://www.freshworks.com/apps/maven_agi_co-pilot/)
-from the Freshdesk Marketplace.
+If it is not successful, double check your subdomain. As an example, if your freshdesk url is http://yourcompany.freshdesk.com, then your subdomain would be “yourcompany”.
 
-This plugin has one required field: the Agent API key that is displayed on the Maven Freshdesk settings page.
+**Knowledge:**
 
-## Still not working?
+Maven will pull in articles from the Freshdesk Knowledge Base.
 
-[Contact us](https://support.mavenagi.com) for more support.
+**Ticket Hand Off:**
+
+When Maven cannot deflect a user inquiry, a ticket is created in the Freshdesk system. Ticket hand off is represented as an action within Maven. A ticket can be created for authenticated users and anonymous users.
+
+
+**Live Agent Handoff - Comming Q2 2025**
+
+Live Agent Handoff will start a live chat with a human agent as a result of a handoff action.
+
+**Copilot**
+
+Once your Maven settings are configured, [install the Freshdesk Copilot](https://www.freshworks.com/apps/maven_agi_co-pilot/) from the Freshdesk Marketplace.
+
+This plugin has one required field: the Agent API key that is available by navigating to: 
+* Apps > Integrations > Freshdesk >Settings
+
+***Still not working?***  
+[Contact us](https://support.mavenagi.com/) for more support.
