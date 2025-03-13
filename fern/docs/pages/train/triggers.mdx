@@ -1,18 +1,18 @@
 ---
-title: Event Triggers
+title: Triggers
 layout: overview
 ---
 
-Event Triggers are used to trigger Maven App execution in response to a system event.
+Triggers are used to trigger Maven App execution in response to a system event.
 
-Most customers will add Event Triggers to their Agent by installing existing Maven Apps via the
-App Marketplace. For advanced use cases, Event Triggers can also be created using the Maven API.
+Most customers will add Triggers to their Agent by installing existing Maven Apps via the
+App Marketplace. For advanced use cases, Triggers can also be created using the Maven API.
 
 ## Example
 
-The most common type of event trigger is used to update another system with data from Maven. For example, you could add a tag to every Zendesk ticket where the copilot response was inserted. 
+The most common type of trigger is used to update another system with data from Maven. For example, you could add a tag to every Zendesk ticket where the copilot response was inserted. 
 
-To set this up a Maven App would create an event trigger of type `Feedback Created`. This trigger would be visible within the Agent Designer. 
+To set this up a Maven App would create a trigger of type `Feedback Created`. This trigger would be visible within the Agent Designer. 
 
 Every time Maven received feedback, it would execute the code within the Maven App passing in the feedback received. This app would then call a Zendesk API to add a tag to the zendesk ticket ID that the feedback referenced.
 
@@ -24,7 +24,7 @@ Trigger code is called in response to an event. Trigger code execution is usuall
 
 [Action code](/help-center/training-maven/actions) is only called in response to a user question, deciding whether an action is called is handled by the LLM. Actions are used to get or update information on behalf of users.
 
-## Event Trigger Types
+## Trigger Types
 
 Currently, Maven supports these event trigger types:
 
