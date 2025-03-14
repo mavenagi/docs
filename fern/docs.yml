@@ -84,7 +84,7 @@ navigation:
       - section: Simulator
         contents:
           - page: Testing with simulator
-            path: ./docs/pages/simulator/overview.mdx
+            path: ./docs/pages/playground/overview.mdx
       - section: Settings
         contents:
           - page: Overview
