@@ -81,10 +81,10 @@ navigation:
                 path: ./docs/pages/apps/ticketing/salesforce.mdx
               - page: Zendesk
                 path: ./docs/pages/apps/ticketing/zendesk.mdx
-      - section: Playground
+      - section: Simulator
         contents:
-          - page: Testing with playground
-            path: ./docs/pages/playground/overview.mdx
+          - page: Testing with simulator
+            path: ./docs/pages/simulator/overview.mdx
       - section: Settings
         contents:
           - page: Overview
