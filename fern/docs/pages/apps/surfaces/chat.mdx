@@ -84,6 +84,7 @@ The full list of widget configuration options:
 | `bgColor` | string | No | - | Widget background color |
 | `textColor` | string | No | 'white' | Widget text color |
 | `buttonLabel` | string | No | 'Get Help' | Widget button label |
+| `hideButton` | boolean | No | false | Hide the Widget button (to later be programmatically controlled - see below) |
 | `horizontalPosition` | 'left' \| 'right' | No | 'right' | Widget horizontal position |
 | `verticalPosition` | 'top' \| 'bottom' | No | 'bottom' | Widget vertical position |
 | `locale` | string | No | browser locale | Widget locale |
@@ -147,10 +148,16 @@ You can programmatically control the widget using the following methods:
 
 ```javascript
 // Open the widget
-window.Maven.open();
+window.Maven.ChatWidget.open();
 
 // Close the widget
-window.Maven.close();
+window.Maven.ChatWidget.close();
+
+// Hide the button
+window.Maven.ChatWidget.hide();
+
+// Show the chat button
+window.Maven.ChatWidget.show();
 ```
 
 ## Live Agent Handoff
