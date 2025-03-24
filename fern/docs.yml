@@ -25,6 +25,10 @@ navigation:
         contents:
           - page: Navigating insights
             path: ./docs/pages/insights/overview.mdx
+      - section: Inbox
+        contents:
+          - page: Inbox overview
+            path: ./docs/pages/inbox.mdx
       - section: Conversations
         contents:
           - page: Conversations overview
