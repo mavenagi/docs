@@ -1,0 +1,99 @@
+## Overview
+
+The Inbox is the centralized workspace for optimizing the quality of your knowledge to keep your Maven agents operating at peak performance! It identifies duplicate content, overlapping knowledge bases, and missing knowledge, ensuring that Maven is referencing the most relevant and diverse information available when responding to queries.
+
+**Use Inbox to:**
+
+- Remove contradictory or redundant content, improving consistency in AI responses
+- Expand Maven’s knowledge by reducing duplicate content and increasing variation
+- Fill in missing knowledge gaps that Maven detected through analyzing conversations
+
+## Accessing the Inbox
+To open the Inbox, navigate to:  
+**Agent Designer > Operate > Inbox**
+
+The interface consists of:
+
+- A search bar to quickly find specific content  
+- A table of unresolved, resolved, or ignored items, for Duplicate Documents, Duplicate Knowledge Bases, and Missing Knowledge  
+- A detailed view on the right, where users can see detailed content and take action  
+- Filtering and sorting options to refine the view
+
+## Key Features
+
+### 1. Duplicate Documents
+
+Duplicate documents are flagged when two or more pieces of content have a high similarity score.
+
+**Why This Matters:**
+
+- AI learns best from diverse content. If multiple documents say the same thing, the AI doesn’t have varied knowledge to pull from, reducing the effectiveness of its responses.
+- Having duplicates can lead to conflicting information if one version is outdated while the other is updated.
+
+**Actions Available:**
+
+- Exclude the duplicate document to remove it from the knowledge base  
+- Ignore the inbox item if the document is unique and should remain
+
+### 2. Knowledge Base Alert
+
+Knowledge base alerts are flagged when more than 15 duplicate documents exist within a single knowledge base.
+
+**Why This Matters:**
+
+- Helps identify potential issues in how knowledge is managed or ingested  
+- Keeps the knowledge base clean, efficient, and easier to maintain
+
+**Actions Available:**
+
+- Deactivate the knowledge base  
+- Ignore the alert if the knowledge base should remain active
+
+### 3. Duplicate Knowledge Bases
+
+This flags large-scale overlap between knowledge bases (collections of documents) when more than 50% of content is duplicated across different knowledge bases.
+
+**Why This Matters:**
+
+- Avoids redundancy that can lead to bloated, inefficient knowledge bases  
+- Prevents conflicting responses if different knowledge bases contain slightly varied versions of the same topic
+
+**Actions Available:**
+
+- Deactivate redundant knowledge bases  
+- Ignore if the duplication is intentional or necessary
+
+### 4. Missing Knowledge
+
+Maven reviews copilot conversations to identify missing knowledge and proposes content to fill those gaps.
+
+**Why This Matters:**
+
+- Gaps in knowledge lead to poor responses  
+- This feature ensures AI suggestions align with real-world agent expertise
+
+**Actions Available:**
+
+- Add Document to integrate AI-suggested knowledge into the knowledge base  
+- Edit Suggestions to refine auto-generated content before publishing
+
+## Best Practices for Maintaining a High-Quality Knowledge Base
+
+- Regularly review and resolve flagged items to prevent duplicate or conflicting content  
+- Prioritize missing knowledge suggestions to improve AI accuracy  
+- Ensure varied, high-quality content so Maven provides insightful, non-repetitive responses  
+- Monitor flagged duplicate knowledge bases to keep the knowledge base streamlined and efficient
+
+## FAQs
+
+**How often does the Inbox refresh?**  
+Every Monday at 4 AM UTC
+
+**Why is duplicate content bad for AI?**  
+The AI learns best from diverse inputs. If it only references duplicated documents, it limits its ability to provide unique and well-rounded answers.
+
+**Can I edit missing knowledge suggestions before adding them?**  
+Yes, AI-generated suggestions can be refined before they are published.
+
+**What happens if I exclude a duplicate document?**  
+It will no longer be referenced by Maven, ensuring only the best version of the content is used.
