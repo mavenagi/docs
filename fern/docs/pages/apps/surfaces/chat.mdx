@@ -10,10 +10,17 @@ Maven offers a chat widget that allows you to embed a Maven experience directly 
 
 To install the chat app on your agent:
 
-1. Navigate to the **Apps** page in the **Agent Designer**.
-2. Click on **Browse & Install** on the **Apps Directory** tile.
-3. Search for "Chat" and click on the **Chat** app tile.
-4. Click on the **Install** button.
+<Steps>
+  <Step title="Locate the chat app">
+    - Navigate to the **Apps** page in the **Agent Designer**
+    - Click on **Browse & Install** on the **Apps Directory** tile
+    - Search for "Chat" and click on the **Chat** app tile
+  </Step>
+  <Step title="Install the app">
+    - Click on the **Install** button
+    - See below for details on configuration options
+  </Step>
+</Steps>
 
 
 ## Integration
@@ -169,7 +176,9 @@ Currently supported providers:
 - Zendesk
 - Front
 
-### Salesforce Configuration
+### Salesforce Legacy Chat REST API Configuration
+
+<Warning>Salesforce has [deprecated](https://help.salesforce.com/s/articleView?id=release-notes.rn_chat_retirement.htm&release=250&type=5) the legacy Chat REST API and recommends migrating to the Salesforce Messaging for In-App and Web API.</Warning>
 
 Maven Chat integrates with Salesforce Live Agent to provide human support capabilities. This integration requires configuration in both Salesforce and Maven.
 
@@ -183,25 +192,34 @@ Maven Chat integrates with Salesforce Live Agent to provide human support capabi
 
 Follow these steps to configure Salesforce integration:
 
-1. **Configure Live Agent Deployment**
-   - Navigate to **Salesforce Setup > Embedded Service Deployments**
-   - Locate or create a new deployment
-   - Note the **Deployment ID** and **ES Live Agent Dev Name**
-
-2. **Configure Chat Button**
-   - Navigate to **Setup > Chat Buttons & Invitations**
-   - Create or select an existing chat button
-   - Note the **Button ID**
-
-3. **Locate Live Agent Settings**
-   - Find your **Chat Host URL** in the Salesforce Live Agent settings
-   - Note your **Organization ID**
+<Steps>
+  <Step title="Configure Live Agent Deployment">
+    - Navigate to **Salesforce Setup > Embedded Service Deployments**
+    - Locate or create a new deployment
+    - Note the **Deployment ID** and **ES Live Agent Dev Name**
+  </Step>
+  <Step title="Configure Chat Button">
+    - Navigate to **Setup > Chat Buttons & Invitations**
+    - Create or select an existing chat button
+    - Note the **Button ID**
+  </Step>
+  <Step title="Locate Live Agent Settings">
+    - Navigate to **Salesforce Setup > Live Agent Settings**
+    - Note your **Chat Host URL**
+  </Step>
+  <Step title="Locate Organization ID">
+    - Navigate to **Salesforce Setup > Organization Settings**
+    - Note your **Organization ID**
+  </Step>
+</Steps>
 
 #### Configuration
 
 Create a handoff configuration object with the following structure:
 
-1. Create your configuration object:
+<Steps>
+  <Step title="Create Configuration Object">
+    Create your configuration object:
 ```javascript
 {
   type: 'salesforce',
@@ -215,10 +233,12 @@ Create a handoff configuration object with the following structure:
   enableAvailabilityCheck: false
 }
 ```
-
-2. Convert to JSON and add to Maven:
-   - Convert the object to a JSON string
-   - Enter it in the **Live agent handoff configuration** field in chat app settings
+  </Step>
+  <Step title="Convert to JSON and add to Maven">
+    - Convert the object to a JSON string
+    - Enter it in the **Live agent handoff configuration** field in chat app settings
+  </Step>
+</Steps>
 
 ##### Configuration Options
 
@@ -236,6 +256,71 @@ Create a handoff configuration object with the following structure:
 | `enableAvailabilityCheck` | boolean | No | false | Whether to check agent availability |
 | `availabilityFallbackMessage` | string | No | - | Message shown when agents unavailable |
 
+
+### Salesforce Messaging for In-App and Web Configuration
+
+Maven Chat supports Messaging for In-App and Web. This integration requires configuration in both Maven and Salesforce.
+
+#### Requirements
+
+- Salesforce account with Messaging for In-App and Web enabled
+- Access to Salesforce Setup
+- A configured Messaging for In-App and Web deployment
+
+#### Setup Process
+
+<Note>Configuration of basic Salesforce settings is outside the scope of this guide.</Note>
+
+<Steps>
+  <Step title="Create an Embedded Service deployment">
+    - Navigate to **Salesforce Setup > Feature Settings > Service > Embedded Service**
+    - Create a new deployment
+    - Select **Messaging for In-App and Web** when prompted
+    - Select **Custom Client** when prompted
+    - Enter a name for the deployment (API Name will be auto-generated) and select the correct messaging channel
+    - Click **Save**
+    - Click **Publish** (may take a few minutes to publish)
+  </Step>
+  <Step title="Retrieve deployment configuration details">
+    - Click on **Install Code Snippet**
+    - Record the **OrganizationId, DeveloperName, and Url** values
+  </Step>
+</Steps>
+
+#### Configuration
+
+Create a handoff configuration object with the following structure:
+
+<Steps>
+  <Step title="Create your configuration object">
+    ```javascript
+    {
+      type: 'salesforce-messaging',
+      organizationId: 'your-organization-id',
+      messagingUrl: 'https://your-messaging-url.my.salesforce-scrt.com/',
+      deploymentId: 'your-developer-name',
+      apiSecret: 'a-random-32-byte-string', // used for signing access tokens for chat sessions
+    }
+    ```
+  </Step>
+  <Step title="Convert to JSON and add to Maven">
+    - Convert the object to a JSON string
+    - Enter it in the **Live agent handoff configuration** field in chat app settings
+  </Step>
+</Steps>
+
+##### Configuration Options
+
+| Option | Type | Required | Default | Description |
+|--------|------|----------|---------|-------------|
+| `type` | 'salesforce-messaging' | Yes | - | Identifies Salesforce as the handoff provider |
+| `organizationId` | string | Yes | - | Your Salesforce organization ID |
+| `messagingUrl` | string | Yes | - | Your Salesforce Messaging for In-App and Web URL |
+| `deploymentId` | string | Yes | - | Your Salesforce deployment ID |
+| `apiSecret` | string | Yes | - | Authentication secret for handoff requests |
+| `allowAnonymousHandoff` | boolean | No | false | Whether to request email from anonymous users |
+| `surveyLink` | string | No | - | Post-handoff survey URL |
+
 ### Zendesk Configuration
 
 Maven Chat integrates with Zendesk Conversations to provide human support capabilities. This integration requires configuration in both Zendesk and Maven.
@@ -250,25 +335,28 @@ Maven Chat integrates with Zendesk Conversations to provide human support capabi
 
 Follow these steps to configure Zendesk integration:
 
-1. **Create Zendesk Integration**
+<Steps>
+  <Step title="Create Zendesk Integration">
    - Navigate to the **Zendesk Admin Center**
    - Go to **Apps and integrations > Integrations > Conversations integrations**
    - Click **Create integration**
    - Enter a unique name for the integration
-
-2. **Configure Webhook**
-   - Set **Webhook endpoint URL** to `https://chat.onmaven.app/api/zendesk/webhook`
-   - Uncheck **Webhook body data**
-   - Check all **Webhook subscriptions**
-   - Click **Save**
-   - After saving, note the **Webhook ID** from the URL (it will be in the format `https://admin.zendesk.com/admin/integrations/webhooks/{webhookId}`)
-
-3. **Generate API Key**
-   - Navigate to the **API Keys** tab
-   - Click **Create API key**
-   - Enter an identifying name for the key
-   - Copy and securely store the provided ID and secret key
-   - Click **Next** to complete the setup
+  </Step>
+  <Step title="Configure Webhook">
+    - Set **Webhook endpoint URL** to `https://chat.onmaven.app/api/zendesk/webhook`
+    - Uncheck **Webhook body data**
+    - Check all **Webhook subscriptions**
+    - Click **Save**
+    - After saving, note the **Webhook ID** from the URL (it will be in the format `https://admin.zendesk.com/admin/integrations/webhooks/{webhookId}`)
+  </Step>
+  <Step title="Generate API Key">
+    - Navigate to the **API Keys** tab
+    - Click **Create API key**
+    - Enter an identifying name for the key
+    - Copy and securely store the provided ID and secret key
+    - Click **Next** to complete the setup
+  </Step>
+</Steps>   
 
 #### Configuration
 
@@ -315,16 +403,17 @@ Maven Chat integrates with Front to provide human support capabilities. This int
 
 Follow these steps to configure Front integration:
 
-1. **Create Front Application**
-   - Navigate to [Front Developer Settings](https://app.frontapp.com/settings/developers)
-   - Click **Create App**
-   - Enter app name and description
-   - Note the **App UID** and **App Secret** from Basic Information
-
-2. **Configure Channel**
-   - Go to the **Features** tab
-   - Click **Create channel type**
-   - Configure the following settings:
+<Steps>
+  <Step title="Create Front Application">
+    - Navigate to [Front Developer Settings](https://app.frontapp.com/settings/developers)
+    - Click **Create App**
+    - Enter app name and description
+    - Note the **App UID** and **App Secret** from Basic Information
+  </Step>
+  <Step title="Configure Channel">
+    - Go to the **Features** tab
+    - Click **Create channel type**
+    - Configure the following settings:
      - Set **Webhook URL** to `https://chat.onmaven.app/api/front`
      - Set **Authentication strategy** to `Bearer`
      - Set **Contact type** to `Custom`
@@ -332,34 +421,38 @@ Follow these steps to configure Front integration:
      - Enable **Reply/Compose**
      - Set **Composer type** to `Basic`
      - Set **Timeline Type UI** to `Chat Timeline`
-   - Click **Create**
-
-3. **Connect Channel in Front**
-   - Navigate to **Channels** under your workspace
-   - Click **Connect a channel**
-   - Find your channel under the "Other" section
-   - Set **Name** and **Token** to `orgId-agentId`
-   - Select target inbox and click **Continue**
-
+     - Click **Create**
+  </Step>
+  <Step title="Connect Channel in Front">
+    - Navigate to **Channels** under your workspace
+    - Click **Connect a channel**
+    - Find your channel under the "Other" section
+    - Set **Name** and **Token** to `orgId-agentId`
+    - Select target inbox and click **Continue**
+  </Step>
+</Steps>
 #### Configuration
 
 The handoff configuration requires two steps:
 
-1. Create your configuration object:
-```javascript
-{
-  type: 'front',
-  apiKey: 'your-front-api-token',
-  appId: 'your-front-app-uid',
-  apiSecret: 'your-front-app-secret',
-  shiftNames: [],
-  host: 'optional-self-hosted-front-url'
-}
-```
-
-2. Convert to JSON and add to Maven:
-   - Convert the object to a JSON string
-   - Enter it in the **Live agent handoff configuration** field in chat app settings
+<Steps>
+  <Step title="Create your configuration object">
+    ```javascript
+    {
+      type: 'front',
+      apiKey: 'your-front-api-token',
+      appId: 'your-front-app-uid',
+      apiSecret: 'your-front-app-secret',
+      shiftNames: [],
+      host: 'optional-self-hosted-front-url'
+    }
+    ```
+  </Step>
+  <Step title="Convert to JSON and add to Maven">
+    - Convert the object to a JSON string
+    - Enter it in the **Live agent handoff configuration** field in chat app settings
+  </Step>
+</Steps>
 
 ##### Configuration Options
 
@@ -374,14 +467,15 @@ The handoff configuration requires two steps:
 
 #### Additional Setup Requirements
 
-1. **Content Security Policy**
-   - Update your CSP to allow content from `chat.onmaven.app`
-
-2. **Widget Installation**
-   - Include the widget script:
-     ```html
-     <script src='https://chat.onmaven.app/js/widget.js' defer></script>
-     ```
+<Steps>
+  <Step title="Content Security Policy">
+    - Update your CSP to allow content from `chat.onmaven.app`
+  </Step>
+  <Step title="Widget Installation">
+    - Include the widget script:
+      ```html
+      <script src='https://chat.onmaven.app/js/widget.js' defer></script>
+      ```
    - Initialize with configuration:
      ```javascript
      addEventListener("load", function () {
@@ -392,6 +486,8 @@ The handoff configuration requires two steps:
        });
      });
      ```
+  </Step>
+</Steps>
 
 ## Authentication
 
