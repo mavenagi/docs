@@ -122,12 +122,29 @@ navbar-links:
     url: https://app.mavenagi.com
 
 colors:
-  accentPrimary:
-    dark: '#9a66f2'
-    light: '#7e3af2'
+  accent-primary:
+    light: '#994DDC'
+    dark: '#C492F4'
+
   background:
-    light: '#f6f5ff'
-    dark: '#000000'
+    light: '#ffffff'
+    dark: '#1A1A1A'
+
+  border:
+    light: '#D4D4D4'
+    dark: '#5E5E5E'
+
+  sidebar-background:
+    light: '#FCFBFA'
+    dark: '#3E3B39'
+
+  header-background:
+    light: '#FCFBFA'
+    dark: '#3E3B39'
+
+  card-background:
+    light: '#FCFBFA'
+    dark: '#3E3B39'
 
 logo:
   dark: ./docs/assets/logo-dark-mode.png
