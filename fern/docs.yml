@@ -63,7 +63,7 @@ navigation:
             contents:
               - page: Chat Widget
                 path: ./docs/pages/apps/surfaces/chat.mdx
-              - page: Full Page Search
+              - page: Full-page Search
                 path: ./docs/pages/apps/surfaces/search.mdx
               - page: Instant Answers
                 path: ./docs/pages/apps/surfaces/instant-answers.mdx
