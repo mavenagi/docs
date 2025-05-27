@@ -265,6 +265,107 @@ Create a handoff configuration object with the following structure:
 | `enableAvailabilityCheck` | boolean | No | false | Whether to check agent availability |
 | `availabilityFallbackMessage` | string | No | - | Message shown when agents unavailable |
 
+#### Customizing LiveChatTranscript Creation
+
+You can customize the Salesforce request to create a LiveChatTranscript by adding a `chasitorConfiguration` object to your Salesforce handoff configuration. This lets you define which fields, entities, and associated records are included in the pre-chat transcript, and how their values are set—either statically or dynamically from runtime sources. For example, you can search for existing Salesforce contacts and associate their contact record with the transcript. You can also automatically create and associate case records with custom fields like Subject.
+
+**How it works:**
+- `chasitorConfiguration` lives on your Salesforce handoff configuration object.
+- It controls which fields (`prechatDetails`) and Salesforce entities (`prechatEntities`) are included in the chat session initialization request, and how their values are determined.
+- To set a static value, use the `value` property in a `prechatDetail`.
+- To set a dynamic value, use the `valueFrom` property (omit `value`).
+
+**Available `valueFrom` sources:**
+- `customField`: Values from custom fields provided in the handoff request.
+- `user`: Values from the user data object (the user data depends on whether a signed user authentication token is provided).
+- `session`: Values from the Salesforce chat session credentials object (e.g., session key or ID).
+- `configuration`: Values from the handoff configuration itself.
+- `conversation`: Values from the Maven conversation (currently, this is only the conversation ID).
+
+The `id` property specifies the key or field name to extract from the chosen source.
+
+**Example:**
+
+```javascript
+const handoffConfiguration = {
+  // ...other Salesforce handoff config...
+  chasitorConfiguration: {
+    prechatDetails: [
+      // Static value
+      {
+        label: "Origin",
+        value: "Web Chat",
+        displayToAgent: false,
+        transcriptFields: ["Origin__c"],
+      },
+      // Dynamic value from user data
+      {
+        label: "Email",
+        valueFrom: { type: "user", id: "email" },
+        displayToAgent: true,
+        transcriptFields: ["Email"],
+      },
+      // Dynamic value from a custom field
+      {
+        label: "Order Number",
+        valueFrom: { type: "customField", id: "orderNumber" },
+        displayToAgent: true,
+        transcriptFields: ["Order_Number__c"],
+      },
+    ],
+    prechatEntities: [
+      // Create or link a Contact
+      {
+        entityName: "Contact",
+        showOnCreate: true,
+        saveToTranscript: "ContactId",
+        entityFieldsMaps: [
+          {
+            fieldName: "Email",
+            label: "Email",
+            doCreate: true,
+            doFind: true,
+            isExactMatch: true,
+          },
+        ],
+      },
+      // Create a Case associated with the Contact
+      {
+        entityName: "Case",
+        showOnCreate: true,
+        linkToEntityName: "Contact",
+        linkToEntityField: "ContactId",
+        saveToTranscript: "CaseId",
+        entityFieldsMaps: [
+          {
+            fieldName: "Origin",
+            label: "Origin",
+            doCreate: true,
+            doFind: false,
+            isExactMatch: false,
+          },
+          {
+            fieldName: "Order_Number__c",
+            label: "Order Number",
+            doCreate: true,
+            doFind: false,
+            isExactMatch: false,
+          },
+        ],
+      },
+    ],
+  },
+};
+```
+
+In this example:
+- `Origin` is set statically.
+- `Email` is dynamically pulled from the user object.
+- `Order Number` is dynamically pulled from a custom field in the handoff request.
+- Both a Contact and a Case are created/linked and associated with the chat transcript.
+
+Edit the `valueFrom` sources and field mappings as needed to match your data model and integration needs.
+
 
 ### Salesforce Messaging for In-App and Web Configuration
 
