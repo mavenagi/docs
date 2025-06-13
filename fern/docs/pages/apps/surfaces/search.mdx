@@ -1,0 +1,122 @@
+---
+title: Search Interface
+slug: /apps/search
+layout: overview
+---
+
+Maven offers a search interface that provides a dedicated web-based search experience for your Maven agent.
+
+## Installation
+
+To install the search app on your agent:
+
+<Steps>
+  <Step title="Locate the search app">
+    - Navigate to the **Apps** page in the **Agent Designer**
+    - Click on **Browse & Install** on the **Apps Directory** tile
+    - Search for "Search" and click on the **Search** app tile
+  </Step>
+  <Step title="Install the app">
+    - Click on the **Install** button
+    - See below for details on configuration options
+  </Step>
+</Steps>
+
+## Access
+
+The search interface is accessed directly through a web URL. Users can visit your personalized search interface at:
+
+```
+https://search.onmaven.app/${organizationId}/${agentId}
+```
+
+Replace `${organizationId}` and `${agentId}` with your actual organization and agent IDs, which can be found in your Maven dashboard.
+
+## Password Protection
+
+The search interface can be protected with HTTP Basic Authentication to restrict access to authorized users only.
+
+### HTTP Basic Auth Configuration
+
+To enable password protection for your search interface:
+
+<Steps>
+  <Step title="Configure Basic Auth in Maven Dashboard">
+    - Navigate to your search app settings in the Maven dashboard
+    - Locate the **HTTP Basic Auth** section under Security settings
+    - Enter a **Basic Auth Username** - this will be the username users need to enter
+    - Enter a **Basic Auth Password** - this will be the password users need to enter
+    - Save your settings
+  </Step>
+  <Step title="Test Access">
+    - Visit your search interface URL: `https://search.onmaven.app/${organizationId}/${agentId}`
+    - You should be prompted for username and password
+    - Enter the credentials you configured to access the interface
+  </Step>
+</Steps>
+
+### How It Works
+
+When HTTP Basic Auth is enabled:
+- Users visiting your search interface will see a browser authentication dialog
+- They must enter the correct username and password to access the search interface
+- The authentication is handled at the HTTP level, providing an additional security layer
+- This is useful for internal tools, beta testing, or restricting access to specific user groups
+
+<Note>
+HTTP Basic Auth provides basic password protection but should not be considered highly secure for sensitive applications. For stronger security, consider using signed user authentication in combination with Basic Auth.
+</Note>
+
+## Basic Settings
+
+The search app supports several basic configuration options that can be customized through the Dashboard:
+
+- **Logo** - The image displayed on the search page.
+- **Favicon** - The image displayed in the browser tab.
+- **Agent Name** - Part of the page title name.
+- **Brand Color** - The accent color used throughout the search UI.
+- **Brand Font Color** - The color of the font against the brand color.
+- **Brand Title Color** - The color used for titles in the search interface.
+- **Popular Questions** - Pre-defined questions shown to help users get started with their search.
+
+## Advanced Settings
+
+The full list of search app settings:
+
+| Category | Setting | Description |
+|----------|---------|-------------|
+| **Branding** | Logo | The image displayed on the search page |
+| | Favicon | The image displayed in the browser tab |
+| | Agent Name | Part of the page title name |
+| | Brand color | The accent color used throughout the search UI |
+| | Brand font color | The color of the font against the brand color |
+| | Brand title color | The color used for titles in the search interface |
+| | Popular questions | Pre-defined questions shown to help users get started |
+| | Basic Auth Username | Username for HTTP Basic Authentication to protect the search interface |
+| | Basic Auth Password | Password for HTTP Basic Authentication to protect the search interface |
+
+## URL Parameters
+
+The search interface supports several URL parameters to customize the user experience:
+
+| Parameter | Type | Description | Example |
+|-----------|------|-------------|---------|
+| `q` | string | Pre-populate the search query | `?q=how+to+reset+password` |
+| `bgColor` | string | Override the background color | `?bgColor=%23007AFF` |
+| `textColor` | string | Override the text color | `?textColor=%23FFFFFF` |
+| `locale` | string | Set the interface language | `?locale=es` |
+| `tags` | string | Add tags to the search session | `?tags=support,billing` |
+
+### Example URLs
+
+```
+# Basic search with pre-filled query
+https://search.onmaven.app/your-org-id/your-agent-id?q=billing+questions
+
+# Customized appearance
+https://search.onmaven.app/your-org-id/your-agent-id?bgColor=%23007AFF&textColor=%23FFFFFF
+
+# Multiple parameters
+https://search.onmaven.app/your-org-id/your-agent-id?q=help&locale=es&tags=support
+```
+
