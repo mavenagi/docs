@@ -172,7 +172,96 @@ For the changes to take effect:
 2. Click on **Manage** for `MavenCaseWebhookEventTrigger`
 3. Click **Suspend**, then click **Resume**
 
-## Configure Live Agent Handoff for Chat
+---
+
+# Configuring Live Agent Handoff
+## Salesforce Messaging for In-App and Web Configuration
+
+Maven Chat supports Messaging for In-App and Web. This integration requires configuration in both Maven and Salesforce.
+
+### Requirements
+
+- Salesforce account with Messaging for In-App and Web enabled
+- Access to Salesforce Setup
+- A configured Messaging for In-App and Web deployment
+
+### Setup Process
+
+<Note>Configuration of basic Salesforce settings is outside the scope of this guide.</Note>
+
+### Step 1: Create an Embedded Service deployment
+
+-   Navigate to **Salesforce Setup > Feature Settings > Service > Embedded Service**
+
+-   Create a new deployment
+
+-   Select **Messaging for In-App and Web** when prompted
+
+-   Select **Custom Client** when prompted
+
+-   Enter a name for the deployment (API Name will be auto-generated) and select the correct messaging channel
+
+-   Click **Save**
+
+-   Click **Publish** (may take a few minutes to publish)
+
+### Step 2: Retrieve deployment configuration details
+
+-   Click on **Install Code Snippet**
+
+-   Record the **OrganizationId**, **DeveloperName**, and **Url** values
+
+* * * * *
+
+### Configuration
+
+#### Step 3: Create your configuration object
+
+```json
+{
+  "type": "salesforce-messaging",
+  "organizationId": "your-organization-id",
+  "messagingUrl": "https://your-messaging-url.my.salesforce-scrt.com/",
+  "deploymentId": "your-developer-name",
+  "apiSecret": "a-random-32-byte-string"
+}
+```
+
+#### Step 4: Add JSON to Maven chat installation
+
+-   Enter the above JSON to the **Live agent handoff configuration** field in chat app settings
+
+#### Configuration Options
+
+| Option | Type | Required | Default | Description |
+|--------|------|----------|---------|-------------|
+| `type` | 'salesforce-messaging' | Yes | - | Identifies Salesforce as the handoff provider |
+| `organizationId` | string | Yes | - | Your Salesforce organization ID |
+| `messagingUrl` | string | Yes | - | Your Salesforce Messaging for In-App and Web URL |
+| `deploymentId` | string | Yes | - | Your Salesforce deployment ID |
+| `apiSecret` | string | Yes | - | Authentication secret for handoff requests |
+| `allowAnonymousHandoff` | boolean | No | false | Whether to request email from anonymous users |
+| `surveyLink` | string | No | - | Post-handoff survey URL |
+
+### Using Live Handoff
+Once configured, support agents can use the Salesforce **Service Console**:
+1. Click the **9 dots** on the left of the screen and search for `Service Console`
+2. In the menu at the left, hover over the empty circle
+3. Click the dropdown arrow next to circle and set it to **Available**
+
+Now, agents are online and can receive incoming chats from Maven.
+
+To initiate a handoff:
+1. In a configured Maven chat instance, type **"connect to an agent"** (this trigger can be customized)
+2. A confirmation popup will appear
+3. Click **Connect to live agent**
+4. The message will appear in the Salesforce **Service Console**
+5. Agents can then **accept the message** and pick up the conversation
+
+---
+
+## Configure Live Agent Handoff for Chat 
+#### (Chat has been deprecated by Salesforce, and it is strongly recommended to switch to a [Messaging Deployment](https://docs.mavenagi.com/apps/salesforce#salesforce-messaging-for-in-app-and-web-configuration)).
 
 Salesforce configuration varies drastically from organization to organization, depending on their requirements and infrastructure. As such, there is no one configuration that applies to Maven AGI chat handoff integration.
 
@@ -301,7 +390,6 @@ To initiate a handoff:
 3. Click **Connect to live agent**
 4. The message will appear in the Salesforce **Service Console**
 5. Agents can then **accept the message** and pick up the conversation
-
 
 ## Still not working?
 
