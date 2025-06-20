@@ -443,7 +443,7 @@ Chat supports rendering Salesforce Messaging pre-chat fields on the escalation f
 - Renders the fields in the live agent escalation form within chat UI.
 - Supports customization using the `prechatFieldMap` property in the **Live agent handoff configuration** object.
 - Supports LLM-generated suggestions for field values.
-- Data can be pulled from the signed user authentication token instead of requiring user input in the form.
+- User data can be pulled from the signed user authentication token instead of requiring user input in the form.
 - When escalation occurs, the selected and/or auto-filled field values are passed to Salesforce as `routingAttributes` in the [createConversation API](https://developer.salesforce.com/docs/service/messaging-api/references/miaw-api-reference?meta=createConversation).
 
 ##### `prechatFieldMap` configuration
@@ -468,7 +468,7 @@ Each key in the map corresponds to the Salesforce pre-chat field name (case-sens
     },
     "_orderNumber": {
       "label": "Order Number",
-      "description": "The order number should be 10 digits long",
+      "description": "The order number should be 10 digits long"
     }
   }
 }
