@@ -431,6 +431,54 @@ Create a handoff configuration object with the following structure:
 | `apiSecret` | string | Yes | - | Authentication secret for handoff requests |
 | `allowAnonymousHandoff` | boolean | No | false | Whether to request email from anonymous users |
 | `surveyLink` | string | No | - | Post-handoff survey URL |
+| `prechatFieldMap` | Record<string, { label?: string; description?: string; signedDataPropertyName?: string; }> | No | - | Customize pre-chat fields |
+
+#### Importing and Customizing Pre-Chat Fields
+
+Chat supports rendering Salesforce Messaging pre-chat fields on the escalation form and passing them back to Salesforce in the `routingAttributes` object when a live agent session is initiated.
+
+##### How it works
+
+- Automatically imports [pre-chat fields](https://help.salesforce.com/s/articleView?id=service.miaw_custom_prechat_3.htm&type=5) configured in your Salesforce Messaging deployment.
+- Renders the fields in the live agent escalation form within chat UI.
+- Supports customization using the `prechatFieldMap` property in the **Live agent handoff configuration** object.
+- Supports LLM-generated suggestions for field values.
+- Data can be pulled from the signed user authentication token instead of requiring user input in the form.
+- When escalation occurs, the selected and/or auto-filled field values are passed to Salesforce as `routingAttributes` in the [createConversation API](https://developer.salesforce.com/docs/service/messaging-api/references/miaw-api-reference?meta=createConversation).
+
+##### `prechatFieldMap` configuration
+
+The optional `prechatFieldMap` object allows you to customize labels, descriptions, and automatically populate field values from signed user data.
+
+Each key in the map corresponds to the Salesforce pre-chat field name (case-sensitive). You can:
+
+- Override the field's label shown in the escalation form
+- Add a user-facing description below the field
+- Populate the field using a property from the signed user data (use `signedDataPropertyName`)
+
+##### Example
+
+```json
+{
+  "type": "salesforce-messaging",
+  ...
+  "prechatFieldMap": {
+    "_email": {
+      "signedDataPropertyName": "email"
+    },
+    "_orderNumber": {
+      "label": "Order Number",
+      "description": "The order number should be 10 digits long",
+    }
+  }
+}
+```
+
+With this setup, the chat widget will:
+- Omit the email field from the escalation form
+- Automatically populate the email field with the value from the `email` property of the signed user data
+- Provides custom label and description for the order number field
+- Send both values to Salesforce as `routingAttributes` during escalation
 
 ### Zendesk Configuration
 
