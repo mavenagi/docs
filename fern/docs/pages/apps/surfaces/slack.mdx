@@ -4,14 +4,27 @@ slug: /apps/slack
 layout: overview
 ---
 
+Maven provides a Slack bot that brings the full Maven experience directly into Slack.
 
-## Setup within Maven
-Each Agent that should be visible within Slack must be enabled and given a name within the Slack settings page.
-If the "Enable this agent for Slack" checkbox is not checked, the agent will not be available within Slack.
+## Installation
+
+To install the chat app on your agent:
+
+<Steps>
+  <Step title="Locate the chat app">
+    - Navigate to the **Apps** page in the **Agent Designer**
+    - Click on **Browse & Install** on the **Apps Directory** tile
+    - Search for "Chat" and click on the **Slack** app tile
+  </Step>
+  <Step title="Install the app">
+    - Click on the **Install** button
+    - See below for details on configuration options
+  </Step>
+</Steps>
+
 
 ## Setup within Slack
-Once the settings are configured, Maven needs to be installed into your Slack workspace.
-On the settings page for the Slack integration within the Maven dashboard, click the link to add the 
-Maven Slack app to your workspace. This will take you through an authentication flow with Slack.
 
-You should then have a Slack app which can be chatted directly or added to a channel.
+After you install the **Slack** app in **Agent Designer**, click on the 
+**Instuctions** tab, click the link to install the Maven Slack bot to your Slack Workspace.
+Follow the steps to authorize the app and then select a channel to enable the bot on.
