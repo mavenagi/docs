@@ -19,6 +19,114 @@ The instant answers code snippet requires a slightly deeper integration.
 It needs to know which piece of the page to attach the widget to and also needs to know when the user question 
 has been submitted and what the question was. This requires a bit more HTML knowledge.
 
+## Configuration Options
+
+The Instant Answers widget supports several configuration options that can be customized:
+
+| Option | Type | Required | Default | Description |
+|--------|------|----------|---------|-------------|
+| `organizationId` | string | Yes | - | Your organization ID |
+| `agentId` | string | Yes | - | Your agent ID |
+| `locale` | string | No | browser locale | Widget locale |
+| `signedUserData` | string | No | - | A signed and encrypted authentication token |
+| `unsignedUserData` | Record\<string, any\> | No | - | Arbitrary data to include for context |
+| `tags` | string[] | No | - | Tags to add to the search (can be a single tag or list of tags) |
+
+### Basic Configuration Example
+
+```javascript
+Maven.InstantAnswersWidget.init({
+  agentId: "your-agent-id",
+  organizationId: "your-organization-id",
+  locale: "en",
+  signedUserData: "your-signed-jwt-token", // Optional user authentication
+  unsignedUserData: {
+    sessionId: "user-session-123",
+    department: "support"
+  },
+  tags: ["help-center", "self-service"]
+});
+```
+
+## Authentication
+
+### Signed User Authentication
+
+Maven Instant Answers supports signed and encrypted user authentication, allowing you to securely authenticate users and pass additional context data (such as session IDs) that can be used by Maven Apps to make API calls on behalf of the user.
+
+#### Requirements
+
+- A server-generated, signed and encrypted JWT containing user data
+- A shared symmetrical encryption key, provided in the Instant Answers app settings under **Security** (**Encryption secret**)
+- A shared public key for verifying signing, provided in the Instant Answers app settings under **Security** (**JWT public key**)
+
+#### User Data Requirements
+
+The user data object must include:
+- `firstName` - User's first name
+- `lastName` - User's last name
+- `id` - User's unique identifier (UUID)
+- At least one of:
+  - `phoneNumber` - User's phone number
+  - `email` - User's email address
+- Additional fields (like `sessionId`) will be included and can be used by Maven Apps
+
+#### Generating User Authentication Token
+
+To protect the user data in transit, generate a signed JWT token containing user data and encrypt the token with `ES256` and a 32-bit secret key. This token must be generated on the backend and passed into the instant answers widget via the `signedUserData` property.
+
+##### Example Implementation (TypeScript)
+
+```typescript
+import { SignJWT, EncryptJWT } from 'jose';
+
+async function secureUserData(userData: Record<string, string> & {
+ id: string
+ firstName: string
+ lastName: string
+ sessionId?: string  // Additional context data
+} & (
+ { email: string, phoneNumber?: string } |
+ { email?: string, phoneNumber: string }
+)) {
+ // 1. Sign the user data with your private key (ES256 algorithm)
+ const signedJWT = await new SignJWT(userData)
+   .setProtectedHeader({ alg: 'ES256' })
+   .setIssuedAt()
+   .setExpirationTime('1d')
+   .sign(yourPrivateKey);
+
+ // 2. Encrypt the signed JWT using your encryption secret
+ const encryptedJWT = await new EncryptJWT({ jwt: signedJWT })
+   .setProtectedHeader({ alg: 'dir', enc: 'A128CBC-HS256' })
+   .encrypt(base64url.decode(encryptionSecret));
+
+ return encryptedJWT;
+}
+```
+
+#### Using Signed User Data
+
+Once you have generated the signed user data token, pass it to the widget during initialization:
+
+```javascript
+Maven.InstantAnswersWidget.init({
+  agentId: "your-agent-id",
+  organizationId: "your-organization-id",
+  signedUserData: await secureUserData({
+    id: "user-123",
+    firstName: "John",
+    lastName: "Doe", 
+    email: "john.doe@example.com",
+    sessionId: "session-abc-123" // Custom data for your app
+  })
+});
+```
+
+<Note>
+Make sure to configure the **JWT public key** and **Encryption secret** in your Instant Answers app settings under the **Security** section for authentication to work properly.
+</Note>
+
 ## Setting up Zendesk help center
 
 Zendesk provides [instructions](https://support.zendesk.com/hc/en-us/articles/4408839332250-Customizing-your-help-center-theme#topic_gxl_3qw_n3)
@@ -51,6 +159,11 @@ For the instant answers widget:
         agentId: "REPLACE THIS WITH YOUR AGENT", // defaults to support
         organizationId: "REPLACE THIS WITH YOUR ORG",
         locale: "en",
+        signedUserData: "your-signed-jwt-token", // Optional: for authenticated users
+        unsignedUserData: {
+          page: "zendesk-help-center",
+          source: "search"
+        }
       });
     
       // If there is an HTML element on the page with the ID 'query'
@@ -108,6 +221,11 @@ In Settings for your site in Experience Builder, navigate to "Advanced" and pres
         agentId: "REPLACE THIS WITH YOUR AGENT", // defaults to support
         organizationId: "REPLACE THIS WITH YOUR ORG",
         locale: "en",
+        signedUserData: "your-signed-jwt-token", // Optional: for authenticated users
+        unsignedUserData: {
+          page: "salesforce-help-center",
+          source: "search"
+        }
       });
     }
 </script>
