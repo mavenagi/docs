@@ -16,6 +16,21 @@ If it is not successful:
 - next check your username. It must belong to the account you used to make your API key.
 - finally, make sure that account has enough permissions to access the Zendesk API. Only admin accounts can allow API access.
 
+**Knowledge:**
+
+Maven will pull in articles from the Zendesk Knowledge Center. By default, the knowledge base is labeled "Zendesk Help Center - Uncategorized". The frequency of the sync/updates can be adjusted by updating the Knowledge Base settings in Maven.
+You can also choose to split up the knowledge base by your Zendesk categories, sections, or associated article permissions by selecting the appropriate "Knowledge Organization" value.
+Please note that if you change this value, you may need to deactivate any existing knowledge bases that were created under a previous setting.
+If you want to include draft articles, select the "Include Draft Articles" option in the settings.
+
+
+**Ticket Hand Off:**
+
+When Maven cannot deflect a user inquiry, a ticket is created in the Freshdesk system. Ticket hand off is represented as an action within Maven.
+By default, any fields that are required on your default Zendesk ticket form will be included in the the form presented to the user on handoff.
+If you want to include additional fields you can make them required by going to Admin Center > Objects and Rules > Fields and select the "Required To Submit a Request" checkbox.
+Please note that if these values are modified in Zendesk, you will need to update the App settings or reinistall the app for the changes to take effect.
+
 ## Setup within Zendesk
 Once your Maven settings are configured, [install the Zendesk plugin](https://www.zendesk.com/marketplace/apps/support/982238/maven-agi-co-pilot/) from the Zendesk Marketplace.
 
