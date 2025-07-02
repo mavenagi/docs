@@ -88,7 +88,16 @@ salesforce setup does start with an EmailMessage.
    - **Read**
    - **View All Records**
    - **View All Fields** permissions.
-5. In Maven Dashboard, navigate to **Train > Knowledge**.
+5. If your content is in a field other than `Knowledge__kav.Content__c`, set the field name in the **Knowledge Column** setting in Maven.
+6. By default, Salesforce Knowledge is contained in the `Salesforce Knowledge` knowledge base in Maven. Optionally, you can specify a column from the `Knowledge__kav` to split by. Enter the field name of the column under `Split Knowledge By` in Maven App settings.
+7. In Maven Dashboard, navigate to **Train > Knowledge**.
+
+---
+
+## Set up Ticket Handoff
+When Maven cannot deflect a user inquiry, a Case is created in the Salesforce.
+If your Case form requires additional custom fields, you may specify these in the `Additional Required Ticket Form Fields` list in the Maven App settings.
+
 
 ---
 
