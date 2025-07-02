@@ -1,0 +1,48 @@
+\---  
+title: Hubspot  
+slug: /apps/freshdesk  
+layout: overview  
+\---
+
+\*\*Setup within Maven\*\*
+
+Install the Freskdesk app via Agent Designer    
+\* Navigate to the Agent Designer dashboard    
+\* Select Apps \\\> App Directory \\\> Browse & Install    
+\* Install Fresdesk
+
+To install, you will need:
+
+\* Your FreshDesk API key: How to find your API key    
+\* Your FreshDesk subdomain: https://yoursubdomain.freshdesk.com    
+\* Optional language (if left blank, 'en' is the default)
+
+If it is not successful, double check your subdomain. As an example, if your freshdesk url is http://yourcompany.freshdesk.com, then your subdomain would be “yourcompany”.
+
+\*\*Knowledge:\*\*
+
+Maven will pull in articles from the Freshdesk Knowledge Base. By default, the knowledge base is labeled "Freshdesk". The frequency of the sync/updates can be adjusted by updating the Knowledge Base settings in Maven.  
+You can also choose to split up the knowledge base by your Freshdesk categories or folders by selecting the appropriate "Knowledge Organization" value.  
+Please note that if you change this value, you may need to deactivate any existing knowledge bases that were created under a previous setting.  
+If you want to include unpublished articles, select the "Include Unpublished" option in the settings.
+
+\*\*Ticket Hand Off:\*\*
+
+When Maven cannot deflect a user inquiry, a ticket is created in the Freshdesk system. Ticket hand off is represented as an action within Maven. A ticket can be created for authenticated users and anonymous users.  
+By default, any fields that are required on your default Freshdesk ticket form will be included in the the form presented to the user on handoff.  
+If you want to include additional fields you can make them required by going to Admin \> Ticket Fields and select the "Required when submitting a ticket" checkbox.  
+Please note that if these values are modified in Freshdesk, you will need to update the App settings or reinistall the app for the changes to take effect.
+
+\*\*Live Agent Handoff \- Comming Q2 2025\*\*
+
+Live Agent Handoff will start a live chat with a human agent as a result of a handoff action.
+
+\*\*Copilot\*\*
+
+Once your Maven settings are configured, \[install the Freshdesk Copilot\](https://www.freshworks.com/apps/maven\_agi\_co-pilot/) from the Freshdesk Marketplace.
+
+This plugin has one required field: the Agent API key that is available by navigating to:   
+\* Apps \> Integrations \> Freshdesk \>Settings
+
+\*\*\*Still not working?\*\*\*    
+\[Contact us\](https://support.mavenagi.com/) for more support.  
