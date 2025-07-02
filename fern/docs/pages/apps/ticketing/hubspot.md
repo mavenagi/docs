@@ -6,10 +6,10 @@ layout: overview
 
 \*\*Setup within Maven\*\*
 
-Install the Freskdesk app via Agent Designer    
+Install the Hubspot app via Agent Designer    
 \* Navigate to the Agent Designer dashboard    
 \* Select Apps \\\> App Directory \\\> Browse & Install    
-\* Install Fresdesk
+\* Install Hubspont
 
 To install, you will need:
 
