@@ -1,37 +1,34 @@
 \---  
-title: Hubspot  
-slug: /apps/freshdesk  
+title: HubSpot  
+slug: /apps/hubspot  
 layout: overview  
 \---
 
 \*\*Setup within Maven\*\*
 
-Install the Hubspot app via Agent Designer    
-\* Navigate to the Agent Designer dashboard    
-\* Select Apps \\\> App Directory \\\> Browse & Install    
-\* Install Hubspont
+**To install this app you will need:**
 
-To install, you will need:
+Pipeline ID
 
-\* Your FreshDesk API key: How to find your API key    
-\* Your FreshDesk subdomain: https://yoursubdomain.freshdesk.com    
-\* Optional language (if left blank, 'en' is the default)
+* Enter the ID of the HubSpot pipeline where you want Maven to create tickets.   
+* You can find this in your HubSpot account under the Sales Pipeline settings.
 
-If it is not successful, double check your subdomain. As an example, if your freshdesk url is http://yourcompany.freshdesk.com, then your subdomain would be “yourcompany”.
+Access Token
+
+* Paste your HubSpot Private App Access Token. This token allows Maven to authenticate and create tickets on your behalf.   
+* You can generate this token from your HubSpot account under Private Apps.
+
+Pipeline Stage ID
+
+* Provide the ID of the specific pipeline stage where tickets should be created within the selected pipeline. This ensures tickets land in the correct stage of your process.
 
 \*\*Knowledge:\*\*
 
-Maven will pull in articles from the Freshdesk Knowledge Base. By default, the knowledge base is labeled "Freshdesk". The frequency of the sync/updates can be adjusted by updating the Knowledge Base settings in Maven.  
-You can also choose to split up the knowledge base by your Freshdesk categories or folders by selecting the appropriate "Knowledge Organization" value.  
-Please note that if you change this value, you may need to deactivate any existing knowledge bases that were created under a previous setting.  
-If you want to include unpublished articles, select the "Include Unpublished" option in the settings.
+Maven will ingest articles from the HubSpot Knowledge Base, organizing them by category. Each HubSpot category will be represented as a separate knowledgebase within Maven, containing its associated articles.  The frequency of the sync/updates can be adjusted by updating the Knowledge Base settings in Maven.  
 
 \*\*Ticket Hand Off:\*\*
 
-When Maven cannot deflect a user inquiry, a ticket is created in the Freshdesk system. Ticket hand off is represented as an action within Maven. A ticket can be created for authenticated users and anonymous users.  
-By default, any fields that are required on your default Freshdesk ticket form will be included in the the form presented to the user on handoff.  
-If you want to include additional fields you can make them required by going to Admin \> Ticket Fields and select the "Required when submitting a ticket" checkbox.  
-Please note that if these values are modified in Freshdesk, you will need to update the App settings or reinistall the app for the changes to take effect.
+When Maven cannot deflect a user inquiry, a ticket is created in the HubSpot system. Ticket hand off is represented as an action within Maven. A ticket can be created for authenticated users and anonymous users.  
 
 \*\*Live Agent Handoff \- Comming Q2 2025\*\*
 
