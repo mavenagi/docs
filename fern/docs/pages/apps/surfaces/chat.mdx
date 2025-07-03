@@ -650,6 +650,100 @@ The handoff configuration requires two steps:
   </Step>
 </Steps>
 
+### Hubspot Live Chat Developer Documentation
+
+Maven Chat integrates with Hubspot to enable live agent handoff via OAuth authentication. This integration requires configuration in both Maven and Hubspot.
+
+---
+
+#### Requirements
+
+- Hubspot developer account  
+- Access to the Maven Developer Console  
+- Ngrok or public redirect URL  
+- Access to the Maven AGI Live Chat Hubspot App  
+
+---
+
+#### Setup Process
+
+<Steps>
+  <Step title="Add Environment Variables">
+    - Add the following ENV vars to your `.env.local` file:
+      - `HUBSPOT_CLIENT_SECRET=''`
+      - `HUBSPOT_CLIENT_ID='0f5677ea-fb37-4cc0-8cf8-589abb745523'`
+      - `HUBSPOT_API_KEY=''`
+      - `NEXT_PUBLIC_HUBSPOT_REDIRECT_URI='https://<your-ngrok-url>/oauth/hubspot'`
+      - `NEXT_PUBLIC_HUBSPOT_CLIENT_ID='0f5677ea-fb37-4cc0-8cf8-589abb745523'`
+    - Obtain the first three values from the [Maven Developer Console](https://developers.mavenagi.com/en/apps/chat/code-editor) or from your Hubspot developer account.
+  </Step>
+
+  <Step title="Register Redirect URL in Hubspot">
+    - Go to the Maven AGI Live Chat app [here](https://app.hubspot.com/developer/45825088/application/10651393)
+    - Click `+ Add redirect URL`
+    - Add: `https://<your-ngrok-url>/oauth/hubspot`
+  </Step>
+
+  <Step title="Start Local Development">
+    - Run `pnpm dev` in your chat repository.
+    - Navigate to `http://<ngrok-url>/<organizationId>/<agentId>/oauth` in your browser.
+    - Log into Hubspot and click the **Connect** button.
+    - OAuth authorization code and state will be saved to the agent’s chat app settings.
+  </Step>
+</Steps>
+
+---
+
+#### App Settings
+
+Next, configure the remaining app settings for **Live agent handoff**. The `accessToken` and `refreshToken` will be populated automatically after OAuth.
+
+```json
+{
+  "type": "hubspot",
+  "accessToken": "<OAuth access token>",
+  "refreshToken": "<OAuth refresh token>",
+  "apiSecret": "<provided-api-secret>",
+  "channelAccounts": {
+    "1340346132": {
+      "id": "1340346132",
+      "channelId": "1018189",
+      "recipientEmailAddress": "support@mavenagi.com",
+      "recipientName": "Maven Support"
+    },
+    "1340346133": {
+      "id": "1340346133",
+      "channelId": "1018189",
+      "recipientEmailAddress": "helpdesk@mavenagi.com",
+      "recipientName": "Maven HelpDesk"
+    }
+  },
+  "customFields": [
+    {
+      "id": "custom-field-name",
+      "label": "Name",
+      "description": "Name",
+      "required": true
+    }
+  ],
+  "agentAvailability": {
+    "timezone": "America/Phoenix",
+    "hours": [
+      {
+        "days": [
+          "Monday",
+          "Tuesday",
+          "Wednesday",
+          "Thursday",
+          "Friday"
+        ],
+        "startTime": "06:00",
+        "endTime": "23:00"
+      }
+    ]
+  }
+}
+```
 ## Authentication
 
 ### Signed User Authentication
