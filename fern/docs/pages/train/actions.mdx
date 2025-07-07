@@ -28,6 +28,70 @@ Action code is only called in response to a user question, deciding whether an a
 
 [Trigger code](/help-center/training-maven/event-triggers) is called in response to an event. Trigger code execution is usually used for data reporting - e.g. exporting to a BI tool like Snowflake or updating a Zendesk ticket with a specific tag whenever a user clicks thumbs down.
 
+## MCP Server Integration
+
+Another way to integrate 3rd party systems with Maven is through MCP (Model Context Protocol). Any remote MCP Server can be brought into Maven via the MCP Maven app and Maven will acquire the ability to use any of the tools the server exposes as Maven actions.
+
+### Quick Start Guide
+
+1. Generate an authenticated URL pointing to the remote MCP Server using a tool such as [smithery.ai](https://smithery.ai)
+2. Search for the MCP app in the Maven App directory
+3. Install the app and supply your copied URL from Smithery. Note: multiple MCP Servers can be added here.
+4. Test the new MCP server functionality that's been added to your Maven agent - Maven is now able to use any of the functions exposed by the MCP Server.
+
+### Step-by-Step Example: Integrating Monday.com
+
+Let's see how this works in practice with an example using Monday.com CRM integration:
+
+Imagine you're a Maven customer with information in Monday.com that you want available to Maven, along with your support staff who leverage Maven as a copilot. You'd also like your team to tell Maven to take actions against Monday.com CRM, such as updating it with information from chat interactions.
+
+**Step 1: Set up your Monday.com board**
+
+Start with your existing Monday.com board - in this example, we have a "Customers" board with customer information.
+
+![Monday.com Customers board example](/docs/assets/actions/mcp/01_monday_customers_board.png)
+
+**Step 2: Find an MCP Server**
+
+Search for an MCP Server for Monday.com on [smithery.ai](https://smithery.ai).
+
+![Searching for MCP Server on Smithery](/docs/assets/actions/mcp/02_smithery_search_mcp.png)
+
+**Step 3: Select a remote MCP Server**
+
+Choose one that's tagged "remote" with high usage, or select another that meets your needs.
+
+![Selecting Monday.com MCP Server](/docs/assets/actions/mcp/03_smithery_monday_server.png)
+
+**Step 4: Generate authenticated URL**
+
+Click the "Generate URL" button and prepare to supply credentials to build the authenticated remote URL.
+
+![Generate URL dialog in Smithery](/docs/assets/actions/mcp/04_smithery_generate_url.png)
+
+**Step 5: Get your Monday.com API token**
+
+Retrieve your API token from the Monday.com developer center.
+
+![Monday.com API token in developer center](/docs/assets/actions/mcp/05_monday_api_token.png)
+
+**Step 6: Create the authenticated URL**
+
+Paste your API token into Smithery and generate the connection link. Copy this link to bring over to Maven.
+
+![Generated authenticated URL in Smithery](/docs/assets/actions/mcp/06_smithery_authenticated_url.png)
+
+**Step 7: Install the MCP app**
+
+Search for the MCP app in the Maven App directory and install it.
+
+**Step 8: Configure the connection**
+
+Supply your copied URL from Smithery during installation. Note that multiple MCP Servers can be added to a single MCP app installation.
+
+**Step 9: Test the integration**
+
+Test the new MCP server functionality through your agent. Maven is now able to use any of the functions exposed by the MCP Server, allowing you to query and update your Monday.com data directly through conversations.
 
 ## Action States
 
