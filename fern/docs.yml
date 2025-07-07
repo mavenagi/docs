@@ -85,6 +85,8 @@ navigation:
                 path: ./docs/pages/apps/ticketing/salesforce.mdx
               - page: Zendesk
                 path: ./docs/pages/apps/ticketing/zendesk.mdx
+              - page: Hubspot
+                path: ./docs/pages/apps/ticketing/hubspot.mdx
       - section: Simulator
         contents:
           - page: Testing with simulator
