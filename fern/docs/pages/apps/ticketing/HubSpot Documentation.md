@@ -1,0 +1,41 @@
+---  
+title: HubSpot  
+slug: /apps/hubspot  
+layout: overview  
+---
+
+**Setup within Maven**
+
+To install this app you will need:
+
+Pipeline ID
+
+* Enter the ID of the HubSpot pipeline where you want Maven to create tickets.   
+* You can find this in your HubSpot account under the Sales Pipeline settings.
+
+Access Token
+
+* Paste your HubSpot Private App Access Token. This token allows Maven to authenticate and create tickets on your behalf.   
+* You can generate this token from your HubSpot account under Private Apps.
+
+Pipeline Stage ID
+
+* Provide the ID of the specific pipeline stage where tickets should be created within the selected pipeline. This ensures tickets land in the correct stage of your process.
+
+**Knowledge:**
+
+Maven will ingest articles from the HubSpot Knowledge Base, organizing them by category. Each HubSpot category will be represented as a separate knowledgebase within Maven, containing its associated articles.  The frequency of the sync/updates can be adjusted by updating the Knowledge Base settings in Maven.  
+
+**Ticket Hand Off:**
+
+When Maven cannot deflect a user inquiry, a ticket is created in the HubSpot system. Ticket hand off is represented as an action within Maven. A ticket can be created for authenticated users and anonymous users.  
+
+**Live Agent Handoff:**
+
+See [Chat Widget \- Live Agent Handoff](https://docs.mavenagi.com/apps/chat#live-agent-handoff) for configuration details
+
+
+**Copilot - Comming Q3 2025**
+
+***Still not working?***  
+[Contact us](https://support.mavenagi.com/) for more support.
