@@ -16,6 +16,7 @@ To install, you will need:
 * Your FreshDesk API key: How to find your API key  
 * Your FreshDesk subdomain: https://yoursubdomain.freshdesk.com  
 * Optional language (if left blank, 'en' is the default)
+* Optional list of ignore tags for copilot
 
 If it is not successful, double check your subdomain. As an example, if your freshdesk url is http://yourcompany.freshdesk.com, then your subdomain would be “yourcompany”.
 
@@ -42,8 +43,13 @@ Live Agent Handoff will start a live chat with a human agent as a result of a ha
 
 Once your Maven settings are configured, [install the Freshdesk Copilot](https://www.freshworks.com/apps/maven_agi_co-pilot/) from the Freshdesk Marketplace.
 
-This plugin has one required field: the Agent API key that is available by navigating to: 
-* Apps > Integrations > Freshdesk >Settings
+Depending on the version installed, this plugin has one or two required fields
+
+Version 3.0.0
+- The Agent API key that is available by navigating to: Apps > Integrations > Freshdesk > Settings
+
+Version 4.0.0
+- The OrganizationId and Agent Id key that is available in agent designer
 
 ***Still not working?***  
 [Contact us](https://support.mavenagi.com/) for more support.
