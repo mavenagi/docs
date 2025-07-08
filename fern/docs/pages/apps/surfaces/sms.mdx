@@ -6,4 +6,35 @@ layout: overview
 
 SMS support is configured using Twilio.
 
-Setup instructions coming soon.
+## Installation
+
+To install the sms app on your agent:
+
+<Steps>
+  <Step title="Locate the chat app">
+    - Navigate to the **Apps** page in the **Agent Designer**
+    - Click on **Browse & Install** on the **Apps Directory** tile
+    - Search for "SMS" and click on the **SMS** app tile
+  </Step>
+  <Step title="Install the app">
+    - Click on the **Install** button
+    - See below for details on configuration options
+  </Step>
+</Steps>
+
+
+## Integration
+
+### In the [Twilio](https://console.twilio.com/) console set the following values:
+
+- Provision a phone number that has SMS capability in Twilio.
+- Set the following values in the Messaging Configuration for the phone number:
+    -  **A message comes in**: **Webhook** 
+    - **URL**: **https://sms.onmaven.app/api/${organizationId}/${agentId}/message**
+    - **HTTP**: **HTTP POST**
+
+### In the SMS App settings configure:
+- Twilio Account SID (found on your Twilio Account Dashboard)
+- Twilio Auth Token (also on your Twilio Account Page)
+- Conversation TTL - The time in minutes that a conversation will be persisted until a new conversation will be created for an incoming SMS message.  Defaults to 10 minutes.
+
