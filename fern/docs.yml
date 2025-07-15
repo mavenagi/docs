@@ -17,6 +17,8 @@ tabs:
 
 navigation:
   - tab: help
+    viewers:
+      - everyone
     layout:
       - section: Help Center
         contents:
