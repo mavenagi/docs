@@ -7,6 +7,9 @@ instances:
         repo: docs
         branch: main
 
+roles:
+  - everyone
+
 tabs:
   help:
     display-name: Help Center
@@ -72,7 +75,7 @@ navigation:
               - page: Slack
                 path: ./docs/pages/apps/surfaces/slack.mdx
               - page: SMS
-                path: ./docs/pages/apps/surfaces/sms.mdx               
+                path: ./docs/pages/apps/surfaces/sms.mdx
           - section: Ticketing Systems
             contents:
               - page: Freshdesk
@@ -125,28 +128,28 @@ navbar-links:
 
 colors:
   accent-primary:
-    light: '#994DDC'
-    dark: '#C492F4'
+    light: "#994DDC"
+    dark: "#C492F4"
 
   background:
-    light: '#ffffff'
-    dark: '#1A1A1A'
+    light: "#ffffff"
+    dark: "#1A1A1A"
 
   border:
-    light: '#D4D4D4'
-    dark: '#5E5E5E'
+    light: "#D4D4D4"
+    dark: "#5E5E5E"
 
   sidebar-background:
-    light: '#FCFBFA'
-    dark: '#3E3B39'
+    light: "#FCFBFA"
+    dark: "#3E3B39"
 
   header-background:
-    light: '#FCFBFA'
-    dark: '#3E3B39'
+    light: "#FCFBFA"
+    dark: "#3E3B39"
 
   card-background:
-    light: '#FCFBFA'
-    dark: '#3E3B39'
+    light: "#FCFBFA"
+    dark: "#3E3B39"
 
 logo:
   dark: ./docs/assets/logo-dark-mode.png
