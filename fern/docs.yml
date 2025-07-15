@@ -17,34 +17,44 @@ tabs:
 
 navigation:
   - tab: help
-    viewers:
-      - everyone
     layout:
       - section: Help Center
+        viewers:
+          - everyone
         contents:
           - page: Welcome
             path: ./docs/pages/welcome.mdx
           - page: Glossary
             path: ./docs/pages/glossary.mdx
       - section: Insights
+        viewers:
+          - everyone
         contents:
           - page: Navigating insights
             path: ./docs/pages/insights/overview.mdx
       - section: Inbox
+        viewers:
+          - everyone
         contents:
           - page: Inbox overview
             path: ./docs/pages/inbox.mdx
       - section: Conversations
+        viewers:
+          - everyone
         contents:
           - page: Conversations overview
             path: ./docs/pages/conversations/overview.mdx
           - page: Reviewing conversations
             path: ./docs/pages/conversations/reviewing-conversations.mdx
       - section: Feedback
+        viewers:
+          - everyone
         contents:
           - page: Overview
             path: ./docs/pages/feedback/overview.mdx
       - section: Training Maven
+        viewers:
+          - everyone
         contents:
           - page: Knowledge
             path: ./docs/pages/train/building-knowledge-base.mdx
@@ -61,6 +71,8 @@ navigation:
           - page: Supporting complex workflows
             path: ./docs/pages/train/workflows.mdx
       - section: Maven Apps
+        viewers:
+          - everyone
         contents:
           - page: Overview
             path: ./docs/pages/apps/overview.mdx
@@ -93,22 +105,32 @@ navigation:
               - page: Hubspot
                 path: ./docs/pages/apps/ticketing/hubspot.mdx
       - section: Simulator
+        viewers:
+          - everyone
         contents:
           - page: Testing with simulator
             path: ./docs/pages/playground/overview.mdx
       - section: Settings
+        viewers:
+          - everyone
         contents:
           - page: Overview
             path: ./docs/pages/settings/overview.mdx
       - section: Developer platform
+        viewers:
+          - everyone
         contents:
           - page: Overview
             path: ./docs/pages/api-overview.mdx
       - section: Multi-language support
+        viewers:
+          - everyone
         contents:
           - page: Overview
             path: ./docs/pages/language-overview.mdx
       - section: Security and Privacy
+        viewers:
+          - everyone
         contents:
           - page: Manage users and permissions
             path: ./docs/pages/manage-users-and-permissions.mdx
