@@ -1,0 +1,51 @@
+---
+title: Sharepoint
+slug: /apps/sharepoint
+layout: overview
+---
+
+## Setup within Maven
+
+**Knowledge:**
+
+In order to set up the SharePoint integration, you will to be a SharePoint administrator.
+
+1. **Create a SharePoint App Registration**:
+   - Go to https://entra.microsoft.com/ Applications > App Registrations > New Registration
+   - Enter app name, select "Multitenant", click "Register"
+
+2. **Create Client ID and Client Secret for your app**:
+    - Go to the App Overview page
+    - Your Tenant ID is listed under "Directory (tenant) ID".
+    - Copy the Tenant ID value (you will need it later)
+    - Select "Client credentials" > "Add a certificate or secret"
+    - Under the "Client Secrets" tab, click "New client secret", enter a description, click "Add".
+    - Copy the value of the client secret (you will need it later)
+
+3. **Create a Certificate for Certificate Authorization**:
+    - Generate a certificate and private key pair.
+      You can use tools like OpenSSL or PowerShell to create a self-signed certificate.
+    - Save the certificate file (e.g., `sharepoint-cert.cer`) and the private key file (e.g., `sharepoint-key.pem`).
+    - Upload your certificate into SharePoint. You need to be an Azure administrator to add Certificates.
+    - Store and save the generated Thumbprint value (you will need it later)
+
+4. **Grant Permissions to the App**:
+    - On the App page, select the "API Permissions" tab
+    - On Graph, grant "Files.Read.All", "Sites.Read.All"
+    - On Sharepoint, grant "Sites.FullControl.All", "Sites.Read.All"
+    - Administrator permissions may be needed to delegate
+
+5. **Configure the Maven SharePoint App**:
+    - Go to the Maven Agent Designer
+    - Navigate to Apps > App Directory > Browse & Install
+    - Install the SharePoint app
+    - Enter the following settings:
+      - `tenantId`: Your Tenant ID from step 2
+      - `clientId`: The Client ID from step 2
+      - `clientSecret`: The Client Secret from step 2
+      - `certificateThumbprint`: The Thumbprint value from step 3
+      - `private-key.pem`: The contents of your private key file (e.g., `sharepoint-key.pem`) from step 3
+         Do not include the key headers. Only the base64-encoded key content should be included.
+
+    - Click "Save" to complete the setup. By default, all SharePoint sites will be included.
+      You may optionally enter a list of specific site URLs to include
