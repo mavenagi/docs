@@ -497,12 +497,6 @@ Maven Chat integrates with Zendesk Conversations to provide human support capabi
 Follow these steps to configure Zendesk integration:
 
 <Steps>
-  <Step title="Create Zendesk Integration">
-   - Navigate to the **Zendesk Admin Center**
-   - Go to **Apps and integrations > Integrations > Conversations integrations**
-   - Click **Create integration**
-   - Enter a unique name for the integration
-  </Step>
   <Step title="Configure Maven Context Field">
     - Go to **Objects and Rules > Tickets > Fields**
     - Click **Add fields**
@@ -510,6 +504,12 @@ Follow these steps to configure Zendesk integration:
     - Set Name to `Maven Context`
     - Click **Save**
     - After saving, note the **Field Id** and **Shared Secret** which are displayed on the page below the **Integration ID** field.
+  </Step>
+  <Step title="Create Zendesk Integration">
+   - Navigate to the **Zendesk Admin Center**
+   - Go to **Apps and integrations > Integrations > Conversations integrations**
+   - Click **Create integration**
+   - Enter a unique name for the integration
   </Step>
   <Step title="Configure first Conversations webhook">
     - Set **Webhook endpoint URL** to `https://chat.onmaven.app/api/zendesk/webhook`
