@@ -518,38 +518,36 @@ Follow these steps to configure Zendesk integration:
     - Click **Save**
     - After saving, note the **Webhook ID** and **Shared Secret** which are displayed on the page below the **Integration ID** field.
   </Step>
-  <Step title="Configure second Zendesk webhook">
-    
-- Go to **Apps and integrations > Webhooks > Webhooks**
-- Click **Create webhook** (top right) > Select **Trigger or automation** > Click **Next**
-- Add Details. Set 
-  - **Name** to `Maven Chat Webhook`
-  - **Description** to `Webhook to receive messaging notifications directly from zendesk`
-  - **Endpoint URL** to `https://chat.onmaven.app/api/zendesk/webhook`
-  - **Request method** to `POST`
-  - **Request format** to `JSON`
-  - **Authentication** to `None`
-  - **Request format** to `JSON`
-- Click **Create webhook**
-- Click **Finish setup**
-- Go to **Objects and rules > Business Rules > Triggers**
-- Click **Create Trigger**
-- Fill Form. Set
-  - **Trigger name** to `[Chat] Messaging`
-  - **Trigger category** to `Notifications`
-- Set Conditions
-  - **Meet ALL of the following conditions**
-    - Category: `Ticket > Messaging session ended reason`
-    - Operator: `Changed to`
-    - Value: `Ended by agent`
-- Set Actions
-    - Category: `Notify by > Active webhook`
-    - Value: `Maven Chat Webhook`
-   - Payload:
- ```json
+  <Step title="Configure second Zendesk webhook">    
+    - Go to **Apps and integrations > Webhooks > Webhooks**
+    - Click **Create webhook** (top right) > Select **Trigger or automation** > Click **Next**
+    - Add Details. Set 
+      - **Name** to `Maven Chat Webhook`
+      - **Description** to `Webhook to receive messaging notifications directly from zendesk`
+      - **Endpoint URL** to `https://chat.onmaven.app/api/zendesk/webhook`
+      - **Request method** to `POST`
+      - **Request format** to `JSON`
+      - **Authentication** to `None`
+    - Click **Create webhook**
+    - Click **Finish setup**
+    - Go to **Objects and rules > Business Rules > Triggers**
+    - Click **Create Trigger**
+    - Fill Form. Set
+      - **Trigger name** to `[Chat] Messaging`
+      - **Trigger category** to `Notifications`
+    - Set Conditions
+      - **Meet ALL of the following conditions**
+        - Category: `Ticket > Messaging session ended reason`
+        - Operator: `Changed to`
+        - Value: `Ended by agent`
+    - Set Actions
+        - Category: `Notify by > Active webhook`
+        - Value: `Maven Chat Webhook`
+      - Payload:
+```json
  {
   "webhook": {
-    "id": "<REPLACE WITH_Webhook ID>" // REPLACE!!
+    "id": "<REPLACE WITH_Webhook ID>" // REPLACE!!!
   },
   "type": "zendesk:trigger",
   "events": [
@@ -558,7 +556,7 @@ Follow these steps to configure Zendesk integration:
       "type": "conversation:ended",
       "payload": {
         "ticket": {
-          "mavenContext": "{{ticket.ticket_field_<REPLACE_WITH_Field Id>}}", // REPLACE!!
+          "mavenContext": "{{ticket.ticket_field_<REPLACE_WITH_Field Id>}}", // REPLACE!!!
           "id": "{{ticket.id}}",
           "title": "{{ticket.title}}",
           "description": "{{ticket.description}}",
@@ -631,9 +629,9 @@ Follow these steps to configure Zendesk integration:
     }
   ]
 }
- ```
-- Click **Create trigger**
+```
 
+    - Click **Create trigger**
   </Step>
   <Step title="Generate API Key">
     - Navigate to the **API Keys** tab
@@ -649,7 +647,7 @@ Follow these steps to configure Zendesk integration:
   4. Select **Agents can end messaging sessions at any time**
   5. Click **Save settings**
   </Step>
-</Steps>   
+</Steps>
 
 #### Configuration
 
