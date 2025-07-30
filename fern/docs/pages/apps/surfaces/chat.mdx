@@ -648,7 +648,7 @@ Follow these steps to configure Zendesk integration:
   4. Select **Agents can end messaging sessions at any time**
   5. Click **Save settings**
   </Step>
-</Steps>
+</Steps>   
 
 #### Configuration
 
@@ -700,23 +700,30 @@ Follow these steps to configure Front integration:
 
 <Steps>
   <Step title="Create Front Application">
-    - Navigate to [Front Developer
-    Settings](https://app.frontapp.com/settings/developers) - Click **Create
-    App** - Enter app name and description - Note the **App UID** and **App
-    Secret** from Basic Information
+    - Navigate to [Front Developer Settings](https://app.frontapp.com/settings/developers)
+    - Click **Create App**
+    - Enter app name and description
+    - Note the **App UID** and **App Secret** from Basic Information
   </Step>
   <Step title="Configure Channel">
-    - Go to the **Features** tab - Click **Create channel type** - Configure the
-    following settings: - Set **Webhook URL** to
-    `https://chat.onmaven.app/api/front` - Set **Authentication strategy** to
-    `Bearer` - Set **Contact type** to `Custom` - Set **Supported attachments**
-    to `Text` - Enable **Reply/Compose** - Set **Composer type** to `Basic` -
-    Set **Timeline Type UI** to `Chat Timeline` - Click **Create**
+    - Go to the **Features** tab
+    - Click **Create channel type**
+    - Configure the following settings:
+     - Set **Webhook URL** to `https://chat.onmaven.app/api/front`
+     - Set **Authentication strategy** to `Bearer`
+     - Set **Contact type** to `Custom`
+     - Set **Supported attachments** to `Text`
+     - Enable **Reply/Compose**
+     - Set **Composer type** to `Basic`
+     - Set **Timeline Type UI** to `Chat Timeline`
+     - Click **Create**
   </Step>
   <Step title="Connect Channel in Front">
-    - Navigate to **Channels** under your workspace - Click **Connect a
-    channel** - Find your channel under the "Other" section - Set **Name** and
-    **Token** to `orgId-agentId` - Select target inbox and click **Continue**
+    - Navigate to **Channels** under your workspace
+    - Click **Connect a channel**
+    - Find your channel under the "Other" section
+    - Set **Name** and **Token** to `orgId-agentId`
+    - Select target inbox and click **Continue**
   </Step>
 </Steps>
 #### Configuration
@@ -896,7 +903,7 @@ The user data object must include:
 
 #### Generating User Authentication Token
 
-To protect the user data in transit, generate a signed JWT token containing user data and encrypt the token with `ES256` and a 32-bit secret key. This token must be generated on the backend and passed into the chat widget via the `signedUserData` property.
+To protect the user data in transit, generate a signed JWT token containing user data and encrypt the token with `ES256` and a 32-byte secret key. This token must be generated on the backend and passed into the chat widget via the `signedUserData` property.
 
 ##### Example Implementation (TypeScript)
 
