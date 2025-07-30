@@ -503,6 +503,13 @@ Follow these steps to configure Zendesk integration:
    - Click **Create integration**
    - Enter a unique name for the integration
   </Step>
+  <Step title="Configure Maven Context Field">
+    - Go to **Objects and Rules > Tickets > Fields**
+    - Click **Add fields**
+    - Set Name to `Maven Context`
+    - Click **Save**
+    - After saving, note the **Field Id** and **Shared Secret** which are displayed on the page below the **Integration ID** field.
+  </Step>
   <Step title="Configure first Conversations webhook">
     - Set **Webhook endpoint URL** to `https://chat.onmaven.app/api/zendesk/webhook`
     - Uncheck **Webhook body data**
@@ -541,7 +548,7 @@ Follow these steps to configure Zendesk integration:
  ```json
  {
   "webhook": {
-    "id": "<REPLACE WITH_WEBHOOK_ID>" // REPLACE!!
+    "id": "<REPLACE WITH_Webhook ID>" // REPLACE!!
   },
   "type": "zendesk:trigger",
   "events": [
@@ -550,7 +557,7 @@ Follow these steps to configure Zendesk integration:
       "type": "conversation:ended",
       "payload": {
         "ticket": {
-          "mavenContext": "{{ticket.ticket_field_<MAVEN_CONTEXT_CUSTOM_FIELD_ID>}}", // REPLACE!!
+          "mavenContext": "{{ticket.ticket_field_<REPLACE_WITH_Field Id>}}", // REPLACE!!
           "id": "{{ticket.id}}",
           "title": "{{ticket.title}}",
           "description": "{{ticket.description}}",
@@ -634,6 +641,13 @@ Follow these steps to configure Zendesk integration:
     - Copy and securely store the provided ID and secret key
     - Click **Next** to complete the setup
   </Step>
+  <Step title="Enable Ending Sessions">
+  1. In Admin Center, click **Channels > Messaging and Social > Messaging**
+  2. Click **Manage settings**
+  3. Under Advanced, click **Ending sessions**
+  4. Select **Agents can end messaging sessions at any time**
+  5. Click **Save settings**
+  </Step>
 </Steps>
 
 #### Configuration
@@ -641,6 +655,7 @@ Follow these steps to configure Zendesk integration:
 Create a handoff configuration object with the following structure:
 
 1. Create your configuration object:
+
 ```javascript
 {
   type: 'zendesk',
@@ -648,7 +663,8 @@ Create a handoff configuration object with the following structure:
   apiKey: 'int_your_integration_api_key',
   apiSecret: 'your_integration_api_secret',
   appId: 'your_zendesk_app_id',
-  webhookId: 'your-webhook-id'
+  webhookId: 'your-webhook-id',
+  mavenContextFieldId: "your-field-id",
 }
 ```
 
@@ -659,13 +675,14 @@ Create a handoff configuration object with the following structure:
 ##### Configuration Options
 
 | Option | Type | Required | Default | Description |
-|--------|------|----------|---------|-------------|
+| --------------------- | --------- | -------- | ------- | ------------------------------------------------------------- |
 | `type` | 'zendesk' | Yes | - | Identifies Zendesk as the handoff provider |
 | `subdomain` | string | Yes | - | Your Zendesk subdomain |
 | `apiKey` | string | Yes | - | Your Zendesk integration API key |
 | `apiSecret` | string | Yes | - | Your Zendesk integration secret |
 | `appId` | string | Yes | - | Your Zendesk app ID |
 | `webhookId` | string | Yes | - | Your Zendesk webhook ID (found in webhook URL after creation) |
+| `mavenContextFieldId` | string    | Yes      | -       | Your Zendesk field ID (found in fields list after creation)   |
 
 ### Front Configuration
 
@@ -683,30 +700,23 @@ Follow these steps to configure Front integration:
 
 <Steps>
   <Step title="Create Front Application">
-    - Navigate to [Front Developer Settings](https://app.frontapp.com/settings/developers)
-    - Click **Create App**
-    - Enter app name and description
-    - Note the **App UID** and **App Secret** from Basic Information
+    - Navigate to [Front Developer
+    Settings](https://app.frontapp.com/settings/developers) - Click **Create
+    App** - Enter app name and description - Note the **App UID** and **App
+    Secret** from Basic Information
   </Step>
   <Step title="Configure Channel">
-    - Go to the **Features** tab
-    - Click **Create channel type**
-    - Configure the following settings:
-     - Set **Webhook URL** to `https://chat.onmaven.app/api/front`
-     - Set **Authentication strategy** to `Bearer`
-     - Set **Contact type** to `Custom`
-     - Set **Supported attachments** to `Text`
-     - Enable **Reply/Compose**
-     - Set **Composer type** to `Basic`
-     - Set **Timeline Type UI** to `Chat Timeline`
-     - Click **Create**
+    - Go to the **Features** tab - Click **Create channel type** - Configure the
+    following settings: - Set **Webhook URL** to
+    `https://chat.onmaven.app/api/front` - Set **Authentication strategy** to
+    `Bearer` - Set **Contact type** to `Custom` - Set **Supported attachments**
+    to `Text` - Enable **Reply/Compose** - Set **Composer type** to `Basic` -
+    Set **Timeline Type UI** to `Chat Timeline` - Click **Create**
   </Step>
   <Step title="Connect Channel in Front">
-    - Navigate to **Channels** under your workspace
-    - Click **Connect a channel**
-    - Find your channel under the "Other" section
-    - Set **Name** and **Token** to `orgId-agentId`
-    - Select target inbox and click **Continue**
+    - Navigate to **Channels** under your workspace - Click **Connect a
+    channel** - Find your channel under the "Other" section - Set **Name** and
+    **Token** to `orgId-agentId` - Select target inbox and click **Continue**
   </Step>
 </Steps>
 #### Configuration
