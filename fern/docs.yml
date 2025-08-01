@@ -9,6 +9,7 @@ instances:
 
 roles:
   - everyone
+  - users
 
 tabs:
   help:
@@ -124,6 +125,10 @@ navigation:
         contents:
           - page: Overview
             path: ./docs/pages/api-overview.mdx
+          - page: Getting Started
+            path: ./docs/pages/app-builder-manual.mdx
+            viewers:
+              - users
       - section: Multi-language support
         viewers:
           - everyone
