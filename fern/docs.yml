@@ -126,7 +126,7 @@ navigation:
           - page: Overview
             path: ./docs/pages/api-overview.mdx
           - page: Getting Started
-            path: ./docs/pages/app-builder-manual.mdx
+            path: ./docs/pages/getting-started-guide-for-developers.mdx
             viewers:
               - users
       - section: Multi-language support
