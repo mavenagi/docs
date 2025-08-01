@@ -497,18 +497,141 @@ Maven Chat integrates with Zendesk Conversations to provide human support capabi
 Follow these steps to configure Zendesk integration:
 
 <Steps>
+  <Step title="Configure Maven Context Field">
+    - Go to **Objects and Rules > Tickets > Fields**
+    - Click **Add fields**
+    - Select `Multi-line`
+    - Set Name to `Maven Context`
+    - Click **Save**
+    - After saving, note the **Field Id** and **Shared Secret** which are displayed on the page below the **Integration ID** field.
+  </Step>
   <Step title="Create Zendesk Integration">
    - Navigate to the **Zendesk Admin Center**
    - Go to **Apps and integrations > Integrations > Conversations integrations**
    - Click **Create integration**
    - Enter a unique name for the integration
   </Step>
-  <Step title="Configure Webhook">
+  <Step title="Configure first Conversations webhook">
     - Set **Webhook endpoint URL** to `https://chat.onmaven.app/api/zendesk/webhook`
     - Uncheck **Webhook body data**
     - Check all **Webhook subscriptions**
     - Click **Save**
     - After saving, note the **Webhook ID** and **Shared Secret** which are displayed on the page below the **Integration ID** field.
+  </Step>
+  <Step title="Configure second Zendesk webhook">    
+    - Go to **Apps and integrations > Webhooks > Webhooks**
+    - Click **Create webhook** (top right) > Select **Trigger or automation** > Click **Next**
+    - Add Details. Set 
+      - **Name** to `Maven Chat Webhook`
+      - **Description** to `Webhook to receive messaging notifications directly from zendesk`
+      - **Endpoint URL** to `https://chat.onmaven.app/api/zendesk/webhook`
+      - **Request method** to `POST`
+      - **Request format** to `JSON`
+      - **Authentication** to `None`
+    - Click **Create webhook**
+    - Click **Finish setup**
+    - Go to **Objects and rules > Business Rules > Triggers**
+    - Click **Create Trigger**
+    - Fill Form. Set
+      - **Trigger name** to `[Chat] Messaging`
+      - **Trigger category** to `Notifications`
+    - Set Conditions
+      - **Meet ALL of the following conditions**
+        - Category: `Ticket > Messaging session ended reason`
+        - Operator: `Changed to`
+        - Value: `Ended by agent`
+    - Set Actions
+        - Category: `Notify by > Active webhook`
+        - Value: `Maven Chat Webhook`
+      - Payload:
+```json
+ {
+  "webhook": {
+    "id": "<REPLACE WITH_Webhook ID>" // REPLACE!!!
+  },
+  "type": "zendesk:trigger",
+  "events": [
+    {
+      "id": "zendesk_trigger_conversation_ended",
+      "type": "conversation:ended",
+      "payload": {
+        "ticket": {
+          "mavenContext": "{{ticket.ticket_field_<REPLACE_WITH_Field Id>}}", // REPLACE!!!
+          "id": "{{ticket.id}}",
+          "title": "{{ticket.title}}",
+          "description": "{{ticket.description}}",
+          "url": "{{ticket.url}}",
+          "link": "{{ticket.link}}",
+          "external_id": "{{ticket.external_id}}",
+          "via": "{{ticket.via}}",
+          "custom_status": "{{ticket.custom_status}}",
+          "status_category": "{{ticket.status_category}}",
+          "status": "{{ticket.status}}",
+          "priority": "{{ticket.priority}}",
+          "ticket_type": "{{ticket.ticket_type}}",
+          "due_date": "{{ticket.due_date}}",
+          "current_holiday_name": "{{ticket.current_holiday_name}}",
+          "latest_comment_html": "{{ticket.latest_comment_html}}",
+          "latest_public_comment_html": "{{ticket.latest_public_comment_html}}",
+          "account": "{{ticket.account}}",
+          "cc_names": "{{ticket.cc_names}}",
+          "tags": "{{ticket.tags}}",
+          "brand": {
+            "name": "{{ticket.brand.name}}"
+          },
+          "group": {
+            "name": "{{ticket.group.name}}"
+          },
+          "requester": {
+            "first_name": "{{ticket.requester.first_name}}",
+            "last_name": "{{ticket.requester.last_name}}",
+            "name": "{{ticket.requester.name}}",
+            "email": "{{ticket.requester.email}}",
+            "language": "{{ticket.requester.language}}",
+            "phone": "{{ticket.requester.phone}}",
+            "external_id": "{{ticket.requester.external_id}}",
+            "details": "{{ticket.requester.details}}",
+            "field": "{{ticket.requester_field}}"
+          },
+          "assignee": {
+            "first_name": "{{ticket.assignee.first_name}}",
+            "last_name": "{{ticket.assignee.last_name}}",
+            "name": "{{ticket.assignee.name}}",
+            "email": "{{ticket.assignee.email}}"
+          },
+          "organization": {
+            "name": "{{ticket.organization.name}}",
+            "external_id": "{{ticket.organization.external_id}}",
+            "details": "{{ticket.organization.details}}",
+            "notes": "{{ticket.organization.notes}}"
+          }
+        },
+        "current_user": {
+          "first_name": "{{current_user.first_name}}",
+          "name": "{{current_user.name}}",
+          "email": "{{current_user.email}}",
+          "external_id": "{{current_user.external_id}}",
+          "phone": "{{current_user.phone}}",
+          "details": "{{current_user.details}}",
+          "notes": "{{current_user.notes}}",
+          "language": "{{current_user.language}}",
+          "organization": {
+            "name": "{{current_user.organization.name}}",
+            "notes": "{{current_user.organization.notes}}",
+            "details": "{{current_user.organization.details}}"
+          }
+        },
+        "satisfaction": {
+          "current_comment": "{{satisfaction.current_comment}}",
+          "current_rating": "{{satisfaction.current_rating}}"
+        }
+      }
+    }
+  ]
+}
+```
+
+    - Click **Create trigger**
   </Step>
   <Step title="Generate API Key">
     - Navigate to the **API Keys** tab
@@ -517,13 +640,21 @@ Follow these steps to configure Zendesk integration:
     - Copy and securely store the provided ID and secret key
     - Click **Next** to complete the setup
   </Step>
-</Steps>   
+  <Step title="Enable Ending Sessions">
+  1. In Admin Center, click **Channels > Messaging and Social > Messaging**
+  2. Click **Manage settings**
+  3. Under Advanced, click **Ending sessions**
+  4. Select **Agents can end messaging sessions at any time**
+  5. Click **Save settings**
+  </Step>
+</Steps>
 
 #### Configuration
 
 Create a handoff configuration object with the following structure:
 
 1. Create your configuration object:
+
 ```javascript
 {
   type: 'zendesk',
@@ -531,7 +662,8 @@ Create a handoff configuration object with the following structure:
   apiKey: 'int_your_integration_api_key',
   apiSecret: 'your_integration_api_secret',
   appId: 'your_zendesk_app_id',
-  webhookId: 'your-webhook-id'
+  webhookId: 'your-webhook-id',
+  mavenContextFieldId: "your-field-id",
 }
 ```
 
@@ -542,13 +674,14 @@ Create a handoff configuration object with the following structure:
 ##### Configuration Options
 
 | Option | Type | Required | Default | Description |
-|--------|------|----------|---------|-------------|
+| --------------------- | --------- | -------- | ------- | ------------------------------------------------------------- |
 | `type` | 'zendesk' | Yes | - | Identifies Zendesk as the handoff provider |
 | `subdomain` | string | Yes | - | Your Zendesk subdomain |
 | `apiKey` | string | Yes | - | Your Zendesk integration API key |
 | `apiSecret` | string | Yes | - | Your Zendesk integration secret |
 | `appId` | string | Yes | - | Your Zendesk app ID |
 | `webhookId` | string | Yes | - | Your Zendesk webhook ID (found in webhook URL after creation) |
+| `mavenContextFieldId` | string    | Yes      | -       | Your Zendesk field ID (found in fields list after creation)   |
 
 ### Front Configuration
 
