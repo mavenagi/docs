@@ -759,12 +759,7 @@ Maven Chat now accepts signed and encrypted user authentication, allowing our cu
 #### User Data Requirements
 
 The user data object must include:
-- `firstName` - User's first name
-- `lastName` - User's last name
-- `id` - User's unique identifier (UUID)
-- At least one of:
-  - `phoneNumber` - User's phone number
-  - `email` - User's email address
+- `id` - A unique identifier for the user
 - Additional fields will be included in the Maven user that's created
 
 #### Generating User Authentication Token
@@ -778,12 +773,7 @@ import { SignJWT, EncryptJWT } from 'jose';
 
 async function secureUserData(userData: Record<string, string> & {
  id: string
- firstName: string
- lastName: string
-} & (
- { email: string, phoneNumber?: string } |
- { email?: string, phoneNumber: string }
-)) {
+}) {
  // 1. Sign the user data with your private key (ES256 algorithm)
  const signedJWT = await new SignJWT(userData)
    .setProtectedHeader({ alg: 'ES256' })
