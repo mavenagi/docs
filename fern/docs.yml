@@ -91,7 +91,7 @@ navigation:
                 path: ./docs/pages/apps/surfaces/slack.mdx
               - page: SMS
                 path: ./docs/pages/apps/surfaces/sms.mdx
-          - section: Ticketing Systems
+          - section: Support Tools
             contents:
               - page: Freshdesk
                 path: ./docs/pages/apps/ticketing/freshdesk.mdx
