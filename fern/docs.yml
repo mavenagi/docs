@@ -89,6 +89,8 @@ navigation:
             contents:
               - page: Slack
                 path: ./docs/pages/apps/surfaces/slack.mdx
+              - page: Microsoft Teams
+                path: ./docs/pages/apps/surfaces/ms-teams.mdx
               - page: SMS
                 path: ./docs/pages/apps/surfaces/sms.mdx
           - section: Support Tools
