@@ -40,3 +40,32 @@ Only admins and owners can add or remove users.
 1. Navigate to **Organization settings > Members**. The Team Members page will open.
 2. Check the ellipsis next to the name of the user whose permissions you'd like to edit.
 3. Click **Remove** and confirm the action
+
+### Configuring SSO
+Admins and owners can configure SSO for their organization from Agent Designer. The following identity providers are supported: 
+- Okta
+- Entra ID
+- ADFS
+- Google Workspace
+- Custom SAML
+
+To set up SSO: 
+1. Navigate to **Organization settings > Security**. The Authentication methods page will open.
+2. Click **Set Up** for Enterprise SSO. 
+3. A new tab will open. Click through the flow to configure the connection, test SSO, and complete set up. 
+
+To edit the SSO connection in the future, click **Manage**.
+
+Once the SSO connection is set up, users can enable SCIM provisioning in the dropdown under Enterprise SSO. To set up SCIM: 
+1. Click **Set up** under **SCIM provisioning not configured**.
+2. Map identity provider attributes to user fields for automatic provisioning. Mapping User ID is required to set up SCIM provisioning; email mapping is optional. Click **Confirm** when complete.
+3. The Base SCIM URL and Auth token will be shown. Users will only see the Auth token once so copy and store securely. Click **Done** when complete. If needed users can regenerate the auth token by clicking the arrow circle next to **Auth token**.
+
+To edit these SCIM mappings in the future, click **Edit SCIM mappings** in the Enterprise SSO dropdown. 
+
+### Disconnecting SSO 
+To disable SCIM connection, click **Remove SCIM** in the Enterprise SSO dropdown. 
+
+To disconnect SSO, click **Disconnect SSO** in the Enterprise SSO dropdown. 
+
+
