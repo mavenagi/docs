@@ -670,9 +670,11 @@ Create a handoff configuration object with the following structure:
 }
 ```
 
-To correctly set the email address on the contact, you need to provide the email address of the API user and the API token for the API user.
-To customize the external id in Zendesk, set the property `externalId` on the `signedUserData` property of the chat configuration.
-By default, `external_id` is set to the user's `id` on `signedUserData`.
+To correctly set the email address on the Zendesk contact, configure a Zendesk API email and API token.
+
+By default, the Zendesk `external_id` is set to the user's `id` on `signedUserData`.
+If your Zendesk `external_id` needs to be different, set the property `externalId` the new value on
+the `signedUserData` property of the chat configuration.
 
 
 2. Convert to JSON and add to Maven:
