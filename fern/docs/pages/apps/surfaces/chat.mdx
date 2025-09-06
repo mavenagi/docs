@@ -664,8 +664,16 @@ Create a handoff configuration object with the following structure:
   appId: 'your_zendesk_app_id',
   webhookId: 'your-webhook-id',
   mavenContextFieldId: "your-field-id",
+  shouldForceUserAuthentication: true
+  forceUserAuthenticationApiEmail: "your api email"
+  forceUserAuthenticationApiToken: "your api token"
 }
 ```
+
+To correctly set the email address on the contact, you need to provide the email address of the API user and the API token for the API user.
+To customize the external id in Zendesk, set the property `externalId` on the `signedUserData` property of the chat configuration.
+By default, `external_id` is set to the user's `id` on `signedUserData`.
+
 
 2. Convert to JSON and add to Maven:
    - Convert the object to a JSON string
@@ -682,6 +690,10 @@ Create a handoff configuration object with the following structure:
 | `appId` | string | Yes | - | Your Zendesk app ID |
 | `webhookId` | string | Yes | - | Your Zendesk webhook ID (found in webhook URL after creation) |
 | `mavenContextFieldId` | string    | Yes      | -       | Your Zendesk field ID (found in fields list after creation)   |
+| `shouldForceUserAuthentication` | boolean    | No      | -       | Whether to force user authentication when creating users via the API   |
+| `forceUserAuthenticationApiEmail` | string    | No      | -       | The email address of the API user    |
+| `forceUserAuthenticationApiToken` | string    | No      | -       | The API token for the API user    |
+
 
 ### Front Configuration
 
