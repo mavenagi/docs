@@ -33,10 +33,14 @@ Follow the steps to authorize the app and then select a channel to enable the bo
 
 To install multiple agents in your Slack workspace:
 
-1. Install the Slack app for each agent you want to add
-2. During the OAuth authorization flow, select a unique channel for each agent
-   - Each agent must be assigned to a different channel
-   - Channels already assigned to other agents cannot be reused
+1. Install the Slack app in Agent Designer for each agent you want to use.
+2. OAuth authorization flow:
+   - You may select a custom name for the Maven Slack bot. You must be a Slack administrator to select a custom name.
+   - If the DM checkbox is selected, the current agent to be the default agent used for direct messages.
+3. In a channel where you want to use the Maven bot, type `/maven configure`.
+   - You will be presented with a list of available agents. Select the agent you want to use in that channel.
+   - The slack app must be installed on the agent in Agent Designer.
+   - Channels already assigned to other agents cannot be reused.
 
 Contact support@mavenagi.com for support. 
 
