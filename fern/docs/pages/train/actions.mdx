@@ -32,62 +32,7 @@ Action code is only called in response to a user question, deciding whether an a
 
 Another way to integrate 3rd party systems with Maven is through MCP (Model Context Protocol). Any remote MCP Server can be brought into Maven via the MCP Maven app and Maven will acquire the ability to use any of the tools the server exposes as Maven actions.
 
-## A2A (Agent-to-Agent) Integration
-
-Maven supports Agent-to-Agent (A2A) communication through JSON-RPC 2.0 protocol. This integration allows Maven to discover and connect with multiple external A2A agents simultaneously via their publicly accessible agent card URLs. Maven automatically fetches agent metadata, then registers all discovered capabilities as actions that can be called by your agent.
-
-### Key Features
-
-- **Multi-Server Integration**: Connect to multiple A2A servers simultaneously
-- **Automatic Discovery**: Automatically discovers all capabilities from connected agents
-- **Intelligent Routing**: Routes LLM calls to the correct A2A server automatically
-- **Enhanced Descriptions**: Adds server context to help the LLM choose the right action
-
-### A2A Quick Start Guide
-
-1. Obtain the agent card URLs from your A2A servers (e.g., `https://example.com/.well-known/agent.json`)
-2. Search for the A2A app in the Maven App directory
-3. Install the app and provide one or more agent card URLs
-4. Maven will automatically fetch the agent metadata from all servers
-5. Test the A2A integration - Maven can now communicate with all remote agents and use their capabilities as actions
-
-### Step-by-Step Example: Integrating Multiple A2A Services
-
-Let's walk through a real-world example of integrating multiple A2A agents with Maven. In this scenario, you want to connect your support team's Maven agent to several specialized services: document processing, weather information, and database queries.
-
-**Step 1: Identify your A2A services**
-
-For this example, we'll integrate three different A2A agents:
-- Document Processing Agent at `https://docs.company.com/.well-known/agent.json`
-- Weather Service Agent at `https://weather-api.service.com/.well-known/agent.json`
-- Database Query Agent at `https://internal.company.com/.well-known/agent.json`
-
-**Step 2: Search for the A2A app**
-
-Navigate to your Maven App directory and search for the A2A integration app.
-
-**Step 3: Install and configure the A2A app**
-
-Install the A2A app and provide all three agent card URLs during the configuration process. The app supports connecting to multiple A2A servers simultaneously.
-
-**Step 4: Automatic discovery and registration**
-
-Maven will automatically:
-- Fetch the agent metadata from each URL
-- Discover all available capabilities from each agent
-- Register them as actions with clear naming (e.g., `a2a_search_documents`, `a2a_get_weather`, `a2a_query_users`)
-
-**Step 5: Test the multi-agent integration**
-
-Test your new A2A integration by asking Maven questions that utilize different agents:
-
-- "Search for climate change documents and get tomorrow's weather forecast"
-- "Find user records for customers in New York and check the weather there"
-- "Extract text from the uploaded PDF and search our database for similar cases"
-
-Maven will intelligently route these requests to the appropriate A2A agents and combine the results in natural conversation.
-
-### MCP Quick Start Guide
+### Quick Start Guide
 
 1. Generate an authenticated URL pointing to the remote MCP Server using a tool such as [smithery.ai](https://smithery.ai)
 2. Search for the MCP app in the Maven App directory
@@ -147,6 +92,61 @@ Supply your copied URL from Smithery during installation. Note that multiple MCP
 **Step 9: Test the integration**
 
 Test the new MCP server functionality through your agent. Maven is now able to use any of the functions exposed by the MCP Server, allowing you to query and update your Monday.com data directly through conversations.
+
+## A2A (Agent-to-Agent) Integration
+
+Maven supports Agent-to-Agent (A2A) communication through JSON-RPC 2.0 protocol. This integration allows Maven to discover and connect with multiple external A2A agents simultaneously via their publicly accessible agent card URLs. Maven automatically fetches agent metadata, then registers all discovered capabilities as actions that can be called by your agent.
+
+### Key Features
+
+- **Multi-Server Integration**: Connect to multiple A2A servers simultaneously
+- **Automatic Discovery**: Automatically discovers all capabilities from connected agents
+- **Intelligent Routing**: Routes LLM calls to the correct A2A server automatically
+- **Enhanced Descriptions**: Adds server context to help the LLM choose the right action
+
+### A2A Quick Start Guide
+
+1. Obtain the agent card URLs from your A2A servers (e.g., `https://example.com/.well-known/agent.json`)
+2. Search for the A2A app in the Maven App directory
+3. Install the app and provide one or more agent card URLs
+4. Maven will automatically fetch the agent metadata from all servers
+5. Test the A2A integration - Maven can now communicate with all remote agents and use their capabilities as actions
+
+### Step-by-Step Example: Integrating Multiple A2A Services
+
+Let's walk through a real-world example of integrating multiple A2A agents with Maven. In this scenario, you want to connect your support team's Maven agent to several specialized services: document processing, weather information, and database queries.
+
+**Step 1: Identify your A2A services**
+
+For this example, we'll integrate three different A2A agents:
+- Document Processing Agent at `https://docs.company.com/.well-known/agent.json`
+- Weather Service Agent at `https://weather-api.service.com/.well-known/agent.json`
+- Database Query Agent at `https://internal.company.com/.well-known/agent.json`
+
+**Step 2: Search for the A2A app**
+
+Navigate to your Maven App directory and search for the A2A integration app.
+
+**Step 3: Install and configure the A2A app**
+
+Install the A2A app and provide all three agent card URLs during the configuration process. The app supports connecting to multiple A2A servers simultaneously.
+
+**Step 4: Automatic discovery and registration**
+
+Maven will automatically:
+- Fetch the agent metadata from each URL
+- Discover all available capabilities from each agent
+- Register them as actions with clear naming (e.g., `a2a_search_documents`, `a2a_get_weather`, `a2a_query_users`)
+
+**Step 5: Test the multi-agent integration**
+
+Test your new A2A integration by asking Maven questions that utilize different agents:
+
+- "Search for climate change documents and get tomorrow's weather forecast"
+- "Find user records for customers in New York and check the weather there"
+- "Extract text from the uploaded PDF and search our database for similar cases"
+
+Maven will intelligently route these requests to the appropriate A2A agents and combine the results in natural conversation.
 
 ## Action States
 
