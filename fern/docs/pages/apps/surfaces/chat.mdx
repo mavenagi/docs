@@ -681,7 +681,7 @@ To correctly set the email address on the Zendesk contact, configure a Zendesk A
 By default, the Zendesk `external_id` is set to the user's `id` on `signedUserData`.
 If your Zendesk `external_id` needs to be different, set the property `externalId` the new value on
 the `signedUserData` property of the chat configuration.
-If you need to set the contact email as the user ID, you should turn `setEmailAsExternalId` on by sending `true`. (This option only works for unsigned user data.)
+To use the contact email as the user ID, set `setEmailAsExternalId` to `true`. Note that this option is only available for unsigned user data.
 
 2. Convert to JSON and add to Maven:
    - Convert the object to a JSON string
