@@ -669,10 +669,9 @@ Create a handoff configuration object with the following structure:
   appId: 'your_zendesk_app_id',
   webhookId: 'your-webhook-id',
   mavenContextFieldId: "your-field-id",
-  shouldForceUserAuthentication: true,
-  forceUserAuthenticationApiEmail: "your api email",
-  forceUserAuthenticationApiToken: "your api token",
-  setEmailAsExternalId: true
+  shouldForceUserAuthentication: true
+  forceUserAuthenticationApiEmail: "your api email"
+  forceUserAuthenticationApiToken: "your api token"
 }
 ```
 
@@ -681,7 +680,7 @@ To correctly set the email address on the Zendesk contact, configure a Zendesk A
 By default, the Zendesk `external_id` is set to the user's `id` on `signedUserData`.
 If your Zendesk `external_id` needs to be different, set the property `externalId` the new value on
 the `signedUserData` property of the chat configuration.
-If you need to set the contact email as the user ID, you should turn `setEmailAsExternalId` on by sending `true`. (This option only works for unsigned user data.)
+
 
 2. Convert to JSON and add to Maven:
    - Convert the object to a JSON string
@@ -701,8 +700,6 @@ If you need to set the contact email as the user ID, you should turn `setEmailAs
 | `shouldForceUserAuthentication` | boolean    | No      | -       | Whether to force user authentication when creating users via the API   |
 | `forceUserAuthenticationApiEmail` | string    | No      | -       | The email address of the API user    |
 | `forceUserAuthenticationApiToken` | string    | No      | -       | The API token for the API user    |
-| `setEmailAsExternalId` | boolean    | No      | -       | If set to `true`, uses the user's email as their Zendesk external_id (only works for unsigned users) |
-
 
 
 ### Front Configuration
