@@ -508,7 +508,7 @@ Follow these steps to configure Zendesk integration:
     - Select `Multi-line`
     - Set Name to `Maven Context`
     - Click **Save**
-    - After saving, note the **Field Id** and **Shared Secret** which are displayed on the page below the **Integration ID** field.
+    - After saving, note the **Field Id**.
   </Step>
   <Step title="Create Zendesk Integration">
    - Navigate to the **Zendesk Admin Center**
@@ -521,7 +521,14 @@ Follow these steps to configure Zendesk integration:
     - Uncheck **Webhook body data**
     - Check all **Webhook subscriptions**
     - Click **Save**
-    - After saving, note the **Webhook ID** and **Shared Secret** which are displayed on the page below the **Integration ID** field.
+    - After saving, note the **AppID** along with the **Webhook ID** and **Shared Secret** which are displayed on the page below the **Integration ID** field.
+  </Step>
+  <Step title="Generate API Key">
+    - On the same screen after conversation webhook creation, navigate to the **API Keys** tab
+    - Click **Create API key**
+    - Enter an identifying name for the key
+    - Copy and securely store the provided **Key ID** and **Secret key**
+    - Click **Next** to complete the setup
   </Step>
   <Step title="Configure second Zendesk webhook">    
     - Go to **Apps and integrations > Webhooks > Webhooks**
@@ -552,7 +559,7 @@ Follow these steps to configure Zendesk integration:
 ```json
  {
   "webhook": {
-    "id": "<REPLACE WITH_Webhook ID>" // REPLACE!!!
+    "id": "<REPLACE_WITH_WebhookID_FROM_STEP_3>" // REPLACE!!!
   },
   "type": "zendesk:trigger",
   "events": [
@@ -638,13 +645,6 @@ Follow these steps to configure Zendesk integration:
 
     - Click **Create trigger**
   </Step>
-  <Step title="Generate API Key">
-    - Navigate to the **API Keys** tab
-    - Click **Create API key**
-    - Enter an identifying name for the key
-    - Copy and securely store the provided ID and secret key
-    - Click **Next** to complete the setup
-  </Step>
   <Step title="Enable Ending Sessions">
   1. In Admin Center, click **Channels > Messaging and Social > Messaging**
   2. Click **Manage settings**
@@ -660,30 +660,45 @@ Create a handoff configuration object with the following structure:
 
 1. Create your configuration object:
 
-```javascript
+```json
 {
-  type: 'zendesk',
-  subdomain: 'your-zendesk-subdomain',
-  apiKey: 'int_your_integration_api_key',
-  apiSecret: 'your_integration_api_secret',
-  appId: 'your_zendesk_app_id',
-  webhookId: 'your-webhook-id',
-  mavenContextFieldId: "your-field-id",
-  shouldForceUserAuthentication: true,
-  forceUserAuthenticationApiEmail: "your api email",
-  forceUserAuthenticationApiToken: "your api token",
-  setEmailAsExternalId: true
+  "type": "zendesk",
+  "subdomain": "your-zendesk-subdomain",
+  "appId": "your_zendesk_app_id",
+  "webhookId": "your-webhook-id",
+  "webhookSecret": "your-webhook-secret",
+  "apiKey": "int_your_integration_api_key",
+  "apiSecret": "your_integration_api_secret",
+  "mavenContextFieldId": "your-field-id",
+  "shouldForceUserAuthentication": true,
+  "forceUserAuthenticationApiEmail": "your api email",
+  "forceUserAuthenticationApiToken": "your api token",
+  "setEmailAsExternalId": true,
+  "enableAvailabilityCheck": true,
+  "availabilityCheckApiEmail": "your api email",
+  "availabilityCheckApiToken": "your api token",
+  "passControlOptions": [
+    {
+      "option": "origin_source_type",
+      "value": "web"
+    }
+  ]
 }
 ```
 
-To correctly set the email address on the Zendesk contact, configure a Zendesk API email and API token.
+2. To correctly set the email address on the Zendesk contact or to enable an agent availability check, generate an API token.
+    - Go to **Apps and integrations > APIs > API Tokens**
+    - Click **Add API token** (top right), give it a description, click **Save**
+    - Copy and securely store the generated token
 
-By default, the Zendesk `external_id` is set to the user's `id` on `signedUserData`.
-If your Zendesk `external_id` needs to be different, set the property `externalId` the new value on
-the `signedUserData` property of the chat configuration.
-To use the contact email as the user ID, set `setEmailAsExternalId` to `true`. Note that this option is only available for unsigned user data.
+**Note:** 
+    - By default, the Zendesk `external_id` is set to the user's `id` on `signedUserData`.
+    - If your Zendesk `external_id` needs to be different, set the property `externalId` to the new value on the `signedUserData` property of the chat configuration.
+    - To use the contact email as the user ID, set `setEmailAsExternalId` to `true`. Note that this option is only available for unsigned user data.
+    - Implementing handoff with the `passControlOptions` set to `origin_source_type: web` will allow the handoff conversations to come through as `via messaging`.
+    - If configuring both setting the email address on the Zendesk contact and enabling an agent availability check, you will need 2 API tokens.
 
-2. Convert to JSON and add to Maven:
+3. Convert to JSON and add to Maven:
    - Convert the object to a JSON string
    - Enter it in the **Live agent handoff configuration** field in chat app settings
 
@@ -691,17 +706,22 @@ To use the contact email as the user ID, set `setEmailAsExternalId` to `true`. N
 
 | Option | Type | Required | Default | Description |
 | --------------------- | --------- | -------- | ------- | ------------------------------------------------------------- |
-| `type` | 'zendesk' | Yes | - | Identifies Zendesk as the handoff provider |
+| `type` | `zendesk` | Yes | - | Identifies Zendesk as the handoff provider |
 | `subdomain` | string | Yes | - | Your Zendesk subdomain |
-| `apiKey` | string | Yes | - | Your Zendesk integration API key |
-| `apiSecret` | string | Yes | - | Your Zendesk integration secret |
-| `appId` | string | Yes | - | Your Zendesk app ID |
-| `webhookId` | string | Yes | - | Your Zendesk webhook ID (found in webhook URL after creation) |
+| `appId` | string | Yes | - | Your Zendesk conversation integration app ID (step 3) |
+| `webhookId` | string | Yes | - | Your Zendesk conversation integration webhook ID (step 3) |
+| `webhookSecret` | string | Yes | - | Your Zendesk conversation integration webhook secret (step 3) |
+| `apiKey` | string | Yes | - | Your Zendesk conversation integration API key (step 4) |
+| `apiSecret` | string | Yes | - | Your Zendesk conversation integration secret (step 4) |
 | `mavenContextFieldId` | string    | Yes      | -       | Your Zendesk field ID (found in fields list after creation)   |
 | `shouldForceUserAuthentication` | boolean    | No      | -       | Whether to force user authentication when creating users via the API   |
-| `forceUserAuthenticationApiEmail` | string    | No      | -       | The email address of the API user    |
-| `forceUserAuthenticationApiToken` | string    | No      | -       | The API token for the API user    |
+| `forceUserAuthenticationApiEmail` | string    | No      | -       | The email address of the API token creator    |
+| `forceUserAuthenticationApiToken` | string    | No      | -       | A generated API token from configuration step 2    |
 | `setEmailAsExternalId` | boolean    | No      | -       | If set to `true`, uses the user's email as their Zendesk external_id (only works for unsigned users) |
+| `enableAvailabilityCheck` | boolean    | No      | -       | Whether to do an agent availability check at the beginning of the maven conversation creation   |
+| `availabilityCheckApiEmail` | string    | No      | -       | The email address of the API token creator    |
+| `availabilityCheckApiToken` | string    | No      | -       | A generated API token from configuration step 2   |
+| `passControlOptions` | array    | No      | -       | If object `origin_source_type` is set to `web`, conversations will come through as `via messaging` in Zendesk |
 
 
 
