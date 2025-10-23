@@ -153,15 +153,15 @@ navigation:
             path: ./docs/pages/security-and-privacy-details.mdx
 
 navbar-links:
+  - type: primary
+    text: Developers
+    url: https://docs.mavenagi.com/developers
+  - type: primary
+    text: Agent Designer
+    url: https://app.mavenagi.com
   - type: secondary
     text: Support
     url: https://support.mavenagi.com
-  - type: secondary
-    text: Developer portal
-    url: https://developers.mavenagi.com
-  - type: primary
-    text: Dashboard
-    url: https://app.mavenagi.com
 
 colors:
   accent-primary:
