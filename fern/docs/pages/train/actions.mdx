@@ -34,10 +34,23 @@ Another way to integrate 3rd party systems with Maven is through MCP (Model Cont
 
 ### Quick Start Guide
 
-1. Generate an authenticated URL pointing to the remote MCP Server using a tool such as [smithery.ai](https://smithery.ai)
-2. Search for the MCP app in the Maven App directory
-3. Install the app and supply your copied URL from Smithery. Note: multiple MCP Servers can be added here.
-4. Test the new MCP server functionality that's been added to your Maven agent - Maven is now able to use any of the functions exposed by the MCP Server.
+<Steps toc={true}>
+  <Step title="Generate Authenticated URL">
+    Generate an authenticated URL pointing to the remote MCP Server using a tool such as [smithery.ai](https://smithery.ai)
+  </Step>
+
+  <Step title="Search for MCP App">
+    Search for the MCP app in the Maven App directory
+  </Step>
+
+  <Step title="Install and Configure">
+    Install the app and supply your copied URL from Smithery. Note: multiple MCP Servers can be added here.
+  </Step>
+
+  <Step title="Test Integration">
+    Test the new MCP server functionality that's been added to your Maven agent - Maven is now able to use any of the functions exposed by the MCP Server.
+  </Step>
+</Steps>
 
 ### Step-by-Step Example: Integrating Monday.com
 
@@ -45,53 +58,67 @@ Let's see how this works in practice with an example using Monday.com CRM integr
 
 Imagine you're a Maven customer with information in Monday.com that you want available to Maven, along with your support staff who leverage Maven as a copilot. You'd also like your team to tell Maven to take actions against Monday.com CRM, such as updating it with information from chat interactions.
 
-**Step 1: Set up your Monday.com board**
+<Steps toc={true}>
+  <Step title="Set up your Monday.com board">
+    Start with your existing Monday.com board - in this example, we have a "Customers" board with customer information.
 
-Start with your existing Monday.com board - in this example, we have a "Customers" board with customer information.
+    <Frame caption="Monday.com Customers Board Example">
+      <img src="/docs/assets/actions/mcp/01_monday_customers_board.png" alt="Monday.com Customers Board Example"/>
+    </Frame>
+  </Step>
 
-![Monday.com Customers board example](/docs/assets/actions/mcp/01_monday_customers_board.png)
+  <Step title="Find an MCP Server">
+    Search for an MCP Server for Monday.com on [smithery.ai](https://smithery.ai).
 
-**Step 2: Find an MCP Server**
+    <Frame caption="Searching for MCP Server on Smithery">
+      <img src="/docs/assets/actions/mcp/02_smithery_search_mcp.png" alt="Searching for MCP Server on Smithery"/>
+    </Frame>
+  </Step>
 
-Search for an MCP Server for Monday.com on [smithery.ai](https://smithery.ai).
+  <Step title="Select a remote MCP Server">
+    Choose one that's tagged "remote" with high usage, or select another that meets your needs.
 
-![Searching for MCP Server on Smithery](/docs/assets/actions/mcp/02_smithery_search_mcp.png)
+    <Frame caption="Selecting Monday.com MCP Server">
+      <img src="/docs/assets/actions/mcp/03_smithery_monday_server.png" alt="Selecting Monday.com MCP Server"/>
+    </Frame>
+  </Step>
 
-**Step 3: Select a remote MCP Server**
+  <Step title="Generate authenticated URL">
+    Click the "Generate URL" button and prepare to supply credentials to build the authenticated remote URL.
 
-Choose one that's tagged "remote" with high usage, or select another that meets your needs.
+    <Frame caption="Generate URL Dialog in Smithery">
+      <img src="/docs/assets/actions/mcp/04_smithery_generate_url.png" alt="Generate URL Dialog in Smithery"/>
+    </Frame>
+  </Step>
 
-![Selecting Monday.com MCP Server](/docs/assets/actions/mcp/03_smithery_monday_server.png)
+  <Step title="Get your Monday.com API token">
+    Retrieve your API token from the Monday.com developer center.
 
-**Step 4: Generate authenticated URL**
+    <Frame caption="Monday.com API Token in Developer Center">
+      <img src="/docs/assets/actions/mcp/05_monday_api_token.png" alt="Monday.com API Token in Developer Center"/>
+    </Frame>
+  </Step>
 
-Click the "Generate URL" button and prepare to supply credentials to build the authenticated remote URL.
+  <Step title="Create the authenticated URL">
+    Paste your API token into Smithery and generate the connection link. Copy this link to bring over to Maven.
 
-![Generate URL dialog in Smithery](/docs/assets/actions/mcp/04_smithery_generate_url.png)
+    <Frame caption="Generated Authenticated URL in Smithery">
+      <img src="/docs/assets/actions/mcp/06_smithery_authenticated_url.png" alt="Generated Authenticated URL in Smithery"/>
+    </Frame>
+  </Step>
 
-**Step 5: Get your Monday.com API token**
+  <Step title="Install the MCP app">
+    Search for the MCP app in the Maven App directory and install it.
+  </Step>
 
-Retrieve your API token from the Monday.com developer center.
+  <Step title="Configure the connection">
+    Supply your copied URL from Smithery during installation. Note that multiple MCP Servers can be added to a single MCP app installation.
+  </Step>
 
-![Monday.com API token in developer center](/docs/assets/actions/mcp/05_monday_api_token.png)
-
-**Step 6: Create the authenticated URL**
-
-Paste your API token into Smithery and generate the connection link. Copy this link to bring over to Maven.
-
-![Generated authenticated URL in Smithery](/docs/assets/actions/mcp/06_smithery_authenticated_url.png)
-
-**Step 7: Install the MCP app**
-
-Search for the MCP app in the Maven App directory and install it.
-
-**Step 8: Configure the connection**
-
-Supply your copied URL from Smithery during installation. Note that multiple MCP Servers can be added to a single MCP app installation.
-
-**Step 9: Test the integration**
-
-Test the new MCP server functionality through your agent. Maven is now able to use any of the functions exposed by the MCP Server, allowing you to query and update your Monday.com data directly through conversations.
+  <Step title="Test the integration">
+    Test the new MCP server functionality through your agent. Maven is now able to use any of the functions exposed by the MCP Server, allowing you to query and update your Monday.com data directly through conversations.
+  </Step>
+</Steps>
 
 ## A2A (Agent-to-Agent) Integration
 
@@ -106,55 +133,75 @@ Maven supports Agent-to-Agent (A2A) communication through JSON-RPC 2.0 protocol.
 
 ### A2A Quick Start Guide
 
-1. Obtain the agent card URLs from your A2A servers (e.g., `https://example.com/.well-known/agent.json`)
-2. Search for the A2A app in the Maven App directory
-3. Install the app and provide one or more agent card URLs
-4. Maven will automatically fetch the agent metadata from all servers
-5. Test the A2A integration - Maven can now communicate with all remote agents and use their capabilities as actions
+<Steps toc={true}>
+  <Step title="Obtain Agent Card URLs">
+    Obtain the agent card URLs from your A2A servers (e.g., `https://example.com/.well-known/agent.json`)
+  </Step>
+
+  <Step title="Search for A2A App">
+    Search for the A2A app in the Maven App directory
+  </Step>
+
+  <Step title="Install and Configure">
+    Install the app and provide one or more agent card URLs
+  </Step>
+
+  <Step title="Automatic Discovery">
+    Maven will automatically fetch the agent metadata from all servers
+  </Step>
+
+  <Step title="Test Integration">
+    Test the A2A integration - Maven can now communicate with all remote agents and use their capabilities as actions
+  </Step>
+</Steps>
 
 ### Step-by-Step Example: Integrating Multiple A2A Services
 
 Let's walk through a real-world example of integrating multiple A2A agents with Maven. In this scenario, you want to connect your support team's Maven agent to several specialized services: document processing, weather information, and database queries.
 
-**Step 1: Identify your A2A services**
+<Steps toc={true}>
+  <Step title="Identify your A2A services">
+    For this example, we'll integrate three different A2A agents:
+    - Document Processing Agent at `https://docs.company.com/.well-known/agent.json`
+    - Weather Service Agent at `https://weather-api.service.com/.well-known/agent.json`
+    - Database Query Agent at `https://internal.company.com/.well-known/agent.json`
+  </Step>
 
-For this example, we'll integrate three different A2A agents:
-- Document Processing Agent at `https://docs.company.com/.well-known/agent.json`
-- Weather Service Agent at `https://weather-api.service.com/.well-known/agent.json`
-- Database Query Agent at `https://internal.company.com/.well-known/agent.json`
+  <Step title="Search for the A2A app">
+    Navigate to your Maven App directory and search for the A2A integration app.
+  </Step>
 
-**Step 2: Search for the A2A app**
+  <Step title="Install and configure the A2A app">
+    Install the A2A app and provide all three agent card URLs during the configuration process. The app supports connecting to multiple A2A servers simultaneously.
+  </Step>
 
-Navigate to your Maven App directory and search for the A2A integration app.
+  <Step title="Automatic discovery and registration">
+    Maven will automatically:
+    - Fetch the agent metadata from each URL
+    - Discover all available capabilities from each agent
+    - Register them as actions with clear naming (e.g., `a2a_search_documents`, `a2a_get_weather`, `a2a_query_users`)
+  </Step>
 
-**Step 3: Install and configure the A2A app**
+  <Step title="Test the multi-agent integration">
+    Test your new A2A integration by asking Maven questions that utilize different agents:
 
-Install the A2A app and provide all three agent card URLs during the configuration process. The app supports connecting to multiple A2A servers simultaneously.
+    - "Search for climate change documents and get tomorrow's weather forecast"
+    - "Find user records for customers in New York and check the weather there"
+    - "Extract text from the uploaded PDF and search our database for similar cases"
 
-**Step 4: Automatic discovery and registration**
-
-Maven will automatically:
-- Fetch the agent metadata from each URL
-- Discover all available capabilities from each agent
-- Register them as actions with clear naming (e.g., `a2a_search_documents`, `a2a_get_weather`, `a2a_query_users`)
-
-**Step 5: Test the multi-agent integration**
-
-Test your new A2A integration by asking Maven questions that utilize different agents:
-
-- "Search for climate change documents and get tomorrow's weather forecast"
-- "Find user records for customers in New York and check the weather there"
-- "Extract text from the uploaded PDF and search our database for similar cases"
-
-Maven will intelligently route these requests to the appropriate A2A agents and combine the results in natural conversation.
+    Maven will intelligently route these requests to the appropriate A2A agents and combine the results in natural conversation.
+  </Step>
+</Steps>
 
 ## Action States
 
 Actions can be in one of three states:
 
-- **Pinned**: The Action will always be provided to the LLM.
-- **Included**: The Action will be provided to the the LLM if it is relevant to the user question.
-- **Excluded**: The Action is disabled and will not be provided to the LLM.
+| **State**   | **Description**                                                                      |
+| ----------- | ------------------------------------------------------------------------------------ |
+| Pinned      | The Action will always be provided to the LLM                                        |
+| Included    | The Action will be provided to the LLM if it is relevant to the user question       |
+| Excluded    | The Action is disabled and will not be provided to the LLM                           |
 
 ## Tuning Actions
 

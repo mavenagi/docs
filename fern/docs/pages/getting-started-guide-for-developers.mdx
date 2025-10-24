@@ -2,27 +2,33 @@ Welcome to the Maven AGI Developer Platform! We're excited to support you in bui
 
 ---
 
-## 1. Key Concepts: Maven Apps, Agents, and Repositories
+## Key Concepts: Maven Apps, Agents, and Repositories
 
 Before diving in, here are a few concepts to understand:
 
-* **Maven App**: A TypeScript-based application that integrates with the Maven platform and extends its capabilities.
-* **Maven Agent**: A runtime environment within your organization that runs one or more installed Maven Apps. Organizations typically have separate agents for staging and production.
-* **GitHub Repositories**: Each Maven App is managed in its own GitHub repo. You'll create your own repository based on our public template and connect it to Maven's deployment system.
-* **Your Maven Contact**: Your Maven contact who will help coordinate the initial setup and configuration of your development environment.
+| **Term**              | **Description**                                                                                                                                                                                           |
+| --------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Maven App             | A TypeScript-based application that integrates with the Maven platform and extends its capabilities.                                                                                                     |
+| Maven Agent           | A runtime environment within your organization that runs one or more installed Maven Apps. Organizations typically have separate agents for staging and production.                                       |
+| GitHub Repositories   | Each Maven App is managed in its own GitHub repo. You'll create your own repository based on our public template and connect it to Maven's deployment system.                                            |
+| Your Maven Contact    | Your Maven contact who will help coordinate the initial setup and configuration of your development environment.                                                                                          |
 
 ### Solution Architecture
 
-The following diagram shows how your Maven app integrates with your website and the Maven platform:
+The following diagram traces the path of a question through the various components involved in a conversation with a Maven agent. 
+It highlights the pieces in green which are customer-authored and points out how your custom Maven app plugs into the conversation flow 
+enabling extension of the Maven agent's capabilities based on your own enterprise's unique integration requirements.
 
-![Customer App Request Flow](../img/customer-app-request-flow-diagram.png)
+<Frame caption="Customer App Request Flow">
+  <img src="../img/customer-app-request-flow-diagram.png" alt="Customer App Request Flow"/>
+</Frame>
 
 **Green components** = You control and implement these  
 **Purple components** = Maven platform infrastructure
 
 ---
 
-## 2. Prerequisites
+## Prerequisites
 
 Before you begin developing Maven Apps, ensure you have:
 
@@ -34,78 +40,125 @@ Before you begin developing Maven Apps, ensure you have:
 
 ---
 
-## 3. Initial Setup Process
+## Initial Setup Process
 
 The new Maven AGI development workflow allows you to create and manage your own GitHub repository while working closely with your Solution Engineer (SE) to get everything configured properly.
 
 ### Overview of the Process
 
-1. **Create Your Repository**: Start with our public template in your own GitHub organization
-2. **Install Maven GitHub App**: Connect your repo to Maven's deployment system
-3. **Coordinate with Your Maven Contact**: Share your repository URL with your Maven contact and they will configure the app in Maven's App Studio
-4. **Deploy and Test**: Push changes and see them deployed automatically
+<Steps toc={true}>
+  <Step title="Create Your Repository">
+    Start with our public template in your own GitHub organization
+  </Step>
 
-> **Naming Convention**: Throughout this guide, we'll use `acme-production` as an example repository name. Replace this with your own descriptive repository name.
+  <Step title="Install Maven GitHub App">
+    Connect your repo to Maven's deployment system
+  </Step>
+  
+  <Step title="Coordinate with Your Maven Contact">
+    Share your repository URL with your Maven contact and they will configure the app in Maven's App Studio
+  </Step>
+
+  <Step title="Deploy and Test">
+    Push changes and see them deployed automatically
+  </Step>
+</Steps>
+
+<Note>
+**Naming Convention**: Throughout this guide, we'll use `acme-production` as an example repository name. Replace this with your own descriptive repository name.
+</Note>
 
 ---
 
-## 4. Step-by-Step Setup Instructions
+## Step-by-Step Setup Instructions
 
-### Step 1: Create Your Repository from Template
+### Create Your Repository from Template
 
-1. **Navigate to the Maven AGI Template**
-   Go to the public [Maven AGI Template Repository](https://github.com/mavenagi-apps/template-api) on GitHub.
+<Steps toc={true}>
+  <Step title="Navigate to the Maven AGI Template">
+    Go to the public [Maven AGI Template Repository](https://github.com/mavenagi-apps/template-api) on GitHub.
 
-   ![Create New Repo Using Template](../img/create-new-repo-using-template.png)
+    <Frame caption="Create New Repo Using Template">
+      <img src="../img/create-new-repo-using-template.png" alt="Create New Repo Using Template"/>
+    </Frame>
+  </Step>
 
-2. **Create a New Repository**
-   Click "Use this template" and create a new repository in your own GitHub organization.
+  <Step title="Create a New Repository">
+    Click "Use this template" and create a new repository in your own GitHub organization.
 
-   ![Create New Repo in Own Org](../img/create-new-repo-in-own-org.png)
+    <Frame caption="Create New Repo in Own Org">
+      <img src="../img/create-new-repo-in-own-org.png" alt="Create New Repo in Own Org"/>
+    </Frame>
+  </Step>
+</Steps>
 
-### Step 2: Install the Maven AGI GitHub App
+### Install the Maven AGI GitHub App
 
-1. **Navigate to the Maven AGI GitHub App**
-   Go to [https://github.com/apps/maven-agi](https://github.com/apps/maven-agi)
+<Steps toc={true}>
+  <Step title="Navigate to the Maven AGI GitHub App">
+    Go to [https://github.com/apps/maven-agi](https://github.com/apps/maven-agi)
 
-   ![Install Maven GitHub App](../img/install-maven-github-app.png)
+    <Frame caption="Install Maven GitHub App">
+      <img src="../img/install-maven-github-app.png" alt="Install Maven GitHub App"/>
+    </Frame>
+  </Step>
 
-2. **Configure the Installation**
-   * Select your GitHub organization
-   * Choose to install only on the specific repository you just created
+  <Step title="Configure the Installation">
+    * Select your GitHub organization
+    * Choose to install only on the specific repository you just created
 
-   ![Configure GitHub App Own Org](../img/configure-github-app-own-org.png)
+    <Frame caption="Configure GitHub App Own Org">
+      <img src="../img/configure-github-app-own-org.png" alt="Configure GitHub App Own Org"/>
+    </Frame>
+  </Step>
 
-3. **Verify Installation**
-   After installation, you should see the Maven AGI app listed in your repository's settings.
+  <Step title="Verify Installation">
+    After installation, you should see the Maven AGI app listed in your repository's settings.
 
-   ![Post Maven GitHub App Install](../img/post-maven-github-app-install.png)
+    <Frame caption="Post Maven GitHub App Install">
+      <img src="../img/post-maven-github-app-install.png" alt="Post Maven GitHub App Install"/>
+    </Frame>
+  </Step>
+</Steps>
 
-### Step 3: Coordinate with Your Maven Contact
+### Coordinate with Your Maven Contact
 
-1. **Share Your Repository URL**
-   Send the URL of your newly created GitHub repository to your Maven contact.
+<Steps toc={true}>
+  <Step title="Share Your Repository URL">
+    Send the URL of your newly created GitHub repository to your Maven contact.
+  </Step>
 
-2. **Wait for Configuration**
-   Your Maven contact will:
-   * Create the app in Maven's App Studio
-   * Configure it to use your GitHub repository
-   * Set up the deployment pipeline
+  <Step title="Wait for Configuration">
+    Your Maven contact will:
+    * Create the app in Maven's App Studio
+    * Configure it to use your GitHub repository
+    * Set up the deployment pipeline
+  </Step>
+</Steps>
 
-### Step 4: Test Your First Deployment
+### Test Your First Deployment
 
-1. **Make a Test Change**
-   Once your Maven contact has configured everything, make a small change to your repository and push it to the `main` branch.
+<Steps toc={true}>
+  <Step title="Make a Test Change">
+    Once your Maven contact has configured everything, make a small change to your repository and push it to the `main` branch.
 
-   ![Commit Change](../img/commit-change.png)
+    <Frame caption="Commit Change">
+      <img src="../img/commit-change.png" alt="Commit Change"/>
+    </Frame>
+  </Step>
 
-2. **Monitor Deployment**
-   You can view the deployment status in Maven's App Studio.
+  <Step title="Monitor Deployment">
+    You can view the deployment status in Maven's App Studio.
 
-   ![View Deployment App Studio](../img/view-deployment-app-studio.png)
-
-3. **Install and Test**
-   Once deployed, install your app on your Maven agent and test the functionality.
+    <Frame caption="View Deployment App Studio">
+      <img src="../img/view-deployment-app-studio.png" alt="View Deployment App Studio"/>
+    </Frame>
+  </Step>
+  
+  <Step title="Install and Test">
+    Once deployed, install your app on your Maven agent and test the functionality.
+  </Step>
+</Steps>
 
 <Tip>
 **Development Lifecycle**: After your app is initially installed, it's still the case that any changes pushed to the main branch of your repository will be automatically deployed. However, to apply these changes to your Maven agent, you need to update the installed app:
@@ -121,7 +174,7 @@ This update process ensures that your agent is running the latest version of you
 
 
 
-## 5. Essential Commands
+## Essential Commands
 
 ```bash
 pnpm install   # Install dependencies
@@ -132,7 +185,7 @@ pnpm dev       # Start development server (if app has UI)
 
 ---
 
-## 6. Understanding Maven App Structure
+## Understanding Maven App Structure
 
 ### Project Structure
 
@@ -189,7 +242,7 @@ For more detailed information about specific Maven app capabilities:
 
 ---
 
-## 7. Testing Your App
+## Testing Your App
 
 * Use **Vitest** for unit testing core functionality
 * For a more robust setup with full end-to-end integration testing in a staging environment, see the [Staging to Production Workflow](./staging-to-production.mdx).
@@ -198,19 +251,23 @@ Example test patterns are available in [Community Gainsight App Tests](https://g
 
 ---
 
-## 8. Troubleshooting
+## Troubleshooting
 
 ### Deployment Issues from GitHub
 
 **Workaround if you hit deployment issues from GitHub**: If you encounter any issues with pushed changes triggering deployments, copy your local changes into the web-based App Studio and deploy from there. Here's a couple screenshots showing where App Studio lives in Maven:
 
-![Navigate to App Studio](../img/navigate-to-app-studio.png)
+<Frame caption="Navigate to App Studio">
+  <img src="../img/navigate-to-app-studio.png" alt="Navigate to App Studio"/>
+</Frame>
 
-![App Studio Code Editor](../img/app-studio-code-editor.png)
+<Frame caption="App Studio Code Editor">
+  <img src="../img/app-studio-code-editor.png" alt="App Studio Code Editor"/>
+</Frame>
 
 ---
 
-## 9. Resources & Getting Help
+## Resources & Getting Help
 
 * [Staging to Production Workflow](./staging-to-production.mdx) - Complete guide for production-ready development
 * [Maven Developer Docs](https://developers.mavenagi.com/docs/api-reference/overview/authentication) - Reference full API docs
