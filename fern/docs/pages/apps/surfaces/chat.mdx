@@ -192,6 +192,7 @@ Currently supported providers:
 - Salesforce
 - Zendesk
 - Front
+- Genesys
 
 ### Salesforce Legacy Chat REST API Configuration
 
@@ -919,6 +920,98 @@ Next, configure the remaining app settings for **Live agent handoff**. The `acce
   }
 }
 ```
+
+### Genesys Configuration
+
+Maven Chat integrates with Genesys Cloud to provide human support capabilities through Open Messaging. This integration requires configuration in both Genesys Cloud and Maven.
+
+#### Requirements
+
+- Genesys Cloud account with admin access
+- Access to Genesys Cloud Admin Console
+- Open Messaging enabled in your Genesys Cloud organization
+
+#### Setup Process
+
+Follow these steps to configure Genesys integration:
+
+<Steps>
+  <Step title="Create OAuth Client">
+    - Navigate to **Genesys Cloud Admin** → **Integrations** → **OAuth**
+    - Click **Add Client**
+    - Set **Grant Type** to **Client Credentials**
+    - Configure the following permissions:
+      - `conversations:message:create`
+      - `conversations:message:view`
+    - Click **Save**
+    - Copy and securely store the **Client ID** and **Client Secret** (the secret is only shown once)
+  </Step>
+  <Step title="Create Open Messaging Integration">
+    - Navigate to **Admin** → **Message** → **Platforms**
+    - Click **+ Add Platform**
+    - Select **Open Messaging**
+    - Configure the integration with a name and description
+    - Set the **Outbound Notification Webhook URL** to: `https://chat.onmaven.app/api/genesys/webhook`
+    - **Important:** No custom headers are required for the webhook
+    - Click **Save** and activate the integration
+    - Copy and securely store the **Integration ID**
+  </Step>
+  <Step title="Generate API Secret">
+    - Generate a secure random string for Maven to use for signing JWT tokens
+    - Run the following command in your terminal:
+      ```bash
+      openssl rand -base64 32
+      ```
+    - Copy and securely store the generated secret
+  </Step>
+</Steps>
+
+#### Configuration
+
+Create a handoff configuration object with the following structure:
+
+<Steps>
+  <Step title="Create your configuration object">
+    ```json
+    {
+      "type": "genesys",
+      "oauthClientId": "your-oauth-client-id",
+      "oauthClientSecret": "your-oauth-client-secret",
+      "integrationId": "your-integration-id",
+      "apiSecret": "your-generated-api-secret",
+      "allowAnonymousHandoff": false
+    }
+    ```
+  </Step>
+  <Step title="Convert to JSON and add to Maven">
+    - Convert the object to a JSON string
+    - Enter it in the **Live agent handoff configuration** field in chat app settings
+  </Step>
+</Steps>
+
+##### Configuration Options
+
+| Option | Type | Required | Default | Description |
+|--------|------|----------|---------|-------------|
+| `type` | 'genesys' | Yes | - | Identifies Genesys as the handoff provider |
+| `oauthClientId` | string | Yes | - | Your Genesys OAuth Client ID from Step 1 |
+| `oauthClientSecret` | string | Yes | - | Your Genesys OAuth Client Secret from Step 1 |
+| `integrationId` | string | Yes | - | Your Genesys Open Messaging Integration ID from Step 2 |
+| `apiSecret` | string | Yes | - | Maven-generated secret for signing JWT tokens (Step 3) |
+| `allowAnonymousHandoff` | boolean | No | false | Whether to request email from anonymous users |
+
+#### How It Works
+
+When a handoff is initiated:
+
+1. Maven sends the conversation transcript to Genesys using the Open Messaging API
+2. The message is routed to the configured integration using the `integrationId`
+3. Genesys sends agent responses back to Maven via the webhook at `https://chat.onmaven.app/api/genesys/webhook`
+4. The webhook validates and routes messages based on the `integrationId` in the payload
+5. Messages are streamed to the chat widget in real-time via Server-Sent Events (SSE)
+
+**Note:** The Genesys webhook endpoint does not require any custom headers or signature validation. Genesys automatically includes the `integrationId` in webhook payloads to identify the source integration.
+
 ## Authentication
 
 ### Signed User Authentication
