@@ -33,6 +33,12 @@ navigation:
         contents:
           - page: Navigating insights
             path: ./docs/pages/insights/overview.mdx
+      - section: Ask Maven
+        viewers:
+          - everyone
+        contents:
+          - page: Ask Maven Overview
+            path: ./docs/pages/ask-maven/overview.mdx
       - section: Inbox
         viewers:
           - everyone
