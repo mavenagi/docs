@@ -1007,11 +1007,11 @@ This can be used to detect when the Chat widget has been opened or closed
     let isOpen = false;
 
     window.addEventListener('mavenWidgetClosed', () => {
-      isOpen = true;
+      isOpen = false;
     });
 
     window.addEventListener('mavenWidgetOpened', () => {
-      isOpen = false;
+      isOpen = true;
     });
     ```
   </Step>
