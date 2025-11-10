@@ -166,6 +166,10 @@ export default () => {
 You can programmatically control the widget using the following methods:
 
 ```javascript
+
+// Returns true if the chat widget is open
+window.Maven.ChatWidget.isOpen();
+
 // Open the widget
 window.Maven.ChatWidget.open();
 
@@ -988,19 +992,6 @@ under **Miscellaneous** (**Enable appendNewMessage API**).
     ```
   </Step>
 </Steps>
-
-## Methods
-
-Maven Chat has methods to programmatically control the widget.
-
-| Name | Parameters | Output | Description |
-|--------|------|----------|---------|-------------|
-| `isOpen` | None | boolean | Returns a true if the chat widget is open |
-| `open` | None | void | Opens the chat widget |
-| `close` | None | void | Closes the chat widget |
-| `show` | None | void | Displays the default open button |
-| `hide` | None | void | Hides the default open button |
-
 
 ## Event Listeners
 
