@@ -988,3 +988,28 @@ under **Miscellaneous** (**Enable appendNewMessage API**).
     ```
   </Step>
 </Steps>
+
+
+## Event Listeners
+
+Maven Chat allows you to listen to events triggered by the chat widget.
+
+This can be used to detect when the Chat widget has been opened or closed
+
+#### Example
+
+<Steps>
+  <Step title="Listening for chat widget events">
+    ```javascript
+    let isOpen = false;
+
+    window.addEventListener('mavenWidgetClosed', () => {
+      isOpen = true;
+    });
+
+    window.addEventListener('mavenWidgetOpened', () => {
+      isOpen = false;
+    });
+    ```
+  </Step>
+</Steps>
