@@ -166,6 +166,10 @@ export default () => {
 You can programmatically control the widget using the following methods:
 
 ```javascript
+
+// Returns true if the chat widget is open
+window.Maven.ChatWidget.isOpen();
+
 // Open the widget
 window.Maven.ChatWidget.open();
 
@@ -1188,6 +1192,30 @@ under **Miscellaneous** (**Enable appendNewMessage API**).
     ```javascript
     Maven.ChatWidget.appendNewMessage({
       text: 'Hello, this is a message'
+    });
+    ```
+  </Step>
+</Steps>
+
+## Event Listeners
+
+Maven Chat allows you to listen to events triggered by the chat widget.
+
+This can be used to detect when the Chat widget has been opened or closed
+
+#### Example
+
+<Steps>
+  <Step title="Listening for chat widget events">
+    ```javascript
+    let isOpen = false;
+
+    window.addEventListener('mavenWidgetClosed', () => {
+      isOpen = false;
+    });
+
+    window.addEventListener('mavenWidgetOpened', () => {
+      isOpen = true;
     });
     ```
   </Step>
