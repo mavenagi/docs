@@ -192,6 +192,7 @@ Currently supported providers:
 - Salesforce
 - Zendesk
 - Front
+- Genesys
 
 ### Salesforce Legacy Chat REST API Configuration
 
@@ -919,6 +920,209 @@ Next, configure the remaining app settings for **Live agent handoff**. The `acce
   }
 }
 ```
+
+### Genesys Configuration
+
+Maven Chat integrates with Genesys Cloud to provide human support capabilities through Open Messaging. This integration requires configuration in both Genesys Cloud and Maven.
+
+#### Requirements
+
+- Genesys Cloud account with admin access
+- Access to Genesys Cloud Admin Console
+- Open Messaging enabled in your Genesys Cloud organization
+
+#### Setup Process
+
+Follow these steps to configure Genesys integration:
+
+<Steps>
+  <Step title="Create OAuth Client">
+    - Navigate to **Genesys Cloud Admin** → **Integrations** → **OAuth**
+    - Click **Add Client**
+    - Set **Grant Type** to **Client Credentials**
+    - Configure the following permissions:
+      - `conversations:message:create`
+      - `conversations:message:view`
+    - Click **Save**
+    - Copy and securely store the **Client ID** and **Client Secret** (the secret is only shown once)
+  </Step>
+  <Step title="Create Open Messaging Integration">
+    - Navigate to **Admin** → **Message** → **Platforms**
+    - Click **+ Add Platform**
+    - Select **Open Messaging**
+    - Configure the integration with a name and description
+    - Set the **Outbound Notification Webhook URL** to: `https://chat.onmaven.app/api/genesys/webhook`
+    - **Important:** No custom headers are required for the webhook
+    - Click **Save** and activate the integration
+    - Copy and securely store the **Integration ID**
+  </Step>
+  <Step title="Generate API Secret">
+    - Generate a secure random string for Maven to use for signing JWT tokens
+    - Run the following command in your terminal:
+      ```bash
+      openssl rand -base64 32
+      ```
+    - Copy and securely store the generated secret
+  </Step>
+</Steps>
+
+#### Configuration
+
+Create a handoff configuration object with the following structure:
+
+<Steps>
+  <Step title="Create your configuration object">
+    ```json
+    {
+      "type": "genesys",
+      "oauthClientId": "your-oauth-client-id",
+      "oauthClientSecret": "your-oauth-client-secret",
+      "integrationId": "your-integration-id",
+      "apiSecret": "your-generated-api-secret",
+      "allowAnonymousHandoff": false,
+      "agentAvailability": {
+        "timezone": "America/New_York",
+        "hours": [
+          {
+            "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+            "startTime": "09:00",
+            "endTime": "17:00"
+          }
+        ]
+      }
+    }
+    ```
+  </Step>
+  <Step title="Convert to JSON and add to Maven">
+    - Convert the object to a JSON string
+    - Enter it in the **Live agent handoff configuration** field in chat app settings
+  </Step>
+</Steps>
+
+##### Configuration Options
+
+| Option | Type | Required | Default | Description |
+|--------|------|----------|---------|-------------|
+| `type` | 'genesys' | Yes | - | Identifies Genesys as the handoff provider |
+| `oauthClientId` | string | Yes | - | Your Genesys OAuth Client ID from Step 1 |
+| `oauthClientSecret` | string | Yes | - | Your Genesys OAuth Client Secret from Step 1 |
+| `integrationId` | string | Yes | - | Your Genesys Open Messaging Integration ID from Step 2 |
+| `apiSecret` | string | Yes | - | Maven-generated secret for signing JWT tokens (Step 3) |
+| `allowAnonymousHandoff` | boolean | No | false | Whether to request email from anonymous users |
+| `agentAvailability` | object | No | - | Configure agent availability based on business hours and timezone. See [Agent Availability](#agent-availability) below |
+
+#### How It Works
+
+When a handoff is initiated:
+
+1. Maven sends the conversation transcript to Genesys using the Open Messaging API
+2. The message is routed to the configured integration using the `integrationId`
+3. Genesys sends agent responses back to Maven via the webhook at `https://chat.onmaven.app/api/genesys/webhook`
+4. The webhook validates and routes messages based on the `integrationId` in the payload
+5. Messages are streamed to the chat widget in real-time via Server-Sent Events (SSE)
+
+**Note:** The Genesys webhook endpoint does not require any custom headers or signature validation. Genesys automatically includes the `integrationId` in webhook payloads to identify the source integration.
+
+#### Agent Availability
+
+Control when live agent handoff is available to users based on your team's business hours. When configured, the handoff option will only be shown to users during specified hours. If not configured, live agent handoff is always available.
+
+##### Configuration Structure
+
+The `agentAvailability` object supports the following properties:
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `timezone` | string | Yes | IANA timezone identifier (e.g., "America/New_York", "Europe/London", "Asia/Tokyo") |
+| `hours` | array | Yes | Array of time window objects defining when agents are available |
+
+Each time window in the `hours` array has the following structure:
+
+| Property | Type | Required | Description |
+|----------|------|----------|-------------|
+| `days` | string[] | Yes | Array of day names: "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday" |
+| `startTime` | string | Yes | Start time in 24-hour format (HH:mm), inclusive |
+| `endTime` | string | Yes | End time in 24-hour format (HH:mm), exclusive |
+
+##### Examples
+
+**Standard Business Hours (9 AM - 5 PM ET, Monday-Friday)**
+```json
+{
+  "agentAvailability": {
+    "timezone": "America/New_York",
+    "hours": [
+      {
+        "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "startTime": "09:00",
+        "endTime": "17:00"
+      }
+    ]
+  }
+}
+```
+
+**Extended Hours with Lunch Break**
+```json
+{
+  "agentAvailability": {
+    "timezone": "America/Los_Angeles",
+    "hours": [
+      {
+        "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "startTime": "08:00",
+        "endTime": "12:00"
+      },
+      {
+        "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "startTime": "13:00",
+        "endTime": "18:00"
+      }
+    ]
+  }
+}
+```
+
+**24/7 Support with Overnight Shifts**
+```json
+{
+  "agentAvailability": {
+    "timezone": "UTC",
+    "hours": [
+      {
+        "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+        "startTime": "00:00",
+        "endTime": "23:59"
+      }
+    ]
+  }
+}
+```
+
+**Overnight Shift (9 PM - 5 AM)**
+```json
+{
+  "agentAvailability": {
+    "timezone": "America/New_York",
+    "hours": [
+      {
+        "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        "startTime": "21:00",
+        "endTime": "05:00"
+      }
+    ]
+  }
+}
+```
+
+##### Important Notes
+
+- **Time Ranges**: Start times are inclusive, end times are exclusive. For example, `"endTime": "17:00"` means agents are available until 4:59:59 PM
+- **Overnight Shifts**: When `endTime` is earlier than `startTime` (e.g., 21:00 to 05:00), the system automatically handles the shift spanning midnight
+- **Timezone**: All times are interpreted in the specified timezone. User requests are evaluated in real-time against the configured timezone
+- **Multiple Windows**: You can define multiple time windows to accommodate lunch breaks, split shifts, or different schedules for different days
+- **Default Behavior**: If `agentAvailability` is not configured, live agent handoff is always available
+
 ## Authentication
 
 ### Signed User Authentication
