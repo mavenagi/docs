@@ -1,54 +1,38 @@
 ---
-title: Maven AGI Apps and API
+title: Build Maven AGI Apps using the Platform API
 slug: maven-platform
-excerpt: Simplifying Integration for Everyone
+excerpt: Extend Your Agent to Integrate with Additional Systems
 layout: overview
 ---
 
-Maven AGI provides a powerful platform for developers to create integrations with Maven, making it easier to enhance and customize your experience.
+Maven AGI provides a powerful [Platform API](https://developers.mavenagi.com/docs/api-reference/overview/authentication) which can be leveraged through the use of Apps. Apps make it possible to customize your Maven agent's brain and connect it with the existing systems inside your enterprise environment. If it has an API, it can be plugged into your Agent through Maven Apps.
+
+To get started building your own Maven App, head over to the [Developer Portal](https://developers.mavenagi.com).
 
 ## What is a Maven App?
 
-A Maven App is a lightweight application that runs in a serverless environment, which means you don't have to manage any servers yourself. This environment is perfect for small integrations and customizations.
+A Maven App is a lightweight application that runs in Maven AGI's hosted environment, allowing you to extend the Maven platform without worrying about managing servers and deployment environments. Apps are the bridge between Maven's AI capabilities and your enterprise systems - enabling you to add custom knowledge sources, actions, user data, and event triggers that are specific to your organization.
 
-## What Can You Do with Maven Apps?
+## What Can You Build with Maven Apps?
 
-Using the Maven REST APIs, developers can:
+Using the Maven Platform API, you can extend your agent to:
 
-- **Add Knowledge**: Automatically input information into Maven.
-- **Add User Data**: Seamlessly integrate user data into Maven.
-- **Custom User Interfaces**: Create unique surfaces where users can ask questions.
-- **Custom Actions**: Implement specific actions based on user interactions.
-- **Custom Event Triggers**: Set up automated responses to certain events.
+- **Connect Knowledge Sources**: Automatically sync information from your internal systems, databases, and documentation into Maven.
+- **Build Custom Actions**: Enable your agent to take actions across any of your systems - create tickets, update records, trigger workflows - while expressing guardrails that ensure you retain control and visibility over every action.
+- **Deliver Personalized Experiences**: Pull user context and permissions from your identity providers and CRM systems to tailor interactions for each user.
+- **Set Up Event Triggers**: Respond automatically to events in your systems, keeping your agent's knowledge fresh and actions proactive.
+- **Create Custom Surfaces**: Develop your own conversational AI user interfaces and products powered by Maven's APIs underneath the hood.
 
-## Why Choose Serverless?
+## Deploy on Your Own Infrastructure
 
-The serverless environment is ideal for:
-
-- **Simplicity**: Easy to write and deploy small integration apps.
-- **Efficiency**: Actions and triggers are efficiently handled in this environment.
-- **LLM Friendly**: Designed to be compatible with Large Language Models (LLMs), making it straightforward to code and maintain apps.
-
-## Larger Applications
-
-For more extensive applications that aren't suitable for a serverless environment, you can still use Maven's platform APIs from your own servers. These applications will use standard authentication headers and an API secret obtained from the [Developer Portal](https://developers.mavenagi.com).
-
-## Security and Accessibility
-
-Currently, only Maven AGI can create apps that work across different customers due to the sensitivity of platform data. However, all customers can develop apps for use within their own organization.
+For more extensive integrations or applications that need to run on your own infrastructure, you can call the Maven Platform API directly from your servers. These applications use standard authentication headers and an API secret obtained from the [Developer Portal](https://developers.mavenagi.com).
 
 ## Open Source and Community
 
-Maven AGI plans to make many of its apps open source, fostering a community of shared knowledge and collaboration.
+Maven AGI hopes to continue making many of its apps open source, fostering a shared community of knowledge and collaboration. Check out our [public community examples](https://github.com/mavenagi-apps/community-gainsight) to see production-ready Maven Apps you can learn from and build upon.
 
-## Designed for Non-Engineers
+## Get Started
 
-Our platform is built with simplicity in mind, aiming to make serverless apps easy to code and maintain. Most apps can be initially created by a Large Language Model (LLM) and then fine-tuned by engineers. We are continually expanding our platform and providing example suites to make Maven apps accessible even to those without technical expertise.
-
-## Minimal Customization Needed
-
-For most customers, minimal custom apps will be necessary. Maven AGI offers connectors to all major platforms, ensuring that common needs are met without extensive custom development.
-
-For more technical information and to read the API reference docs, please visit the [Developer Portal](https://developers.mavenagi.com).
+Ready to build? Visit the [Developer Portal](https://developers.mavenagi.com) for complete API reference documentation, guides, and examples.
 
 We hope this helps you understand how Maven AGI can simplify integration and enhance your experience. If you have any questions, feel free to reach out!
