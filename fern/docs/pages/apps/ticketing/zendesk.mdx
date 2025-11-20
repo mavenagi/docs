@@ -26,10 +26,18 @@ If you want to include draft articles, select the "Include Draft Articles" optio
 
 **Ticket Hand Off:**
 
-When Maven cannot deflect a user inquiry, a ticket is created in the Freshdesk system. Ticket hand off is represented as an action within Maven.
+When Maven cannot deflect a user inquiry, a ticket is created in the Zendesk system. Ticket hand off is represented as an action within Maven.
 By default, any fields that are required on your default Zendesk ticket form will be included in the the form presented to the user on handoff.
 If you want to include additional fields you can make them required by going to Admin Center > Objects and Rules > Fields and select the "Required To Submit a Request" checkbox.
 Please note that if these values are modified in Zendesk, you will need to update the App settings or reinistall the app for the changes to take effect.
+
+**File Attachments in Ticket Creation:**
+
+When users submit a support ticket through the chat interface, they can upload files such as screenshots, images, documents, or videos. These attachments are automatically sent to Zendesk and included on the newly created ticket. Attachment support is available for asynchronous ticket creation only, due to limitations in the Zendesk Sunshine API. To enable this feature, install the Zendesk App in Agent Designer and select Enable Zendesk Attachments in the configuration UI. Once enabled, users will see an attachment option directly within the escalation form.
+
+**Attachment Support During Live Chat:**
+
+Users can also upload files in real time during a live messaging conversation with Zendesk agents. Any attachments sent by the user will appear instantly in the Zendesk agent workspace, and agents can upload files back to the user through the same chat interface. To enable live attachment support, install the Chat App in Agent Designer and add "enableAttachments": true to your handoff configuration. After saving your changes, file sharing will be available immediately for all new conversations.
 
 ## Setup within Zendesk
 Once your Maven settings are configured, [install the Zendesk plugin](https://www.zendesk.com/marketplace/apps/support/982238/maven-agi-co-pilot/) from the Zendesk Marketplace.
