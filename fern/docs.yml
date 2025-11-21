@@ -9,7 +9,6 @@ instances:
 
 roles:
   - everyone
-  - users
 
 tabs:
   help:
@@ -133,14 +132,6 @@ navigation:
         contents:
           - page: Overview
             path: ./docs/pages/api-overview.mdx
-          - page: Getting started guide for developers
-            path: ./docs/pages/getting-started-guide-for-developers.mdx
-            viewers:
-              - users
-          - page: Staging to Production Workflow
-            path: ./docs/pages/staging-to-production.mdx
-            viewers:
-              - users
       - section: Multi-language support
         viewers:
           - everyone
