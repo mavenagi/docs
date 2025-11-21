@@ -4,9 +4,135 @@ slug: apps/intercom
 layout: overview
 ---
 
-Maven provides an integration that allows it to participate in Intercom workflows via a Custom Action.
+Maven provides an integration with Intercom that enables automatic knowledge base synchronization and ticket creation directly from conversations.
 
-## Configure Maven
+## Features
+
+- **Knowledge Base Ingestion**: Automatically syncs articles from your Intercom Help Center to Maven
+- **Ticket Creation**: Create support tickets directly from Maven chat conversations
+- **Conversation Transcripts**: Attaches full conversation history as internal notes on tickets
+- **Contact Management**: Intercom automatically handles contact creation and matching
+
+## Prerequisites
+
+Before setting up the Intercom integration, you'll need:
+
+- An Intercom account with API access
+- An API access token from a custom Intercom app
+- (Optional) A Help Center ID if you want to sync from a specific help center
+- (Optional) Ticket type and team/admin IDs for ticket routing
+
+## Setup within Intercom
+
+### Step 1: Create a Custom App and Access Token
+
+1. Log in to your Intercom account
+2. Open a new tab and go to the [Intercom Developer Hub](https://developers.intercom.com)
+3. Click **New app** to create a new application
+4. Name it "Maven Integration" or similar for easy identification
+5. On the next screen, find **Authentication** in the left-hand menu and click it
+6. Your private **Access Token** will be automatically generated and displayed under the name of your workspace
+7. Copy and securely store your Access Token
+
+<Warning>
+Store your API access token securely. It provides access to your Intercom data.
+</Warning>
+
+### Step 2: Find Your Help Center ID (Optional)
+
+If you want to sync articles from a specific Help Center rather than all Help Centers:
+
+1. Navigate to your Help Center in Intercom
+2. The Help Center ID can be found in the URL or via the Intercom API
+
+### Step 3: Configure Ticket Settings (Optional)
+
+For ticket creation, you may want to configure:
+
+- **Ticket Type ID**: The type of ticket to create (defaults to standard support ticket)
+- **Default Team ID**: The team to assign tickets to
+- **Default Admin ID**: The admin to assign tickets to
+
+These IDs can be found in Intercom's admin settings or via the API.
+
+## Setup within Maven
+
+1. In Maven AGI, navigate to your agent
+2. Go to **Apps** and find **Intercom**
+3. Enter the following settings:
+
+| Setting | Required | Description |
+|---------|----------|-------------|
+| **Access Token** | Yes | Your Intercom API access token from Step 1 |
+| **Help Center ID** | No | Specific Help Center ID to sync articles from. If not provided, syncs from all Help Centers |
+| **Ticket Type ID** | No | The Intercom ticket type ID for created tickets |
+| **Default Team ID** | No | Team to assign tickets to by default |
+| **Default Admin ID** | No | Admin to assign tickets to by default |
+
+4. Click **Install**
+
+The app will automatically:
+- Validate your credentials
+- Ingest your Help Center articles
+- Create ticket creation actions
+
+## Knowledge Base Sync
+
+Maven automatically syncs articles from your Intercom Help Center:
+
+- **Article Content**: Full article body is fetched and processed
+- **HTML Conversion**: HTML content is converted to Markdown for optimal AI processing
+- **Auto-refresh**: Knowledge base is updated periodically to keep content fresh
+- **Selective Sync**: Optionally sync from a specific Help Center using the Help Center ID setting
+
+## Ticket Creation
+
+When Maven cannot fully resolve a user's inquiry, it can create a support ticket in Intercom. Two actions are available:
+
+**For Identified Users:**
+- Appears when user has name and email in their profile
+- Pre-fills contact information automatically
+
+**For Unidentified Users:**
+- Appears when user information is not available
+- Prompts for name and email before creating the ticket
+
+Both actions:
+- Create a ticket with the subject and description provided by the user
+- Let Intercom handle contact creation/matching automatically by email
+- Attach the full Maven conversation transcript as an internal note
+- Optionally route to specified team or admin
+- Enable email notifications to the customer (tickets are shared)
+
+## Troubleshooting
+
+### Invalid Access Token Error
+- Verify your access token is correct and hasn't been revoked
+- Ensure the token has the required permissions for Help Center and ticket access
+- Check that you're using the correct workspace
+
+### No Articles Ingested
+- Verify your access token has read access to Help Center articles
+- If using a Help Center ID, ensure it exists and contains published articles
+- Check that articles are in a published state
+
+### Ticket Creation Fails
+- Verify your API token has write access to Tickets and Contacts
+- Check that required fields are being provided (email, subject, description)
+- If using Ticket Type ID, ensure it's valid for your workspace
+- Review Intercom API logs for detailed error messages
+
+---
+
+## Workflow Integration (Legacy)
+
+<Note>
+The workflow integration approach described below is an alternative method for integrating Maven with Intercom. For most use cases, we recommend using the standard integration described above, which provides a simpler setup and better user experience.
+</Note>
+
+Maven can also participate in Intercom workflows via a Custom Action. This approach is useful if you need to integrate Maven responses directly into existing Intercom workflow automations.
+
+### Configure Maven for Workflows
 
 To get started, install the Intercom App from the Maven App directory:
 
@@ -20,7 +146,7 @@ Create an authentication token to be used between the services using a random nu
   <img src="/docs/assets/intercom/02_Intercom_Install.png" alt="Configure Authentication Token and Escalation Topics"/>
 </Frame>
 
-## Configure Intercom
+### Configure Intercom for Workflows
 
 Navigate to **Settings** -> **Integration** -> **Authentication** in Intercom and create a record for the token created above.
 
@@ -38,7 +164,6 @@ The Maven Custom Action will return its response into a custom attribute on the 
   <img src="/docs/assets/intercom/05_Intercom_Conversation_Attributes.png" alt="Configure Conversation Attributes"/>
 </Frame>
 
-
 The action itself is an API call to Maven with a URL that encodes both your organization and agent ID. Navigate to **Settings** -> **Integration** -> **Custom Actions** and create a new record.
 
 On the **About** page, set the Action Usage to be **Workflows and Help Desk**.
@@ -49,7 +174,9 @@ On the **About** page, set the Action Usage to be **Workflows and Help Desk**.
 
 On the **API Connection** page, set the URL to:
 
+```
 https://intercom.onmaven.app/api/{ORG_ID}/{AGENT_ID}/webhook
+```
 
 Replace `{ORG_ID}` and `{AGENT_ID}` with your actual organization and agent IDs. Configure the authentication token from above as an authorization header.
 
@@ -61,11 +188,11 @@ The request values need to be mapped to a JSON structure using Intercom values a
 
 ```json
 {
-  "conversation_id" : "$CONVERSATION_ID",
+  "conversation_id": "$CONVERSATION_ID",
   "q": "$LAST_MESSAGE_BODY",
-  "message_id" : "$LAST_MESSAGE_ID"
-  "status" : "$MAVEN_STATUS",
-  "user_id" : "$USER_ID",
+  "message_id": "$LAST_MESSAGE_ID",
+  "status": "$MAVEN_STATUS",
+  "user_id": "$USER_ID"
 }
 ```
 
@@ -81,7 +208,7 @@ Once the message is returned, map the response values for text and status to the
   <img src="/docs/assets/intercom/09_Intercom_Custom_Action_Page_4.png" alt="Map Response to Conversation Attributes"/>
 </Frame>
 
-## Integrating into a Workflow
+### Integrating into a Workflow
 
 To integrate the custom action into a workflow, add it to the flow using Intercom's builder.
 
@@ -89,10 +216,16 @@ To integrate the custom action into a workflow, add it to the flow using Interco
   <img src="/docs/assets/intercom/10_Intercom_Workflow.png" alt="Integrate Custom Action into Workflow"/>
 </Frame>
 
-## Logging
+### Workflow Logging
 
 Action logs are available in the logs panel of the Intercom Custom Action.
 
-## Limitations
+### Workflow Limitations
 
-The major limitation is that streaming responses are only available through Maven’s chat interface and not through third-party chat interfaces like those of Intercom.
+The major limitation is that streaming responses are only available through Maven's chat interface and not through third-party chat interfaces like those of Intercom.
+
+---
+
+## Still not working?
+
+[Contact us](https://support.mavenagi.com) for more support.
