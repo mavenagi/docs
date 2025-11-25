@@ -1,0 +1,55 @@
+---
+title: OAuth Sign In Action
+slug: /actions/oauth-sign-in
+layout: overview
+---
+
+MavenAGI supports OAuth through the OAuth Sign In Action, this action will connect to the OAuth service, get the user information and show an escalation form to the user, to complete the escalation.
+
+To show the escalation flow, action chaining must be turned on, if it is, updating the *description* will be enough to tell the bot what action must be executed after the user has sign in.
+
+## Installation
+
+To install the OAuth Sign In Action on your agent:
+
+<Steps>
+  <Step title="Locate the OAuth Sign In Action App">
+    - Go to Agent Designer
+    - Look for the organization and the Agent in which you want to install the Action
+    - Search for OAuth Sign In Action
+      <Frame caption="OAuth Sign In Action in Agent Designer">
+        <img src="/docs/assets/actions/oauth-sign-in/oauth-sign-in-action-app-in-directory.png" alt="OAuth Sign In Action"/>
+      </Frame>
+    - Open the action, and click install
+    - When Installing the application, this form will appear, fill in the spaces to complete the installation
+    <Frame caption="Action Installation Form">
+      <img src="/docs/assets/actions/oauth-sign-in/oauth-sign-in-action-installation-form.png" alt="Action Installation Form"/>
+    </Frame>
+  </Step>
+  <Step title="Bot Configuration">
+    - Once installed, the bot will use the description field to know when the action should be executed
+    - When the Bot executes the action the end user will see the following button
+    <Frame caption="Action Shown in Widget to End User">
+      <img src="/docs/assets/actions/oauth-sign-in/oauth-sign-in-action-in-widget.png" alt="Action Shown in Widget to End User"/>
+    </Frame>
+  </Step>
+</Steps>
+
+## Enabling Action Chaining
+
+For the chat widget to execute the right flow, an action chaining feature flag **must** turned on for your *organization.* 
+Make sure to contact your representative so the feture flag is enabled for your organization.
+
+Once that action chaining is enabled, we can update the **Action Description** to use a prompt like the following to get the 
+bot to respond with the escalation action after the user has signed in. If it is not possible to for the Bot to escalate the
+end user, it can also responde with a simpler message.
+
+
+```markdown
+This action will allow a user to sign in before continuing the conversation, every user that starts the chat must sign in this is a requisite to get assistance and to be escalated, everything that requires the transferring of sensitive information must take place after the user has signed in
+
+# RESPONSE INSTRUCTION: 
+On successful sign-in, do NOT generate any chat text.
+You MUST immediately return the `escalate-to-agent` action as the next step.
+This action is a prerequisite for any assistance or escalation and for transferring sensitive information.
+```

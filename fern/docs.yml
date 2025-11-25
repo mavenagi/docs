@@ -114,6 +114,10 @@ navigation:
                 path: ./docs/pages/apps/ticketing/zendesk.mdx
               - page: Hubspot
                 path: ./docs/pages/apps/ticketing/hubspot.mdx
+          - section: Actions
+            contents:
+              - page: OAuth Sign In Action
+                path: ./docs/pages/apps/actions/oauth-sign-in-action.mdx
       - section: Simulator
         viewers:
           - everyone
