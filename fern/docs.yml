@@ -10,6 +10,10 @@ instances:
 roles:
   - everyone
 
+ai-search:
+  location:
+    - docs
+
 tabs:
   help:
     display-name: Help Center
