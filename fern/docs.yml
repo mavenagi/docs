@@ -14,22 +14,32 @@ ai-search:
   location:
     - docs
 
+layout:
+  searchbar-placement: header
+  page-width: full
+  tabs-placement: header
+
 tabs:
-  help:
-    display-name: Help Center
-    icon: home
+  agent-designer:
+    display-name: Agent Designer
+    icon: settings
+  maven-surfaces:
+    display-name: Maven Surfaces
+    icon: browser
+  third-party-surfaces:
+    display-name: Third-Party Surfaces
+    icon: plug
+  platform:
+    display-name: Platform
+    icon: server
+  reference:
+    display-name: Reference
+    icon: book
 
 navigation:
-  - tab: help
+  # Tab 1: Agent Designer
+  - tab: agent-designer
     layout:
-      - section: Help Center
-        viewers:
-          - everyone
-        contents:
-          - page: Welcome
-            path: ./docs/pages/welcome.mdx
-          - page: Glossary
-            path: ./docs/pages/glossary.mdx
       - section: Insights
         viewers:
           - everyone
@@ -80,48 +90,6 @@ navigation:
             path: ./docs/pages/train/evaluating-and-improving-maven-quality.mdx
           - page: Supporting complex workflows
             path: ./docs/pages/train/workflows.mdx
-      - section: Maven Apps
-        viewers:
-          - everyone
-        contents:
-          - page: Overview
-            path: ./docs/pages/apps/overview.mdx
-          - section: Maven Surfaces
-            contents:
-              - page: Chat Widget
-                path: ./docs/pages/apps/surfaces/chat.mdx
-              - page: Full Page Search
-                path: ./docs/pages/apps/surfaces/search.mdx
-              - page: Instant Answers
-                path: ./docs/pages/apps/surfaces/instant-answers.mdx
-          - section: 3rd Party Surfaces
-            contents:
-              - page: Slack
-                path: ./docs/pages/apps/surfaces/slack.mdx
-              - page: Microsoft Teams
-                path: ./docs/pages/apps/surfaces/ms-teams.mdx
-              - page: SMS
-                path: ./docs/pages/apps/surfaces/sms.mdx
-          - section: Support Tools
-            contents:
-              - page: Freshdesk
-                path: ./docs/pages/apps/ticketing/freshdesk.mdx
-              - page: Front
-                path: ./docs/pages/apps/ticketing/front.mdx
-              - page: Intercom
-                path: ./docs/pages/apps/ticketing/intercom.mdx
-              - page: Salesforce
-                path: ./docs/pages/apps/ticketing/salesforce.mdx
-              - page: Sharepoint
-                path: ./docs/pages/apps/ticketing/sharepoint.mdx
-              - page: Zendesk
-                path: ./docs/pages/apps/ticketing/zendesk.mdx
-              - page: Hubspot
-                path: ./docs/pages/apps/ticketing/hubspot.mdx
-          - section: Actions
-            contents:
-              - page: OAuth Sign In Action
-                path: ./docs/pages/apps/actions/oauth-sign-in-action.mdx
       - section: Simulator
         viewers:
           - everyone
@@ -134,28 +102,126 @@ navigation:
         contents:
           - page: Overview
             path: ./docs/pages/settings/overview.mdx
-      - section: Developer platform
+          - page: User roles and permissions in Maven
+            path: ./docs/pages/user-roles-and-permissions-in-maven.mdx
+          - page: Manage users and permissions
+            path: ./docs/pages/manage-users-and-permissions.mdx
+          - page: Multi-language support
+            path: ./docs/pages/language-overview.mdx
+
+  # Tab 2: Maven Surfaces
+  - tab: maven-surfaces
+    layout:
+      - section: Chat Widget
+        viewers:
+          - everyone
+        contents:
+          - page: Chat Widget
+            path: ./docs/pages/apps/surfaces/chat.mdx
+          - page: Configuration
+            path: ./docs/pages/apps/surfaces/chat/configuration.mdx
+          - section: Live Agent Handoff
+            contents:
+              - page: Overview
+                path: ./docs/pages/apps/surfaces/chat/live-agent-handoff/index.mdx
+              - page: Salesforce (Legacy)
+                path: ./docs/pages/apps/surfaces/chat/live-agent-handoff/salesforce-legacy.mdx
+              - page: Salesforce Messaging
+                path: ./docs/pages/apps/surfaces/chat/live-agent-handoff/salesforce-messaging.mdx
+              - page: Zendesk
+                path: ./docs/pages/apps/surfaces/chat/live-agent-handoff/zendesk.mdx
+              - page: Front
+                path: ./docs/pages/apps/surfaces/chat/live-agent-handoff/front.mdx
+              - page: HubSpot
+                path: ./docs/pages/apps/surfaces/chat/live-agent-handoff/hubspot.mdx
+              - page: Genesys
+                path: ./docs/pages/apps/surfaces/chat/live-agent-handoff/genesys.mdx
+          - page: Authentication
+            path: ./docs/pages/apps/surfaces/chat/authentication.mdx
+          - page: Programmatic Control
+            path: ./docs/pages/apps/surfaces/chat/programmatic-control.mdx
+      - section: Search
+        viewers:
+          - everyone
+        contents:
+          - page: Full Page Search
+            path: ./docs/pages/apps/surfaces/search.mdx
+      - section: Instant Answers
+        viewers:
+          - everyone
+        contents:
+          - page: Instant Answers
+            path: ./docs/pages/apps/surfaces/instant-answers.mdx
+
+  # Tab 3: Third-Party Surfaces
+  - tab: third-party-surfaces
+    layout:
+      - section: Ticketing Integrations
+        viewers:
+          - everyone
+        contents:
+          - page: Overview
+            path: ./docs/pages/apps/overview.mdx
+          - page: Zendesk
+            path: ./docs/pages/apps/ticketing/zendesk.mdx
+          - page: Salesforce
+            path: ./docs/pages/apps/ticketing/salesforce.mdx
+          - page: HubSpot
+            path: ./docs/pages/apps/ticketing/hubspot.mdx
+          - page: Freshdesk
+            path: ./docs/pages/apps/ticketing/freshdesk.mdx
+          - page: Front
+            path: ./docs/pages/apps/ticketing/front.mdx
+          - page: Intercom
+            path: ./docs/pages/apps/ticketing/intercom.mdx
+          - page: Kustomer
+            path: ./docs/pages/apps/ticketing/kustomer.mdx
+          - page: Zoho
+            path: ./docs/pages/apps/ticketing/zoho.mdx
+          - page: SharePoint
+            path: ./docs/pages/apps/ticketing/sharepoint.mdx
+      - section: Messaging
+        viewers:
+          - everyone
+        contents:
+          - page: Slack
+            path: ./docs/pages/apps/surfaces/slack.mdx
+          - page: Microsoft Teams
+            path: ./docs/pages/apps/surfaces/ms-teams.mdx
+          - page: SMS
+            path: ./docs/pages/apps/surfaces/sms.mdx
+      - section: Actions
+        viewers:
+          - everyone
+        contents:
+          - page: OAuth Sign In Action
+            path: ./docs/pages/apps/actions/oauth-sign-in-action.mdx
+
+  # Tab 4: Platform
+  - tab: platform
+    layout:
+      - section: Security and Privacy
+        viewers:
+          - everyone
+        contents:
+          - page: Security and privacy details
+            path: ./docs/pages/security-and-privacy-details.mdx
+      - section: API
         viewers:
           - everyone
         contents:
           - page: Overview
             path: ./docs/pages/api-overview.mdx
-      - section: Multi-language support
+
+  # Tab 5: Reference
+  - tab: reference
+    layout:
+      - section: Glossary
         viewers:
           - everyone
         contents:
-          - page: Overview
-            path: ./docs/pages/language-overview.mdx
-      - section: Security and Privacy
-        viewers:
-          - everyone
-        contents:
-          - page: Manage users and permissions
-            path: ./docs/pages/manage-users-and-permissions.mdx
-          - page: User roles and permissions in Maven
-            path: ./docs/pages/user-roles-and-permissions-in-maven.mdx
-          - page: Security and privacy details
-            path: ./docs/pages/security-and-privacy-details.mdx
+          - page: Glossary
+            path: ./docs/pages/glossary.mdx
 
 navbar-links:
   - type: secondary
