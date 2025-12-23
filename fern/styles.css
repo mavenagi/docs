@@ -1,0 +1,9 @@
+/* Rebrand Ask AI to Ask Maven */
+.fern-ask-ai-button .fern-button-text {
+  font-size: 0; /* Hide original text */
+}
+
+.fern-ask-ai-button .fern-button-text::after {
+  content: "Ask Maven";
+  font-size: 14px; /* Restore font size */
+}
