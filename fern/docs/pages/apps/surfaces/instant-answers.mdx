@@ -250,6 +250,140 @@ Maven.InstantAnswersWidget.search({
 });
 ```
 
+## Setting up HubSpot Knowledge Base
+
+HubSpot Knowledge Base requires JavaScript injection through the Header HTML settings to embed the Maven Instant Answers widget.
+
+### Access Header HTML Settings
+
+1. In HubSpot, navigate to **Services** → **Knowledge Base** → **Settings** (cog icon)
+2. Click on **Content** → **Pages**
+3. Select the knowledge base where you want to add Instant Answers
+4. Click **Template** to access template settings
+5. Locate the **Header HTML** section
+
+### Add Integration Code
+
+Copy and paste the following code into the Header HTML section:
+
+```html
+<!-- Load Maven AGI Instant Answers Script -->
+<script src="https://instant-answers.onmaven.app/js/widget.js" async></script>
+
+<script>
+(function () {
+
+  const MAVEN_CONFIG = {
+    organizationId: "YOUR_ORG_ID",      // Replace with your organization ID
+    agentId: "YOUR_AGENT_ID"            // Replace with your agent ID
+  };
+
+  // Check if current page is a search page
+  function isSearchPage() {
+    const { pathname, search } = window.location;
+    return pathname.toLowerCase().includes("search") || /[?&](q|term|query)=/.test(search);
+  }
+
+  // Extract search query from URL
+  function getSearchQuery() {
+    const params = new URLSearchParams(window.location.search);
+    return params.get("q") || params.get("term") || params.get("query") || "";
+  }
+
+  // Create and insert widget into page
+  function insertMavenWidget() {
+
+    // Parent container to insert the widget in. This must exist in your knowledge base
+    const searchContainer =
+      document.querySelector(".hs-search-results") ||
+      document.querySelector("[class*='search']") ||
+      document.querySelector("main") ||
+      document.body;
+
+    if (!searchContainer) {
+      console.warn("[Maven] No container found");
+      return;
+    }
+
+    const wrapper = document.createElement("div");
+    wrapper.id = "maven-instant-answers-search";
+    searchContainer.insertBefore(wrapper, searchContainer.firstChild);
+
+    // Wait for DOM to fully update before initializing
+    setTimeout(initializeMaven, 100);
+  }
+
+  // Initialize Maven widget and perform search
+  function initializeMaven() {
+    let attempts = 0;
+    const maxAttempts = 30; // 3 seconds
+
+    const checkMaven = setInterval(() => {
+      attempts++;
+
+      if (typeof Maven !== "undefined" && Maven.InstantAnswersWidget) {
+        clearInterval(checkMaven);
+
+        try {
+          Maven.InstantAnswersWidget.init(MAVEN_CONFIG);
+
+          const query = getSearchQuery();
+          if (query) {
+            Maven.InstantAnswersWidget.search({
+              query: query,
+              selector: "#maven-instant-answers-search"
+            });
+          }
+        } catch (error) {
+          console.error("[Maven] Error:", error);
+        }
+      }
+
+      if (attempts >= maxAttempts) {
+        clearInterval(checkMaven);
+        console.warn("[Maven] Maven API not found");
+      }
+    }, 100);
+  }
+
+  // Setup on page load
+  function setup() {
+    if (isSearchPage()) {
+      // Wait for page to stabilize before inserting widget
+      setTimeout(insertMavenWidget, 500);
+    }
+  }
+
+  // Run setup when DOM is ready
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", setup);
+  } else {
+    setup();
+  }
+
+})();
+</script>
+```
+
+### Configure Credentials
+
+Update the `MAVEN_CONFIG` object with your credentials:
+
+```javascript
+const MAVEN_CONFIG = {
+  organizationId: "your-org-id",     // Your Maven organization ID
+  agentId: "your-agent-id"           // Your Maven agent ID
+};
+```
+
+### Customize Container Selector (Optional)
+
+The script automatically finds where to inject the widget using fallback selectors. If the widget doesn't appear in the right location, you can customize the `searchContainer` variable in the integration code to match your knowledge base structure.
+
+<Note>
+The widget is inserted as the **first child** of the selected container. If you need it in a different position, modify the `insertBefore` line in the `insertMavenWidget()` function.
+</Note>
+
 ## Still not working?
 
 In general, if the instant answers widget renders but seems to load forever, this most likely means that Maven is being sent an empty question. 
