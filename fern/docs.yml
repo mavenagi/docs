@@ -23,12 +23,18 @@ tabs:
   agent-designer:
     display-name: Agent Designer
     icon: settings
+  cx-integrations:
+    display-name: CX Integrations
+    icon: plug
   maven-surfaces:
     display-name: Maven Surfaces
     icon: browser
   third-party-surfaces:
     display-name: Third-Party Surfaces
     icon: plug
+  knowledge-connectors:
+    display-name: Knowledge Connectors
+    icon: book-open
   platform:
     display-name: Platform
     icon: server
@@ -40,38 +46,70 @@ navigation:
   # Tab 1: Agent Designer
   - tab: agent-designer
     layout:
-      - section: Insights
-        viewers:
-          - everyone
+      - section: Explore
         contents:
-          - page: Navigating insights
-            path: ./docs/pages/insights/overview.mdx
-      - section: Ask Maven
-        viewers:
-          - everyone
+          - section: Ask Maven
+            contents:
+              - page: Ask Maven Overview
+                path: ./docs/pages/ask-maven/overview.mdx
+          - section: Insights
+            contents:
+              - page: Navigating insights
+                path: ./docs/pages/insights/overview.mdx
+          - section: Inbox
+            contents:
+              - page: Inbox overview
+                path: ./docs/pages/inbox.mdx
+          - section: Conversations
+            contents:
+              - page: Conversations overview
+                path: ./docs/pages/conversations/overview.mdx
+              - page: Reviewing conversations
+                path: ./docs/pages/conversations/reviewing-conversations.mdx
+          - section: Feedback
+            contents:
+              - page: Overview
+                path: ./docs/pages/feedback/overview.mdx
+      - section: Customize
         contents:
-          - page: Ask Maven Overview
-            path: ./docs/pages/ask-maven/overview.mdx
-      - section: Inbox
-        viewers:
-          - everyone
+          - section: Knowledge
+            contents:
+              - page: Building Your Knowledge Base
+                path: ./docs/pages/train/building-knowledge-base.mdx
+              - page: Preparing Knowledge
+                path: ./docs/pages/preparing-knowledge.mdx
+          - section: Actions
+            contents:
+              - page: Actions Overview
+                path: ./docs/pages/train/actions.mdx
+          - section: Apps
+            contents:
+              - page: Apps Overview
+                path: ./docs/pages/customize/apps/overview.mdx
+          - section: Triggers
+            contents:
+              - page: Event Triggers
+                path: ./docs/pages/train/triggers.mdx
+          - section: Agent Settings
+            contents:
+              - page: Overview
+                path: ./docs/pages/settings/overview.mdx
+              - page: User roles and permissions in Maven
+                path: ./docs/pages/user-roles-and-permissions-in-maven.mdx
+              - page: Manage users and permissions
+                path: ./docs/pages/manage-users-and-permissions.mdx
+              - page: Multi-language support
+                path: ./docs/pages/language-overview.mdx
+      - section: Evaluate
         contents:
-          - page: Inbox overview
-            path: ./docs/pages/inbox.mdx
-      - section: Conversations
-        viewers:
-          - everyone
-        contents:
-          - page: Conversations overview
-            path: ./docs/pages/conversations/overview.mdx
-          - page: Reviewing conversations
-            path: ./docs/pages/conversations/reviewing-conversations.mdx
-      - section: Feedback
-        viewers:
-          - everyone
-        contents:
-          - page: Overview
-            path: ./docs/pages/feedback/overview.mdx
+          - section: Simulator
+            contents:
+              - page: Testing with simulator
+                path: ./docs/pages/playground/overview.mdx
+          - section: Test Suites
+            contents:
+              - page: Test Suites Overview
+                path: ./docs/pages/evaluate/test-suites/overview.mdx
       - section: Training Maven
         viewers:
           - everyone
@@ -90,26 +128,94 @@ navigation:
             path: ./docs/pages/train/evaluating-and-improving-maven-quality.mdx
           - page: Supporting complex workflows
             path: ./docs/pages/train/workflows.mdx
-      - section: Simulator
-        viewers:
-          - everyone
-        contents:
-          - page: Testing with simulator
-            path: ./docs/pages/playground/overview.mdx
-      - section: Settings
-        viewers:
-          - everyone
-        contents:
-          - page: Overview
-            path: ./docs/pages/settings/overview.mdx
-          - page: User roles and permissions in Maven
-            path: ./docs/pages/user-roles-and-permissions-in-maven.mdx
-          - page: Manage users and permissions
-            path: ./docs/pages/manage-users-and-permissions.mdx
-          - page: Multi-language support
-            path: ./docs/pages/language-overview.mdx
 
-  # Tab 2: Maven Surfaces
+  # Tab 2: CX Integrations
+  - tab: cx-integrations
+    layout:
+      - section: Overview
+        contents:
+          - page: CX Integrations Overview
+            path: ./docs/pages/cx-integrations/overview.mdx
+      - section: Integration Patterns
+        contents:
+          - page: Agent Assist Copilot
+            path: ./docs/pages/cx-integrations/integration-patterns/agent-assist-copilot.mdx
+          - page: Live Agent Handoff
+            path: ./docs/pages/cx-integrations/integration-patterns/live-agent-handoff.mdx
+          - page: Conversation Sync
+            path: ./docs/pages/cx-integrations/integration-patterns/conversation-sync.mdx
+          - page: Ticket Actions
+            path: ./docs/pages/cx-integrations/integration-patterns/ticket-actions.mdx
+          - page: Knowledge Connectors
+            path: ./docs/pages/cx-integrations/integration-patterns/knowledge-connectors.mdx
+      - section: Supported CX Systems
+        contents:
+          - section: Zendesk
+            contents:
+              - page: Overview
+                path: ./docs/pages/cx-integrations/zendesk/overview.mdx
+              - page: Setup Guide
+                path: ./docs/pages/cx-integrations/zendesk/setup.mdx
+          - section: Salesforce
+            contents:
+              - page: Overview
+                path: ./docs/pages/cx-integrations/salesforce/overview.mdx
+              - page: Setup Guide
+                path: ./docs/pages/cx-integrations/salesforce/setup.mdx
+          - section: Freshdesk
+            contents:
+              - page: Overview
+                path: ./docs/pages/cx-integrations/freshdesk/overview.mdx
+              - page: Setup Guide
+                path: ./docs/pages/cx-integrations/freshdesk/setup.mdx
+          - section: HubSpot
+            contents:
+              - page: Overview
+                path: ./docs/pages/cx-integrations/hubspot/overview.mdx
+              - page: Setup Guide
+                path: ./docs/pages/cx-integrations/hubspot/setup.mdx
+          - section: Front
+            contents:
+              - page: Overview
+                path: ./docs/pages/cx-integrations/front/overview.mdx
+              - page: Setup Guide
+                path: ./docs/pages/cx-integrations/front/setup.mdx
+          - section: Genesys
+            contents:
+              - page: Overview
+                path: ./docs/pages/cx-integrations/genesys/overview.mdx
+          - section: HelpScout
+            contents:
+              - page: Overview
+                path: ./docs/pages/cx-integrations/helpscout/overview.mdx
+          - section: Intercom
+            contents:
+              - page: Overview
+                path: ./docs/pages/cx-integrations/intercom/overview.mdx
+              - page: Setup Guide
+                path: ./docs/pages/cx-integrations/intercom/setup.mdx
+          - section: Kustomer
+            contents:
+              - page: Overview
+                path: ./docs/pages/cx-integrations/kustomer/overview.mdx
+              - page: Setup Guide
+                path: ./docs/pages/cx-integrations/kustomer/setup.mdx
+          - section: Zoho Desk
+            contents:
+              - page: Overview
+                path: ./docs/pages/cx-integrations/zoho/overview.mdx
+              - page: Setup Guide
+                path: ./docs/pages/cx-integrations/zoho/setup.mdx
+          - section: ServiceNow
+            contents:
+              - page: Overview (Coming Soon)
+                path: ./docs/pages/cx-integrations/servicenow/overview.mdx
+          - section: Jira
+            contents:
+              - page: Overview (Coming Soon)
+                path: ./docs/pages/cx-integrations/jira/overview.mdx
+
+  # Tab 3: Maven Surfaces
   - tab: maven-surfaces
     layout:
       - section: Chat Widget
@@ -153,33 +259,9 @@ navigation:
           - page: Instant Answers
             path: ./docs/pages/apps/surfaces/instant-answers.mdx
 
-  # Tab 3: Third-Party Surfaces
+  # Tab 4: Third-Party Surfaces
   - tab: third-party-surfaces
     layout:
-      - section: Ticketing Integrations
-        viewers:
-          - everyone
-        contents:
-          - page: Overview
-            path: ./docs/pages/apps/overview.mdx
-          - page: Zendesk
-            path: ./docs/pages/apps/ticketing/zendesk.mdx
-          - page: Salesforce
-            path: ./docs/pages/apps/ticketing/salesforce.mdx
-          - page: HubSpot
-            path: ./docs/pages/apps/ticketing/hubspot.mdx
-          - page: Freshdesk
-            path: ./docs/pages/apps/ticketing/freshdesk.mdx
-          - page: Front
-            path: ./docs/pages/apps/ticketing/front.mdx
-          - page: Intercom
-            path: ./docs/pages/apps/ticketing/intercom.mdx
-          - page: Kustomer
-            path: ./docs/pages/apps/ticketing/kustomer.mdx
-          - page: Zoho
-            path: ./docs/pages/apps/ticketing/zoho.mdx
-          - page: SharePoint
-            path: ./docs/pages/apps/ticketing/sharepoint.mdx
       - section: Messaging
         viewers:
           - everyone
@@ -197,7 +279,15 @@ navigation:
           - page: OAuth Sign In Action
             path: ./docs/pages/apps/actions/oauth-sign-in-action.mdx
 
-  # Tab 4: Platform
+  # Tab 5: Knowledge Connectors
+  - tab: knowledge-connectors
+    layout:
+      - section: Knowledge Connectors
+        contents:
+          - page: SharePoint
+            path: ./docs/pages/knowledge-connectors/sharepoint/overview.mdx
+
+  # Tab 6: Platform
   - tab: platform
     layout:
       - section: Security and Privacy
@@ -213,7 +303,7 @@ navigation:
           - page: Overview
             path: ./docs/pages/api-overview.mdx
 
-  # Tab 5: Reference
+  # Tab 7: Reference
   - tab: reference
     layout:
       - section: Glossary

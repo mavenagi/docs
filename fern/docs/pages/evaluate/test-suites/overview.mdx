@@ -1,0 +1,294 @@
+---
+title: Test Suites Overview
+slug: test-suites-overview
+layout: overview
+---
+
+Test Suites allow you to systematically evaluate how your Maven agent responds to questions by creating collections of test cases with expected answers.
+
+# Overview
+
+Test Suites provide a structured way to validate your agent's performance against known question-answer pairs. Each Test Suite contains one or more tests, and each test can include multiple conversation turns to evaluate how Maven handles context across back-and-forth exchanges.
+
+Test Suites are particularly useful when you want to:
+
+- **Validate knowledge base changes** before deploying to production
+- **Establish quality baselines** to measure improvement over time
+- **Test multi-turn conversations** to ensure Maven maintains context correctly
+- **Automate regression testing** to catch issues when making configuration changes
+
+# How Test Suites Work
+
+When you run a Test Suite, Maven:
+
+1. Creates a simulated conversation for each test
+2. Asks each question in sequence, building conversation context
+3. Compares Maven's responses against your expected answers using semantic similarity
+4. Calculates a score for each answer and an overall score for the suite
+
+**Scoring Method:**
+- Maven uses embedding-based similarity to compare answers (not exact word matching)
+- Each answer receives a score: **PERFECT**, **GREAT**, **OKAY**, or **BAD**
+- Your Test Suite's overall score is calculated as: `(GREAT + PERFECT answers) / total answers`
+
+**Score Thresholds:**
+
+| Similarity Score | Rating | Description |
+|-----------------|--------|-------------|
+| 0.99 or higher | PERFECT | Semantically identical to expected answer |
+| 0.90 - 0.98 | GREAT | Very close match with expected answer |
+| 0.80 - 0.89 | OKAY | Acceptable match but room for improvement |
+| Below 0.80 | BAD | Significant deviation from expected answer |
+
+# Creating a Test Suite
+
+## Option 1: Upload CSV File
+
+The fastest way to create a Test Suite is by uploading a CSV file with your test cases.
+
+### CSV Format Requirements
+
+Your CSV file must include these columns:
+
+- **name** (required): Name of the test case
+- **question** (required): The first question in the conversation
+- **answer** (optional): Expected answer to compare against Maven's response
+
+### Supporting Multi-Turn Conversations
+
+Test Suites support up to **10 conversation turns** per test case. To create multi-turn tests, add numbered question/answer columns:
+
+| Column | Description |
+|--------|-------------|
+| `name` | Test case name |
+| `question` | First question |
+| `answer` | Expected answer to first question |
+| `question2` | Second question in the conversation |
+| `answer2` | Expected answer to second question |
+| `question3` | Third question in the conversation |
+| `answer3` | Expected answer to third question |
+| ... | ... |
+| `question10` | Tenth question in the conversation |
+| `answer10` | Expected answer to tenth question |
+
+**Important:** Questions are asked sequentially within the same conversation, so later questions can reference context from earlier exchanges. This allows you to test how well Maven maintains conversation context.
+
+### Example CSV Files
+
+**Single-turn test (one question per test):**
+```csv
+name,question,answer
+Password Reset,How do I reset my password?,"Click 'Forgot Password' on the login page and follow the email instructions."
+Business Hours,What are your business hours?,"We're open Monday-Friday 9am-5pm EST."
+Shipping Policy,What is your shipping policy?,"We offer free standard shipping on orders over $50 within the continental US."
+```
+
+**Multi-turn test (conversation with context):**
+```csv
+name,question,answer,question2,answer2,question3,answer3
+Account Upgrade,I want to upgrade my account,I can help you upgrade. What plan interests you?,What's the difference between Pro and Enterprise?,Enterprise includes dedicated support and SSO authentication.,How much does Enterprise cost?,Enterprise starts at $500/month for up to 50 users.
+Return Process,How do I return an item?,You can initiate a return within 30 days. Do you have your order number?,Yes it's ORDER-12345,Great! I can process that return. What's the reason for the return?,The item doesn't fit,I've created a return label. You'll receive it via email within a few minutes.
+```
+
+### Converting from Google Sheets or Excel
+
+If you have test questions in Google Sheets or Excel:
+
+1. Open your spreadsheet
+2. Select **File → Download → Comma Separated Values (.csv)**
+3. Upload the downloaded CSV file to Maven
+
+### Creating the Test Suite
+
+1. Navigate to **Evaluate → Test Suites** in Agent Designer
+2. Click **Create Test Suite**
+3. Enter a name for your test suite
+4. Select **CSV** as the type
+5. Upload your CSV file
+6. Click **Create**
+
+Maven will parse your CSV and create individual test cases from each row.
+
+## Option 2: Create Tests Manually
+
+You can also create test cases manually through the Agent Designer interface:
+
+1. Navigate to **Evaluate → Test Suites**
+2. Click **Create Test Suite**
+3. Enter a name and select **Manual** as the type
+4. Click **Create**
+5. In your new Test Suite, click **Add Test**
+6. Enter a test name
+7. Add question/answer pairs:
+   - **Question**: What you want Maven to answer
+   - **Expected Answer**: What the ideal response should be (optional)
+8. Click **Add Question** to create multi-turn conversations (up to 10 turns)
+9. Click **Save**
+
+Repeat step 5-9 to add more test cases to your suite.
+
+# Running a Test Suite
+
+1. Navigate to your Test Suite
+2. Click **Run Eval** or **Run Test Suite**
+3. (Optional) Enter a description to identify this test run
+4. Click **Run**
+
+Test Suites run asynchronously in the background. Depending on the number of tests and questions, results typically appear within 1-5 minutes. Refresh the page to see updated results.
+
+**Note:** Maven runs up to 5 test cases concurrently for faster results.
+
+# Viewing Results
+
+After your Test Suite completes, you'll see a results summary showing:
+
+## Test Suite Results
+
+- **Status**: PROCESSING, READY, or FAILED
+- **Overall Score**: Percentage of answers rated GREAT or PERFECT
+- **Test Count**: Number of individual test cases evaluated
+- **Created Date**: When the test run was executed
+
+## Detailed Test Results
+
+Click on a test run to view detailed results for each test case:
+
+| Column | Description |
+|--------|-------------|
+| Test Name | Name of the test case |
+| Question | The question asked |
+| Expected Answer | Your reference answer (if provided) |
+| Actual Answer | Maven's response |
+| Score | PERFECT / GREAT / OKAY / BAD |
+| Quality | Maven's internal confidence score |
+| Conversation Link | View the full simulated conversation |
+
+For multi-turn tests, you'll see all question/answer pairs nested under the test name, allowing you to see how Maven maintained context throughout the conversation.
+
+## Exporting Results
+
+Click the **Export** button to download test results as a CSV file for further analysis or sharing with your team.
+
+# Multi-Turn Conversation Testing
+
+One of Test Suites' most powerful features is the ability to test conversations with multiple back-and-forth exchanges. This helps you evaluate:
+
+- **Context retention**: Does Maven remember information from earlier in the conversation?
+- **Follow-up handling**: Can Maven answer clarifying questions based on previous responses?
+- **Conversation flow**: Does the dialogue feel natural across multiple turns?
+
+### How Multi-Turn Testing Works
+
+Questions within a single test are asked sequentially in the same conversation. Each question has access to the full conversation history, including:
+
+- All previous user questions
+- All previous Maven responses
+- Any actions Maven took
+- User data and personalization context
+
+This mimics real customer conversations where questions build on each other.
+
+### Example: Context-Dependent Questions
+
+```csv
+name,question,answer,question2,answer2,question3,answer3
+Plan Comparison,What plans do you offer?,We offer Starter ($10/mo) and Pro ($50/mo) plans.,What's included in Pro?,Pro includes unlimited users and priority support.,Can I switch from Starter to Pro anytime?,Yes you can upgrade anytime from your account settings.
+```
+
+In this test:
+- Question 2 ("What's included in Pro?") assumes Maven knows we're discussing pricing plans
+- Question 3 ("Can I switch...") refers back to the plan names mentioned earlier
+
+Maven should maintain this context across all three turns.
+
+# Best Practices
+
+## Structuring Test Cases
+
+- **Use real customer questions** to create realistic test scenarios
+- **Test edge cases** that might reveal knowledge gaps
+- **Group related tests** in the same suite (e.g., "Billing Questions", "Product Features")
+- **Keep test names descriptive** so results are easy to interpret
+
+## Working with Expected Answers
+
+- **Expected answers are optional**: If you don't provide an answer, Maven uses its own confidence score instead of similarity
+- **Be consistent with tone**: Match the style you expect from Maven (formal vs. conversational)
+- **Include key information**: Expected answers should contain the essential facts needed to answer correctly
+- **Avoid exact wording**: Semantic similarity means Maven doesn't need to match word-for-word
+
+## Testing Conversations
+
+- **Start simple**: Begin with single-turn tests before adding multi-turn complexity
+- **Build context gradually**: Ensure each question logically follows from the previous one
+- **Test context limits**: Try questions that reference information from 3-4 turns back
+- **Validate action triggering**: Include questions that should trigger actions or workflows
+
+## Iterating and Improving
+
+1. **Establish a baseline**: Run your Test Suite before making any changes
+2. **Make targeted improvements**: Update knowledge, tune persona, or refine actions
+3. **Re-run the same suite**: Compare new results against your baseline
+4. **Track score trends**: Monitor whether changes improve or degrade performance
+5. **Investigate failures**: Review BAD and OKAY scores to identify specific knowledge gaps
+
+# Advanced Configuration
+
+## Test Suite Settings
+
+When creating or editing a Test Suite, you can configure:
+
+- **Conversation Tags**: Apply tags that will be added to simulated conversations
+- **Conversation Metadata**: Add metadata key-value pairs for testing personalization
+- **User Data**: Simulate user profile information (name, email, custom fields)
+- **Response Config**: Configure response behavior (length, capabilities, copilot mode)
+
+These settings allow you to test how Maven responds under different conditions.
+
+## Response Length and Capabilities
+
+You can test different response configurations:
+
+- **Standard responses**: Default Maven responses
+- **Copilot mode**: Test how suggestions appear to human agents
+- **Specific capabilities**: Enable/disable certain features (charts, actions, etc.)
+
+This helps validate that Maven behaves correctly across different integration modes.
+
+# Limitations and Considerations
+
+- **Maximum conversation turns**: 10 question/answer pairs per test case
+- **Asynchronous execution**: Results appear after processing completes (not real-time)
+- **Static evaluation**: Tests use configuration at run-time; re-run to test new changes
+- **Semantic similarity**: Scores measure meaning, not exact text matching
+- **No user interaction**: Tests simulate conversations but don't involve real human input
+
+# Frequently Asked Questions
+
+**Q: How long does it take to run a Test Suite?**
+A: Small test suites (fewer than 20 tests) typically complete in 1-2 minutes. Larger suites may take 5-10 minutes. Tests run in parallel (up to 5 concurrent) for faster results.
+
+**Q: Can I edit a test after creating it?**
+A: Yes, you can edit test names and questions at any time. Re-run the Test Suite to see updated results.
+
+**Q: What happens if I don't provide expected answers?**
+A: Maven will use its own internal confidence score instead of comparing to a reference answer. This is useful when you want to test that Maven can answer (without judging correctness).
+
+**Q: Do test conversations appear in my regular conversation history?**
+A: No, test conversations are isolated and don't appear in your production conversation data or analytics.
+
+**Q: Can I delete old test results?**
+A: Test Suite runs are preserved for historical comparison. You can delete entire Test Suites (which removes all associated runs) but individual runs are kept for tracking quality over time.
+
+**Q: How does scoring work for multi-turn conversations?**
+A: Each question/answer pair is scored independently, then averaged to create the test's overall score. All answer scores contribute equally to the final Test Suite score.
+
+**Q: Can Test Suites trigger real actions?**
+A: Yes, if a question would normally trigger an action (like creating a ticket or looking up an order), that action will execute during testing. Be cautious with actions that modify external systems.
+
+# Related Features
+
+- **[Simulator](https://docs.mavenagi.com/maven-simulator)**: Test individual questions interactively with full configuration control
+- **[Insights Dashboard](https://docs.mavenagi.com/navigating-insights)**: Monitor real conversation quality metrics from production
+- **[Building Your Knowledge Base](https://docs.mavenagi.com/building-knowledge-base)**: Learn how to improve knowledge for better test scores
+- **[Conversations](https://docs.mavenagi.com/conversations-overview)**: Review actual customer conversations to identify test scenarios
