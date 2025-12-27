@@ -1,0 +1,32 @@
+---
+title: Live Agent Handoff
+slug: /apps/chat/live-agent-handoff
+---
+
+Maven Chat supports seamless handoff to live agent support through various service providers. When configured, conversations can be automatically transferred to human agents.
+
+## Supported Providers
+
+Currently supported providers:
+
+- [Salesforce (Legacy)](/apps/surfaces/chat/live-agent-handoff/salesforce-legacy) - Legacy Chat REST API integration
+- [Salesforce Messaging](/apps/surfaces/chat/live-agent-handoff/salesforce-messaging) - Messaging for In-App and Web API
+- [Zendesk](/apps/surfaces/chat/live-agent-handoff/zendesk) - Zendesk Conversations integration
+- [Front](/apps/surfaces/chat/live-agent-handoff/front) - Front messaging integration
+- [HubSpot](/apps/surfaces/chat/live-agent-handoff/hubspot) - HubSpot Live Chat with OAuth
+- [Genesys](/apps/surfaces/chat/live-agent-handoff/genesys) - Genesys Cloud Open Messaging
+
+## Configuration
+
+Each provider requires configuration in both the provider's system and in Maven's chat app settings. The configuration is stored as a JSON object in the **Live agent handoff configuration** field in the chat app settings under **Miscellaneous**.
+
+## Common Features
+
+Many providers support common features such as:
+
+- **Agent Availability** - Control when live agent handoff is available based on business hours
+- **Anonymous Handoff** - Configure whether to request email from anonymous users
+- **Custom Fields** - Pass additional context and data during handoff
+
+See individual provider documentation for specific configuration options and setup instructions.
+

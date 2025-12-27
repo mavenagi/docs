@@ -1,0 +1,79 @@
+---
+title: Chat Widget Programmatic Control
+slug: /apps/chat/programmatic-control
+---
+
+## Programmatic Control
+
+You can programmatically control the widget using the following methods:
+
+```javascript
+
+// Returns true if the chat widget is open
+window.Maven.ChatWidget.isOpen();
+
+// Open the widget
+window.Maven.ChatWidget.open();
+
+// Close the widget
+window.Maven.ChatWidget.close();
+
+// Hide the button
+window.Maven.ChatWidget.hide();
+
+// Show the chat button
+window.Maven.ChatWidget.show();
+
+// Only available if **appendNewMessage API** is enabled in the chat app settings under **Miscellaneous**
+window.Maven.ChatWidget.appendNewMessage({
+  text: 'Hello, this is a test message'
+});
+```
+
+## Pushing Messages Programmatically
+
+Maven Chat now allows you to push messages to the chat session from your backend.
+This can be used to notify the user of updates or to provide additional context to the user.
+This feature is disabled by default and must be enabled in the chat app settings
+under **Miscellaneous** (**Enable appendNewMessage API**).
+
+### Requirements
+
+- Enable **appendNewMessage API** in the chat app settings under **Miscellaneous**
+
+### Example
+
+<Steps>
+  <Step title="API example to push a message to the chat widget">
+    ```javascript
+    Maven.ChatWidget.appendNewMessage({
+      text: 'Hello, this is a message'
+    });
+    ```
+  </Step>
+</Steps>
+
+## Event Listeners
+
+Maven Chat allows you to listen to events triggered by the chat widget.
+
+This can be used to detect when the Chat widget has been opened or closed
+
+### Example
+
+<Steps>
+  <Step title="Listening for chat widget events">
+    ```javascript
+    let isOpen = false;
+
+    window.addEventListener('mavenWidgetClosed', () => {
+      isOpen = false;
+    });
+
+    window.addEventListener('mavenWidgetOpened', () => {
+      isOpen = true;
+    });
+    ```
+  </Step>
+</Steps>
+
