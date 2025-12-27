@@ -10,10 +10,6 @@ instances:
 roles:
   - everyone
 
-ai-search:
-  location:
-    - docs
-
 layout:
   searchbar-placement: header
   page-width: full
