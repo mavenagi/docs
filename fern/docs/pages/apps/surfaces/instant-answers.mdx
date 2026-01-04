@@ -73,7 +73,7 @@ The user data object must include:
 
 #### Generating User Authentication Token
 
-To protect the user data in transit, generate a signed JWT token containing user data and encrypt the token with `ES256` and a 32-bit secret key. This token must be generated on the backend and passed into the instant answers widget via the `signedUserData` property.
+To protect the user data in transit, generate a signed JWT token containing user data and encrypt the token with `ES256` and a 32-byte secret key. This token must be generated on the backend and passed into the instant answers widget via the `signedUserData` property.
 
 ##### Example Implementation (TypeScript)
 
