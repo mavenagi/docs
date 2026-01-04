@@ -1,0 +1,104 @@
+---
+title: Front Live Agent Handoff
+slug: /apps/chat/live-agent-handoff/front
+---
+
+## Front Configuration
+
+Maven Chat integrates with Front to provide human support capabilities. This integration requires configuration in both Front and Maven.
+
+#### Requirements
+
+- Front account with admin access
+- Access to Front's developer settings
+- Maven-created Front Application Channel
+
+#### Setup Process
+
+Follow these steps to configure Front integration:
+
+<Steps>
+  <Step title="Create Front Application">
+    - Navigate to [Front Developer Settings](https://app.frontapp.com/settings/developers)
+    - Click **Create App**
+    - Enter app name and description
+    - Note the **App UID** and **App Secret** from Basic Information
+  </Step>
+  <Step title="Configure Channel">
+    - Go to the **Features** tab
+    - Click **Create channel type**
+    - Configure the following settings:
+     - Set **Webhook URL** to `https://chat.onmaven.app/api/front`
+     - Set **Authentication strategy** to `Bearer`
+     - Set **Contact type** to `Custom`
+     - Set **Supported attachments** to `Text`
+     - Enable **Reply/Compose**
+     - Set **Composer type** to `Basic`
+     - Set **Timeline Type UI** to `Chat Timeline`
+     - Click **Create**
+  </Step>
+  <Step title="Connect Channel in Front">
+    - Navigate to **Channels** under your workspace
+    - Click **Connect a channel**
+    - Find your channel under the "Other" section
+    - Set **Name** and **Token** to `orgId-agentId`
+    - Select target inbox and click **Continue**
+  </Step>
+</Steps>
+#### Configuration
+
+The handoff configuration requires two steps:
+
+<Steps>
+  <Step title="Create your configuration object">
+    ```javascript
+    {
+      type: 'front',
+      apiKey: 'your-front-api-token',
+      appId: 'your-front-app-uid',
+      apiSecret: 'your-front-app-secret',
+      shiftNames: [],
+      host: 'optional-self-hosted-front-url'
+    }
+    ```
+  </Step>
+  <Step title="Convert to JSON and add to Maven">
+    - Convert the object to a JSON string
+    - Enter it in the **Live agent handoff configuration** field in chat app settings
+  </Step>
+</Steps>
+
+##### Configuration Options
+
+| Option | Type | Required | Default | Description |
+|--------|------|----------|---------|-------------|
+| `type` | 'front' | Yes | - | Identifies Front as the handoff provider |
+| `apiKey` | string | Yes | - | Your Front API token |
+| `appId` | string | Yes | - | Your Front App UID |
+| `apiSecret` | string | Yes | - | Your Front App Secret |
+| `shiftNames` | string[] | No | [] | Names of shifts for availability routing |
+| `host` | string | No | - | Custom URL for self-hosted Front instances |
+
+#### Additional Setup Requirements
+
+<Steps>
+  <Step title="Content Security Policy">
+    - Update your CSP to allow content from `chat.onmaven.app`
+  </Step>
+  <Step title="Widget Installation">
+    - Include the widget script:
+      ```html
+      <script src='https://chat.onmaven.app/js/widget.js' defer></script>
+      ```
+   - Initialize with configuration:
+     ```javascript
+     addEventListener("load", function () {
+       Maven.ChatWidget.load({
+         organizationId: "your-org-id",
+         agentId: "your-agent-id",
+         // ... other configuration options
+       });
+     });
+     ```
+  </Step>
+</Steps>

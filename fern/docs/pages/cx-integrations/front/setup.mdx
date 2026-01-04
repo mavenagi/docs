@@ -1,0 +1,48 @@
+---
+title: Front Setup Guide
+slug: cx-integrations/front/setup
+---
+
+Maven provides an integration that allows it to create tickets in Front via a Custom Action. Once triggered, a form will be used to collect name, email address, summary and description of the issue the user is facing via the chat experience.
+
+<Frame caption="Ticket Action Form">
+  <img src="/docs/assets/front/05_Front_Ticket_Action_Form.png" alt="Ticket Action Form" width="300" height="440" />
+</Frame>
+
+## Configure Maven
+
+To get started, install the Front App from the Maven App directory:
+
+<Frame caption="Install Front App from Maven App Directory">
+  <img src="/docs/assets/front/01_Front_App_Directory.png" alt="Install Front App from Maven App Directory"/>
+</Frame>
+
+In Front, visit the `Developers` portal to create an API token and configure that secret during the installation proces.
+
+<Frame caption="Create API Token in Front">
+  <img src="/docs/assets/front/02_Front_Developers_API_Tokens.png" alt="Create API Token in Front"/>
+</Frame>
+
+Also, provide the **name** of the email-based channel that should be used to escalate a conversation to a ticket.
+
+<Frame caption="Channels in Front">
+  <img src="/docs/assets/front/03_Front_Developers_Channels.png" alt="Channels in Front"/>
+</Frame>
+
+Note: Front automatically generates a name for channels when they are created. Usually, the name of the channel is the entire email address but if that fails to install, provide just the username portion of the email address.
+
+<Frame caption="Configure API Token and Channel">
+  <img src="/docs/assets/front/04_Front_Install.png" alt="Configure API Token and Channel"/>
+</Frame>
+
+## Configure Front
+
+Given that the provided channel is already configured in Front, no other action is required.
+
+## Logging
+
+Action logs are available in the logs panel of the Front Custom Action.
+
+## Limitations
+
+- Only email-based channels are currently supported

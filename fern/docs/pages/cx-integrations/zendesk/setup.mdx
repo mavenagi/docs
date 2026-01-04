@@ -1,0 +1,48 @@
+---
+title: Zendesk Setup Guide
+slug: cx-integrations/zendesk/setup
+---
+
+## Setup within Maven
+To set up the Zendesk integration, you will need to first [make an API key](https://support.zendesk.com/hc/en-us/articles/4408889192858-Managing-access-to-the-Zendesk-API#topic_bsw_lfg_mmb) for your Zendesk account.
+
+Once you have an API key, enter your Zendesk subdomain, username you used to make your API key and the key 
+itself in the Maven Zendesk integration settings. After you click "Save", you will see a message below the Zendesk 
+settings letting you know whether the connection is successful.
+
+If it is not successful: 
+- first [check your subdomain](https://support.zendesk.com/hc/en-us/articles/4409381383578-Where-can-I-find-my-Zendesk-subdomain)
+- next check your username. It must belong to the account you used to make your API key.
+- finally, make sure that account has enough permissions to access the Zendesk API. Only admin accounts can allow API access.
+
+**Knowledge:**
+
+Maven will pull in articles from the Zendesk Knowledge Center. By default, the knowledge base is labeled "Zendesk Help Center - Uncategorized". The frequency of the sync/updates can be adjusted by updating the Knowledge Base settings in Maven.
+You can also choose to split up the knowledge base by your Zendesk categories, sections, or associated article permissions by selecting the appropriate "Knowledge Organization" value.
+Please note that if you change this value, you may need to deactivate any existing knowledge bases that were created under a previous setting.
+If you want to include draft articles, select the "Include Draft Articles" option in the settings.
+
+
+**Ticket Hand Off:**
+
+When Maven cannot deflect a user inquiry, a ticket is created in the Zendesk system. Ticket hand off is represented as an action within Maven.
+By default, any fields that are required on your default Zendesk ticket form will be included in the the form presented to the user on handoff.
+If you want to include additional fields you can make them required by going to Admin Center > Objects and Rules > Fields and select the "Required To Submit a Request" checkbox.
+Please note that if these values are modified in Zendesk, you will need to update the App settings or reinistall the app for the changes to take effect.
+
+**File Attachments in Ticket Creation:**
+
+When users submit a support ticket through the chat interface, they can upload files such as screenshots, images, documents, or videos. These attachments are automatically sent to Zendesk and included on the newly created ticket. Attachment support is available for asynchronous ticket creation only, due to limitations in the Zendesk Sunshine API. To enable this feature, install the Zendesk App in Agent Designer and select Enable Zendesk Attachments in the configuration UI. Once enabled, users will see an attachment option directly within the escalation form.
+
+**Attachment Support During Live Chat:**
+
+Users can also upload files in real time during a live messaging conversation with Zendesk agents. Any attachments sent by the user will appear instantly in the Zendesk agent workspace, and agents can upload files back to the user through the same chat interface. To enable live attachment support, install the Chat App in Agent Designer and add "enableAttachments": true to your handoff configuration. After saving your changes, file sharing will be available immediately for all new conversations.
+
+## Setup within Zendesk
+Once your Maven settings are configured, [install the Zendesk plugin](https://www.zendesk.com/marketplace/apps/support/982238/maven-agi-co-pilot/) from the Zendesk Marketplace.
+
+This plugin has one required field: the Agent API key that is displayed on the Maven Zendesk settings page.
+
+## Still not working?
+
+[Contact us](https://support.mavenagi.com) for more support.

@@ -1,0 +1,51 @@
+---
+title: Chat Widget Authentication
+slug: /apps/chat/authentication
+---
+
+## Signed User Authentication
+
+Maven Chat now accepts signed and encrypted user authentication, allowing our customers to securely authenticate their users with Maven and persist user data across Maven Apps. Authentication is optional and users will fall back to anonymous sessions.
+
+### Requirements
+
+- A server-generated, signed and encrypted JWT containing user data
+- A shared symmetrical encryption key, provided in the chat app settings (**Encryption secret**)
+- A shared public key for verifying signing, provided in the chat app settings (**JWT public key**)
+
+### User Data Requirements
+
+The user data object must include:
+- `id` - A unique identifier for the user
+- Additional fields will be included in the Maven user that's created
+
+### Generating User Authentication Token
+
+To protect the user data in transit, generate a signed JWT token containing user data and encrypt the token with `ES256` and a 32-byte secret key. This token must be generated on the backend and passed into the chat widget via the `signedUserData` property.
+
+#### Example Implementation (TypeScript)
+
+```typescript
+import { SignJWT, EncryptJWT } from 'jose';
+
+async function secureUserData(userData: Record<string, string> & {
+ id: string
+}) {
+ // 1. Sign the user data with your private key (ES256 algorithm)
+ const signedJWT = await new SignJWT(userData)
+   .setProtectedHeader({ alg: 'ES256' })
+   .setIssuedAt()
+   .setExpirationTime('1d')
+   .sign(yourPrivateKey);
+
+
+ // 2. Encrypt the signed JWT using your encryption secret
+ const encryptedJWT = await new EncryptJWT({ jwt: signedJWT })
+   .setProtectedHeader({ alg: 'dir', enc: 'A128CBC-HS256' })
+   .encrypt(base64url.decode(encryptionSecret));
+
+
+ return encryptedJWT;
+}
+```
+

@@ -1,0 +1,157 @@
+---
+title: Zoho Desk Setup Guide
+slug: cx-integrations/zoho/setup
+---
+
+Maven provides an integration with Zoho Desk that enables automatic knowledge base synchronization and ticket creation directly from conversations.
+
+## Features
+
+- **Knowledge Base Ingestion**: Automatically syncs published Zoho Desk articles to Maven
+- **Ticket Creation**: Create support tickets directly from conversations
+- **Contact Management**: Automatically creates and links contacts in Zoho Desk
+- **Conversation Transcripts**: Attaches full conversation history to tickets as private comments
+
+## Prerequisites
+
+Before setting up the Zoho Desk integration, you'll need to obtain the following from your Zoho Desk account:
+
+- **Client ID** - Your Zoho OAuth Client ID
+- **Client Secret** - Your Zoho OAuth Client Secret
+- **Refresh Token** - OAuth refresh token for API access
+- **Organization ID** - Your Zoho Desk organization ID
+- **Department ID** - The department where tickets will be created
+
+## Setup within Zoho Desk
+
+### Step 1: Generate OAuth Refresh Token
+
+The easiest way to generate your OAuth credentials is to use our automated token generator:
+
+**https://zoho-auth.onmaven.app**
+
+This tool will guide you through:
+1. Creating your Zoho OAuth app
+2. Authorizing the app
+3. Generating your refresh token
+
+<Accordion title="Manual OAuth Setup">
+
+If you prefer to set up OAuth manually:
+
+1. **Create a Server-based OAuth App**:
+   - Go to [Zoho API Console](https://api-console.zoho.com)
+   - Click **ADD CLIENT** > **Server-based Applications**
+   - Fill in your application details
+   - Add redirect URI: `https://zoho-auth.onmaven.app/callback`
+   - Copy your **Client ID** and **Client Secret**
+
+2. **Enable Required Scopes**:
+   - `Desk.tickets.ALL` - For ticket creation
+   - `Desk.articles.READ` - For knowledge base article access
+   - `Desk.contacts.ALL` - For contact management
+
+3. **Generate Refresh Token**:
+   - Use the token generator tool linked above, or
+   - Follow Zoho's OAuth documentation to generate a refresh token manually
+
+</Accordion>
+
+### Step 2: Find Your Zoho IDs
+
+**Organization ID:**
+1. Log in to Zoho Desk
+2. Go to **Settings > Developer Space > API**
+3. Your Organization ID (OrgId) is displayed on this page
+
+**Department ID:**
+1. In Zoho Desk, go to **Settings > Channels & Departments > Departments**
+2. Click on the department you want to use for ticket creation
+3. The department ID is in the URL: `.../departments/[DEPARTMENT_ID]`
+
+## Setup within Maven
+
+1. In Maven AGI, navigate to your agent
+2. Go to **Apps** and find **Zoho Desk**
+3. Enter the following settings:
+
+| Setting | Required | Description |
+|---------|----------|-------------|
+| **Client ID** | Yes | Your Zoho OAuth Client ID |
+| **Client Secret** | Yes | Your Zoho OAuth Client Secret |
+| **Refresh Token** | Yes | The OAuth refresh token from Step 1 |
+| **Organization ID** | Yes | Your Zoho Desk Organization ID |
+| **Department ID** | Yes | The department ID where tickets will be created |
+
+4. Click **Install**
+
+The app will automatically:
+- Validate your credentials
+- Ingest your knowledge base articles
+- Create ticket creation actions
+
+## Knowledge Base Sync
+
+Maven automatically syncs published articles from your Zoho Desk knowledge base:
+
+- **Filters**: Only articles that are **Published** and visible to **All Users** are synced
+- **Content Conversion**: HTML content is converted to Markdown for optimal AI processing
+- **Auto-refresh**: Knowledge base is updated periodically to keep content fresh
+
+<Note>
+Articles that are in Draft status or only visible to Agents/Registered Users will not be synced.
+</Note>
+
+## Ticket Creation
+
+When Maven cannot fully resolve a user's inquiry, it can create a support ticket in Zoho Desk. Two actions are available:
+
+**For Identified Users:**
+- Appears when user has name and email in their profile
+- Pre-fills contact information automatically
+
+**For Unidentified Users:**
+- Appears when user information is not available
+- Prompts for name and email before creating the ticket
+
+Both actions:
+- Create or link to an existing contact in Zoho Desk
+- Create a ticket in the specified department
+- Attach the full conversation transcript as a private comment
+
+## Supported Data Centers
+
+This integration supports all Zoho data centers:
+
+| Region | Domain |
+|--------|--------|
+| United States | accounts.zoho.com |
+| Europe | accounts.zoho.eu |
+| India | accounts.zoho.in |
+| Australia | accounts.zoho.com.au |
+| Japan | accounts.zoho.jp |
+| Canada | accounts.zohocloud.ca |
+| China | accounts.zoho.com.cn |
+
+Make sure to select the correct data center when generating your refresh token.
+
+## Troubleshooting
+
+### Invalid Credentials Error
+- Double-check your Client ID and Client Secret
+- Ensure your refresh token is valid and hasn't expired
+- Verify you're using the correct data center
+
+### No Articles Ingested
+- Check that articles are published with visibility set to **All Users** (not just Agents)
+- Verify your Organization ID is correct
+- Ensure the OAuth scopes include `Desk.articles.READ`
+
+### Ticket Creation Fails
+- Verify Department ID is correct
+- Check OAuth scopes include `Desk.tickets.ALL` and `Desk.contacts.ALL`
+- Ensure your Zoho Desk plan supports API access
+
+## Still not working?
+
+[Contact us](https://support.mavenagi.com) for more support.

@@ -1,0 +1,121 @@
+---
+title: Chat Widget Configuration
+slug: /apps/chat/configuration
+---
+
+## Basic Settings
+
+The chat app supports several basic configuration options that can be customized through the Dashboard:
+
+- **Logo URL** - The URL of the logo to display in the chat header.
+- **Brand Color** - The accent color used on the chat UI.
+- **Welcome Message** - The message displayed when the chat widget is opened.
+- **Popular Questions** - Questions shown directly under the welcome message.
+
+Additionally, the appearance of the widget on your site can be further customized:
+
+```javascript
+  Maven.ChatWidget.load({
+    organizationId: "YOUR_ORGANIZATION_ID",
+    agentId: "YOUR_AGENT_ID",
+    bgColor: "#007AFF",
+    buttonLabel: "Chat with us",
+    horizontalPosition: "left",
+    verticalPosition: "top",
+  })
+```
+
+## Advanced Settings
+
+The full list of chat app settings:
+
+| Category | Setting | Description |
+|----------|---------|-------------|
+| **Branding** | Logo URL | The URL of the logo to display in the chat header |
+| | Brand color | The accent color used on the chat UI |
+| | Brand font color | The color of the font against the brand color |
+| | Welcome message | The message displayed when the chat widget is opened |
+| | Popular questions | Questions shown directly under the welcome message |
+| | Enable preview site | Allows the widget to appear on the preview site |
+| **Security** | Allowed domains | The domains that are allowed to render the chat iframe |
+| | JWT public key | The public key used to verify authentication tokens (more on this below) |
+| | Encryption secret | The secret used to encrypt authentication tokens (more on this below) |
+| **Miscellaneous** | Disable attachments | Disables the ability to send files in the chat |
+| | Live agent handoff configuration | A JSON object that configures the live agent handoff settings (more on this below) |
+
+## Widget Configuration Options
+
+The full list of widget configuration options:
+
+| Option | Type | Required | Default | Description |
+|--------|------|----------|---------|-------------|
+| `organizationId` | string | Yes | - | Your organization ID |
+| `agentId` | string | Yes | - | Your agent ID |
+| `bgColor` | string | No | - | Widget background color |
+| `textColor` | string | No | 'white' | Widget text color |
+| `buttonLabel` | string | No | 'Get Help' | Widget button label |
+| `hideButton` | boolean | No | false | Hide the Widget button (to later be programmatically controlled - see below) |
+| `horizontalPosition` | 'left' \| 'right' | No | 'right' | Widget horizontal position |
+| `verticalPosition` | 'top' \| 'bottom' | No | 'bottom' | Widget vertical position |
+| `iFrameHorizontalOffset` | number | No | 0 | Horizontal offset in pixels for the iframe position |
+| `iFrameVerticalOffset` | number | No | 0 | Vertical offset in pixels for the iframe position |
+| `buttonHorizontalOffset` | number | No | 0 | Horizontal offset in pixels for the button position |
+| `buttonVerticalOffset` | number | No | 0 | Vertical offset in pixels for the button position |
+| `locale` | string | No | browser locale | Widget locale |
+| `signedUserData` | string | No | - | A signed and encrypted authentication token |
+| `unsignedUserData` | Record\<string, any\> | No | - | Arbitrary data to include in conversation for context |
+| `tags` | string[] | No | - | Tags to add to the conversation (can be a single tag or list of tags) e.g. ['tag 1', 'tag 2', 'tag 3'] |
+| `enableSessionStorage` | boolean | No | false | Stores chat messages using session storage, allowing conversation continuity during reloads within the same browser tab |
+
+### Passing metadata 
+
+Use the `unsignedUserData` parameter to pass name/value pairs of data about the user and the user's context. For example, if your React application has url path parts that you'd like to parse and send:
+
+``` typescript
+'use client';
+
+import Script from 'next/script';
+import React, { useEffect, useState } from 'react';
+
+export default () => {
+  let [part1, setPart1] = useState<string | null>(null);
+  let [part2, setPart2] = useState<string | null>(null);
+
+  useEffect(() => {
+    const parts = window.location.pathname.split('/').filter(Boolean);
+    setPart1(parts[0] || null);
+    setPart2(parts[1] || null);
+  }, []);
+
+  const handleOnReady = () => {
+    if (window.Maven?.ChatWidget) {
+      window.Maven.ChatWidget.load({
+        organizationId: 'your-org-id',
+        agentId: 'your-agent-id',
+        bgColor: '#007AFF',
+        buttonLabel: 'Chat',
+        horizontalPosition: 'right',
+        verticalPosition: 'bottom',
+        unsignedUserData: {
+          part1: part1,
+          part2: part2,
+        },
+      });
+    }
+  };
+
+  return (
+    <div>
+      <h1>URL Parts</h1>
+      <p>Param 1: {part1}</p>
+      <p>Param 2: {part2}</p>
+      <Script
+        src="https://chat.onmaven.app/js/widget.js"
+        strategy="lazyOnload"
+        onReady={handleOnReady}
+      />
+    </div>
+  );
+};
+```
+

@@ -1,0 +1,137 @@
+---
+title: Kustomer Setup Guide
+slug: cx-integrations/kustomer/setup
+---
+
+Maven provides an integration with Kustomer that enables automatic knowledge base synchronization and conversation creation directly from chat interactions.
+
+## Features
+
+- **Knowledge Base Ingestion**: Automatically syncs articles from your Kustomer knowledge base to Maven
+- **Conversation Creation**: Create support conversations directly from Maven chat
+- **Customer Management**: Automatically creates and links customers in Kustomer
+- **Conversation Transcripts**: Attaches full conversation history as internal notes
+- **Custom Attributes**: Supports custom conversation attributes for advanced workflows
+
+## Prerequisites
+
+Before setting up the Kustomer integration, you'll need:
+
+- A Kustomer account with API access
+- An API access token with appropriate permissions
+- Your Kustomer subdomain
+
+## Setup within Kustomer
+
+### Step 1: Create an API Access Token
+
+1. Log in to your Kustomer account
+2. Navigate to **Settings > API Keys** in your Kustomer admin panel
+3. Click **Create API Key**
+4. Name it "Maven Integration" or similar for easy identification
+5. Set permissions to ensure the API key has:
+   - **Read** access to Knowledge Base articles
+   - **Read/Write** access to Customers (for customer creation)
+   - **Read/Write** access to Conversations (for conversation creation)
+6. Click **Generate** to create your API key
+7. Copy the access token immediately - it will not be shown again
+
+<Warning>
+Store your API access token securely. It provides access to your Kustomer data and cannot be retrieved after initial creation.
+</Warning>
+
+### Step 2: Find Your Subdomain
+
+Your Kustomer subdomain is the first part of your Kustomer URL. For example, if you access Kustomer at `https://yourcompany.kustomerapp.com`, your subdomain is `yourcompany`.
+
+### Step 3: Find Your Knowledge Base ID (Optional)
+
+If you want to sync articles from a specific knowledge base rather than all knowledge bases:
+
+1. Navigate to your Knowledge Base in Kustomer
+2. The knowledge base ID can be found in the URL when viewing the knowledge base settings
+
+## Setup within Maven
+
+1. In Maven AGI, navigate to your agent
+2. Go to **Apps** and find **Kustomer**
+3. Enter the following settings:
+
+| Setting | Required | Description |
+|---------|----------|-------------|
+| **Access Token** | Yes | Your Kustomer API access token from Step 1 |
+| **Subdomain** | Yes | Your Kustomer organization subdomain (e.g., "yourcompany") |
+| **Knowledge Base ID** | No | Specific knowledge base ID to sync from. If not provided, syncs from all knowledge bases |
+
+4. Click **Install**
+
+The app will automatically:
+- Validate your credentials
+- Ingest your knowledge base articles
+- Create conversation creation actions
+
+## Knowledge Base Sync
+
+Maven automatically syncs articles from your Kustomer knowledge base:
+
+- **Content Extraction**: Article content is fetched from the current published version
+- **HTML Conversion**: HTML content is converted to Markdown for optimal AI processing
+- **Auto-refresh**: Knowledge base is updated periodically to keep content fresh
+- **Selective Sync**: Optionally sync from a specific knowledge base using the Knowledge Base ID setting
+
+## Conversation Creation
+
+When Maven cannot fully resolve a user's inquiry, it can create a support conversation in Kustomer. Two actions are available:
+
+**For Identified Users:**
+- Appears when user has name and email in their profile
+- Pre-fills customer information automatically
+
+**For Unidentified Users:**
+- Appears when user information is not available
+- Prompts for name and email before creating the conversation
+
+Both actions:
+- Create or link to an existing customer in Kustomer
+- Create a new conversation with the issue details
+- Add the user's message as the initial incoming message
+- Attach the full Maven conversation transcript as an internal note
+- Include custom attributes for tracking (Maven source, agent ID, organization ID)
+
+### Custom Attributes
+
+Conversations created by Maven include the following custom attributes:
+
+| Attribute | Description |
+|-----------|-------------|
+| `mavenAgiSourceStr` | Identifies the source as "chat-integration" |
+| `mavenAgiAgentIdStr` | The Maven agent ID that created the conversation |
+| `mavenAgiOrgIdStr` | The Maven organization ID |
+| `subjectStr` | The subject/title of the support request |
+
+You can use these attributes in Kustomer workflows for routing and automation.
+
+## Troubleshooting
+
+### Invalid Access Token Error
+- Verify your access token is correct and hasn't been revoked
+- Ensure the token has the required permissions for knowledge base and conversation access
+- Check that you're using the correct subdomain
+
+### No Articles Ingested
+- Verify your subdomain is correct
+- If using a Knowledge Base ID, ensure it exists and contains published articles
+- Check that your API token has read access to the Knowledge Base
+
+### Conversation Creation Fails
+- Verify your API token has write access to Customers and Conversations
+- Check that required fields are being provided (name, email, subject)
+- Review Kustomer API logs for detailed error messages
+
+### Customer Not Found/Created
+- Ensure your API token has permissions to create customers
+- Verify the email address format is valid
+
+## Still not working?
+
+[Contact us](https://support.mavenagi.com) for more support.
